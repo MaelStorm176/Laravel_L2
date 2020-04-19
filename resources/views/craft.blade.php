@@ -7,9 +7,11 @@
                 <div class="card">
                     <div class="card-header">Craft une pizza</div>
                     @auth
-                        <button type="button" onclick="ajouter()" class="btn btn-outline-primary" data-toggle="modal" data-target="#putain">
-                            Ajouter un ingrédient
-                        </button>
+                        @if(Auth::user()->id==1 && Auth::user()->username=="admin")
+                            <button type="button" onclick="ajouter()" class="btn btn-outline-primary" data-toggle="modal" data-target="#putain">
+                                Ajouter un ingrédient
+                            </button>
+                        @endif
 
                         <!-- Modal -->
                         <div class="modal fade" id="putain" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -46,15 +48,12 @@
                                             <div class="col-md-6">
                                                 <button type="submit"  class="btn btn-success">Valider</button>
                                             </div>
-
-
                                         </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <form action="{{route('craft.ajouter')}}" method="post">
-                            @csrf
+
                         <table style="vertical-align: baseline; text-align: center" >
                             <thead>
                             <tr>
@@ -68,10 +67,9 @@
                             </tr>
                             </thead>
                             <tbody>
-
-                               <!-- {{$var=1}}-->
-
-
+                            <form action="{{route('craft.ajouter')}}" method="post">
+                            @csrf
+                            <!-- {{$var=1}}-->
                         @foreach ($ingredients as $value)
                             <tr id="{{$value->id}}">
                                 <td>{{ $value->nom_i }}<img style="margin-left: 2em" src="{{$value->image}}"width="150px"></td>
@@ -92,24 +90,14 @@
                                 @endif
                             </tr>
                             <!--  {{$var++}}-->
-
                         @endforeach
                             <tr>
                                 <td><button type="submit" class="btn btn-primary">Valider</button></td>
                             </tr>
-
+                            </form>
                             </tbody>
                         </table>
-
-                        </form>
-
-
-
-
                             <!-- -->
-
-
-
                     @endauth
                     @guest
                     Vous devez être connecté
@@ -118,9 +106,6 @@
             </div>
         </div>
     </div>
-
-
-
 @endsection
 <script>
     //Vide le formulaire afin d'ajouter une pizza

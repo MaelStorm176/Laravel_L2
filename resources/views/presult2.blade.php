@@ -37,8 +37,8 @@
     </tbody>
 </table>
     @if($value->user_id==Auth::user()->id)
-{!! $products->render() !!}
-        @endif
+        {!! $products->render() !!}
+    @endif
 </div>
 <script>
     function myFunction() {

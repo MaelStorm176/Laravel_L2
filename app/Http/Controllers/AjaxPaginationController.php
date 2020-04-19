@@ -21,6 +21,6 @@ class AjaxPaginationController extends Controller
             return view('presult', compact('products'));
         }
 
-        return view('home',compact('products'));
+        return view('historique_commande',compact('products'));
     }
 }

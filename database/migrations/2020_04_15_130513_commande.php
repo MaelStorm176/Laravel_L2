@@ -22,7 +22,7 @@ class Commande extends Migration
             $table->Integer('user_id');
             $table->string('statut_prepa')->default('En cours');
             $table->string('statut_p')->default('');//payement
-            $table->Integer('user_prepa')->default('');
+            $table->Integer('user_prepa')->default(0);
             $table->timestamps();
         });
     }
