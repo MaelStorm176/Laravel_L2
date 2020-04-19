@@ -78,14 +78,15 @@
         </style>
     </head>
     @section('content')
-    <div class="flex-center position-ref full-height ">
+
+        <div class="flex-center position-ref full-height ">
         <div class="content" id="content">
             <h1> Dernier commentaire </h1>
             <div id="affichage_comm">
 
             </div>
             @guest
-            <a class="btn btn-outline-primary" href="{{ route('login') }}">Connectez vous pour poster un commentaire !</a>
+                <a class="btn btn-outline-primary" href="{{ route('login') }}">Connectez vous pour poster un commentaire !</a>
             @endguest
 
             @auth
