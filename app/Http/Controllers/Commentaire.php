@@ -51,4 +51,5 @@ class Commentaire extends Controller
     		echo '<a id="star_comm" value="0">☆</a>';
     	}
     }
+
 }

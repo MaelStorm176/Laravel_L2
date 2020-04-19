@@ -64,7 +64,7 @@
                direction: rtl;
             }
             .rating  {
-               color: #aaFFaaa;
+               color: #aaFFaa;
                font-size: 3em;
                transition: color .4s;
             }
@@ -83,7 +83,6 @@
         <div class="content" id="content">
             <h1> Dernier commentaire </h1>
             <div id="affichage_comm">
-
             </div>
             @guest
                 <a class="btn btn-outline-primary" href="{{ route('login') }}">Connectez vous pour poster un commentaire !</a>
