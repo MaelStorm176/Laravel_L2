@@ -65,7 +65,7 @@ class Pizza extends Controller
     //Selectionne toutes les pizzas afin de les afficher
     public function all(){
         $pizza = DB::table('pizza')->select('*')->get();
-        return view('pizza.pizza_all')->with('pizza',$pizza); //je retourne la vue pizza_all avec une variable nommée $pizza
+        return view('pizza.pizza_carte')->with('pizza',$pizza); //je retourne la vue pizza_all avec une variable nommée $pizza
     }
 
     //Modifie une pizza

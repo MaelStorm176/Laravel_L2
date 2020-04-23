@@ -1,9 +1,6 @@
 @extends('layouts.app')
 <head>
-    <!-- Material Design Bootstrap -->
-    <link href="css/mdb.min.css" rel="stylesheet">
     <link href="css/pizza.css" rel="stylesheet">
-
 </head>
 @section('content')
     @include('pizza.pizza_modal')
@@ -21,7 +18,7 @@
             @endauth
             <img src="{{$key->photo}}" class="img-pizza">
             <h3><span>{{$key->nom}}</span></h3>
-            <p style="width: 50%;">{{$key->description}}</p>
+            <p style="width: 50%;">{{$key->description_courte}}</p>
             <a href="pizza_all/{{$key->nom}}" class="btn btn-outline-primary">Voir le détail</a>
         </div>
         @else
@@ -36,9 +33,8 @@
             @endauth
             <img src="{{$key->photo}}" class="img-pizza">
             <h3><span>{{$key->nom}}</span></h3>
-            <p>{{$key->description}}</p>
+            <p>{{$key->description_courte}}</p>
             <a class="btn btn-outline-primary" style="cursor: not-allowed;">Indisponible</a>
-
         </div>
         @endif
     @endforeach
@@ -70,4 +66,67 @@
             }
         </script>
     @endif
+@endsection
+
+@section('script')
+    <script type="text/javascript">
+    //Vide le formulaire afin d'ajouter une pizza
+    function ajouter(){
+        $('#exampleModalLongTitle').html('Ajouter une pizza');
+        $('#formu').prop('action','{{route('pizza.upload')}}');
+        $('#upload').html('Ajouter');
+        $('#nom_p').val('');
+        $('#categorie').val('');
+        $('#description_courte').val('');
+        $('#description_longue').val('');
+        $('#prix_p').val('');
+        $('#pet-select').val('');
+    }
+
+    //Rempli le formulaire afin de modifier la pizza selectionnée
+    function modifier(id) {
+        $('#exampleModalLongTitle').html('Modifier pizza');
+        $('#formu').prop('action','{{route('pizza.modifier')}}');
+        $('#upload').html('Modifier');
+        $('#id_pizza').val(id);
+        var dummy = Date.now();
+        $.ajax({
+            url :'afficher_form',
+            type : 'GET',
+            dataType : 'html',
+            data : {dummy:dummy, id:id},
+            success : function(code_html, statut){
+                var dataretour = code_html.split('_|');
+                $('#image').prop('file',dataretour[0]);
+                $('#nom_p').val(dataretour[1]);
+                $('#categorie').val(dataretour[2]);
+                $('#description_courte').val(dataretour[3]);
+                $('#description_longue').val(dataretour[4]);
+                $('#prix_p').val(dataretour[5]);
+                $('#pet-select').val(dataretour[6]);
+            },
+
+            error : function(resultat, statut, erreur){
+                alert('Erreur avec la requete Ajax');
+            },
+        });
+    }
+
+    function supprimer(id){
+        var dummy = Date.now();
+        $.ajax({
+            url :'pizza.supprimer',
+            type : 'GET',
+            dataType : 'html',
+            data : {dummy:dummy, id:id},
+            success : function(code_html, statut){
+                $('div[id="'+id+'"]').remove();
+            },
+
+            error : function(resultat, statut, erreur){
+                alert('Erreur avec la requete Ajax');
+            },
+        });
+    }
+    </script>
 @endsection

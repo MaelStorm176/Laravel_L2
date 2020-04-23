@@ -72,8 +72,10 @@
 
                     <p class="lead font-weight-bold">Description</p>
 
-                    <p> <em> {{$key->description}} </em> </p>
+                    <p> <em> {{$key->description_courte}} </em> </p>
+                    <p> {{$key->description_longue}} </p>
 
+                    @auth
                     <form class="d-flex justify-content-left" action="{{route('panier.ajouter')}}">
                         <!-- Default input -->
                         <input type="number" name="quantite" value="1" aria-label="Search" class="form-control" style="width: 100px">
@@ -82,6 +84,11 @@
                             <i class="fas fa-shopping-cart ml-1"></i>
                         </button>
                     </form>
+                    @endauth
+
+                    @guest
+                        <a href="{{route('login')}}"><button class="btn btn-primary btn-md my-0 p">Pour commander, connectez vous !</button></a>
+                    @endguest
 
                 </div>
                 <!--Content-->
@@ -133,11 +140,7 @@
 <script type="text/javascript" src="js/mdb.min.js"></script>
 <!-- Initializations -->
 <script type="text/javascript">
-    // Animations initialization
-    new WOW().init();
-
     function afficher_promo() {
         $('#div-promotion').show();
     }
-
 </script>

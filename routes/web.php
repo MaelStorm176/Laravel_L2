@@ -13,9 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 Route::get('commentaire', 'Commentaire@index')->name('home');
 Route::get('ajout_commentaire', 'Commentaire@ajout')->name('ajout_commentaire');
 Route::get('clear_db', 'Commentaire@clear_db')->name('clear_db');
@@ -58,6 +55,7 @@ Route::get('/payment_accepted', function () {
     return view('payment_accepted');
 });
 Route::get('/payment', 'StripePaymentController@index')->name('payment');
+Route::get('testvalidite', 'StripePaymentController@testvalidite')->name('testvalidite');
 
 /*CRAFT*/
 Route::get('/craft', 'Craft@index')->name('craft');
@@ -77,12 +75,10 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/accueil', function(){
+Route::get('/', function(){
     return view('accueil');
-});
-Route::get('/carte', function(){
-    return view('carte');
-});
+})->name('/');
+
 Route::get('/engagements', function(){
     return view('engagements');
 });

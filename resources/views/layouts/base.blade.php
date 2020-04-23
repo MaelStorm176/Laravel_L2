@@ -1,10 +1,8 @@
 <!DOCTYPE HTML>
 <html lang="fr">
     <head>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        <script src="{{ asset('js/app.js') }}"></script>
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
         <meta charset="uft-8">
         <link rel="shortcut icon" href="img/favicon.png">
@@ -16,14 +14,17 @@
             <div class="container">
                 <section class="row justify-content-center">
                     <div class="col-lg-4">
+                        <img src="img/ban.png" style="max-width: 80%;">
+                        <!--
                         <div class="jumbotron mb-0 text-center">
-                            <h2 class="mb-0">LOGO PIZZERIA</h2>     
+                            <h2 class="mb-0">LOGO PIZZERIA</h2>
                         </div>
+                        -->
                     </div>
                 </section>
             </div>
         </header>
-            
+
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3 rounded-0">
             <div class="container container-nav">
                 <a class="navbar-brand" href="accueil">NOM PIZZERIA</a>
@@ -33,7 +34,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="carte">Notre Carte</a>
+                            <a class="nav-link" href="{{route('pizza_all')}}">Notre Carte</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="horaires">Nos Horaires</a>
@@ -44,11 +45,40 @@
                         <li class="nav-item">
                             <a class="nav-link" href="avis">Avis</a>
                         </li>
-                    </ul>      
-                    <div class="navbar-right">
-                        <button type="button" class="btn btn-outline-info navbar-btn" data-toggle="modal" data-target="#connexionModal"><span class="fas fa-user mr-2"></span>Connexion</button>
-                        <button type="button" class="btn btn-outline-warning navbar-btn" data-toggle="modal" data-target="#inscriptionModal"><span class="fas fa-pen-alt mr-2"></span>Inscription</button>
-                    </div>
+                    </ul>
+
+                    @guest
+                        <div class="navbar-right">
+                            <button type="button" id="btn_modal_connexion" class="btn btn-outline-info navbar-btn" data-toggle="modal" data-target="#connexionModal"><span class="fas fa-user mr-2"></span>Connexion</button>
+                            <button type="button" id="btn_modal_register" class="btn btn-outline-warning navbar-btn" data-toggle="modal" data-target="#inscriptionModal"><span class="fas fa-pen-alt mr-2"></span>Inscription</button>
+                        </div>
+                        @if(Session::get('errors'))
+                            @if ($errors->login)
+                                @foreach($errors->all() as $error)
+                                <span style=" color: #b94a48;font-weight: bold;"><strong>ERREUR {{ $error }}</strong></span>
+                                @endforeach
+                            @endif
+                        @endif
+                    @endguest
+                    @auth
+                        <div class="navbar-right">
+                            <ul class="navbar-nav mr-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="avis">{{ Auth::user()->username }}</a>
+                            </li>
+                            <i class="fas fa-shopping-cart ml-1"></i>
+                            <a class="" href="{{ route('logout') }}"
+                               onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                            </ul>
+                        </div>
+                    @endauth
                 </div>
             </div>
         </nav>
@@ -57,77 +87,155 @@
             © 2020 Copyright:
             <a href="#">LIEN DU SITE</a>
         </footer>
-        <!-- Modal Connexion -->
-        <div class="modal fade" id="connexionModal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header bg-info text-white">
-                        <h5 class="modal-title" id="exampleModalCenterTitle">Connecte-toi</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <form>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label for="inputEmail1">E-mail</label>
-                                <input type="email" class="form-control" id="inputEmail1">
-                            </div>
-                            <div class="form-group">
-                                <label for="inputPassword1">Mot de passe</label>
-                                <input type="password" class="form-control" id="inputPassword1">
-                            </div>
+        @guest
+            <!-- Modal Connexion -->
+            <div class="modal fade" id="connexionModal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header bg-info text-white">
+                            <h5 class="modal-title" id="exampleModalCenterTitle">Connecte-toi</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
-                        <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Retour</button>
-                        <button type="submit" class="btn btn-primary">Connexion</button>
-                        </div>
-                    </form>   
-                </div>
-            </div>
-        </div>
+                        <form method="POST" action="{{ route('login') }}">
+                            @csrf
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="inputEmail1">E-mail</label>
+                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
-        <!-- Modal Inscription -->
-        <div class="modal fade" id="inscriptionModal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header bg-warning text-white">
-                        <h5 class="modal-title" id="exampleModalCenterTitle">Inscris-toi</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <form>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label for="inputNom">Nom</label>
-                                <input type="text" class="form-control" id="inputNom">
+                                    @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPassword1">Mot de passe</label>
+                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+
+                                    @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="inputPrenom">Prénom</label>
-                                <input type="text" class="form-control" id="inputPrenom">
-                            </div>
-                            <div class="form-group">
-                                <label for="inputEmail2">E-mail</label>
-                                <input type="email" class="form-control" id="inputEmail2">
-                              </div>
-                            <div class="form-group">
-                                <label for="inputPassword1">Mot de passe</label>
-                                <input type="password" class="form-control" id="inputPassword2">
-                            </div>
-                            <div class="form-group">
-                                <label for="inputPassword3">Retape ton mot de passe</label>
-                                <input type="password" class="form-control" id="inputPassword3">
-                            </div>
-                        </div>
-                        <div class="modal-footer">
+                            <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Retour</button>
-                            <button type="button" class="btn btn-warning">Inscription</button>
-                        </div>
-                    </form>
+                            <button type="submit" class="btn btn-primary">Connexion</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
+
+            <!-- Modal Inscription -->
+            <div class="modal fade" id="inscriptionModal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header bg-warning text-white">
+                            <h5 class="modal-title" id="exampleModalCenterTitle">Inscris-toi</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form method="POST" action="{{ route('register') }}">
+                            @csrf
+
+                            <div class="form-group row">
+                                <label for="username" class="col-md-4 col-form-label text-md-right">{{ __('Pseudonyme') }}</label>
+
+                                <div class="col-md-6">
+                                    <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" autofocus>
+
+                                    @error('username')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="first_name" class="col-md-4 col-form-label text-md-right">{{ __('Prénom') }}</label>
+
+                                <div class="col-md-6">
+                                    <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" required autocomplete="first_name">
+
+                                    @error('first_name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="last_name" class="col-md-4 col-form-label text-md-right">{{ __('Nom') }}</label>
+
+                                <div class="col-md-6">
+                                    <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" required autocomplete="last_name">
+
+                                    @error('last_name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Adresse e-mail') }}</label>
+
+                                <div class="col-md-6">
+                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+
+                                    @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Mot de passe') }}</label>
+
+                                <div class="col-md-6">
+                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+
+                                    @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirmation du mot de passe') }}</label>
+
+                                <div class="col-md-6">
+                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                </div>
+                            </div>
+
+                            <div class="form-group row mb-0">
+                                <div class="col-md-6 offset-md-4">
+                                    <button type="submit" class="btn btn-primary">
+                                        {{ __('Register') }}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        @endguest
+
+
         <script>
             $(function () {
                 $('[data-toggle="tooltip"]').tooltip()

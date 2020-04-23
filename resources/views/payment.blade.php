@@ -33,7 +33,7 @@
                             ?>
                             <input value="<?php echo $email;?>" name="user_email" type="hidden">
                             <input value="<?php echo $user;?>" name="user_id" type="hidden">
-                            <input value="{{$prix_total}}" name="prix_total" type="hidden">
+                            <input value="{{$prix_total}}" name="prix_total" id="prix_total" type="hidden">
                             <input value="{{$products}}" name="products" type="hidden">
                             <input value="com_{{auth::user()->id}}_{{$prix_total}}" name="num_commande" type="hidden">
                             <!--Grid row-->
@@ -149,32 +149,32 @@
                                 <span class="text-muted">{{$key->promo}} €</span>
                             </li>
                         @endforeach
-                        <li class="list-group-item d-flex justify-content-between bg-light">
+                        <li id="affichage" style="display:none;" class="list-group-item justify-content-between bg-light">
                             <div class="text-success">
                                 <h6 class="my-0">Promo code</h6>
-                                <small>EXAMPLECODE</small>
+                                <small id="affcode"></small>
                             </div>
-                            <span class="text-success">-$5</span>
+                            <span class="text-success" id="remise"></span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between lh-condensed">
                             <div>
                                 <h6 class="my-0">TOTAL</h6>
                                 <small class="text-muted">TTC</small>
                             </div>
-                            <span class="text-muted"><strong> {{$prix_total}} € </strong></span>
+                            <span id="total" class="text-muted"><strong> {{$prix_total}} € </strong></span>
                         </li>
                     </ul>
                     <!-- Panier -->
 
                     <!-- Promo code -->
-                    <form class="card p-2">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Code promo" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-secondary btn-md waves-effect m-0" type="button">APPLIQUER</button>
-                            </div>
+                    <!-- Promo code -->
+                    <div class="input-group">
+                        <input type="text" name="code" id="code" class="form-control" placeholder="Code promo" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary btn-md waves-effect m-0" onclick="testvalidite()">APPLIQUER</button>
                         </div>
-                    </form>
+                    </div>
+                    <span style="color:red; display:none;" id="invalide">Code invalide</span>
                     <!-- Promo code -->
 
                 </div>
@@ -203,61 +203,44 @@
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 <script type="text/javascript">
 
-    $(function() {
+    function testvalidite() {
+        const code = $("#code").val();
+        var prix = $("#prix_total").val();
 
-        var $form=$(".require-validation");
+        $.ajax({
+            url : 'testvalidite',
+            type : 'GET',
+            dataType : 'html',
+            data : {code:code},
+            success : function(code_html, statut){
+                var res = code_html.split('/');
+                var remise;
+                if(res[0] == 1) {
+                    $("#invalide").hide();
+                    $("#affichage").show();
+                    prix*=res[1];
+                    remise = -($("#prix_total").val()-prix);
+                    $("#prix_total").val(prix);
+                    $("#total").html(prix+" €");
+                    $("#remise").html(remise+" €");
+                    $("#affcode").html(res[2]);
 
-        $('form.require-validation').bind('submit', function(e) {
-            var $form= $(".require-validation"),
-                inputSelector = ['input[type=email]', 'input[type=password]',
-                    'input[type=text]', 'input[type=file]',
-                    'textarea'].join(', '),
-                $inputs       = $form.find('.required').find(inputSelector),
-                $errorMessage = $form.find('div.error'),
-                valid         = true;
-            $errorMessage.addClass('hide');
-
-            $('.has-error').removeClass('has-error');
-            $inputs.each(function(i, el) {
-                var $input = $(el);
-                if ($input.val() === '') {
-                    $input.parent().addClass('has-error');
-                    $errorMessage.removeClass('hide');
-                    e.preventDefault();
                 }
-            });
+                else {
+                    $("#invalide").show();
+                }
+            },
 
-            if (!$form.data('cc-on-file')) {
-                e.preventDefault();
-                Stripe.setPublishableKey($form.data('stripe-publishable-key'));
-                Stripe.createToken({
-                    number: $('.card-number').val(),
-                    cvc: $('.card-cvc').val(),
-                    exp_month: $('.card-expiry-month').val(),
-                    exp_year: $('.card-expiry-year').val()
-                }, stripeResponseHandler);
+            error : function(resultat, statut, erreur){
+                alert('Erreur avec la requete Ajax');
+            },
+
+            complete : function(resultat, statut){
+
             }
 
         });
-
-        function stripeResponseHandler(status, response) {
-            if (response.error) {
-                $('.error')
-                    .removeClass('hide')
-                    .find('.alert')
-                    .text(response.error.message);
-            } else {
-                /* token contains id, last4, and card type */
-                var token = response['id'];
-
-                $form.find('input[type=text]').empty();
-                $form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
-                $form.get(0).submit();
-            }
-        }
-
-    });
-
+    }
 </script>
 @endsection
 
