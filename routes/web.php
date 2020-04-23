@@ -70,3 +70,19 @@ Route::get('/clear-cache', function() {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/accueil', function(){
+    return view('accueil');
+});
+Route::get('/carte', function(){
+    return view('carte');
+});
+Route::get('/engagements', function(){
+    return view('engagements');
+});
+Route::get('/avis', function(){
+    return view('avis');
+});
+Route::get('/horaires', function(){
+    return view('horaires');
+});
