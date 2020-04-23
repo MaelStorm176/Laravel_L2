@@ -1,13 +1,13 @@
 <button type="button"  class="btn btn-outline-primary" data-toggle="modal" onclick="myFunction()">
-    Afficher historique des commandes
+    Afficher historique des commandes de la mort
 </button>
 <div  id="myDIV"  >
 <table class="table table-striped">
     <thead>
     <tr>
         <th scope="col">#</th>
-        <th scope="col">Type pizza</th>
-        <th scope="col">Nom client</th>
+        <th scope="col">Détail de la commande</th>
+        <th scope="col">Client</th>
         <th scope="col">Prix</th>
         <th scope="col">Statut Paiement</th>
         <th scope="col">Heure de la commande</th>
@@ -20,14 +20,13 @@
     @foreach ($products as $value)
         <tr>
             <td>{{ $value->id }}</td>
-            <td>{{ $value->nom_p }}</td>
-            <td>{{ $value->user_name }}</td>
-            <td>{{ $value->prix_p }}€</td>
-            <td>{{ $value->statut_p }}</td>
+            <td>{{ $value->num_commande }}</td>
+            <td>{{ $value->user_email }}</td>
+            <td>{{ $value->prix_total }}</td>
+            <td>{{ $value->statut_pay }}</td>
             <td>{{ $value->created_at }}</td>
             <td>{{ $value->updated_at }}</td>
             <td>{{ $value->statut_prepa }}</td>
-
         </tr>
     @endforeach
     </tbody>

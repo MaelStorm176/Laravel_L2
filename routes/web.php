@@ -38,6 +38,9 @@ Route::get('panier','Panier@afficher')->name('panier');
 Route::get('panier.creer','Panier@creer')->name('panier.creer');
 Route::get('panier.ajouter','Panier@ajouter')->name('panier.ajouter');
 Route::get('panier.prix','Panier@prix_total')->name('panier.prix');
+Route::get('panier.modifier','Panier@modifier')->name('panier.modifier');
+Route::get('panier.contenu_supprimer','Panier@contenu_supprimer')->name('panier.contenu_supprimer');
+
 
 /*COMMANDE*/
 Route::get('valider', 'Commande@valider')->name('valider');
@@ -46,12 +49,15 @@ Route::get('historique', 'Commande@historique')->name('historique');
 Route::get('historique_commande','AjaxPaginationController@ajaxPagination')->name('historique_commande');
 
 /*PAYEMENT*/
+
+Route::get('/test', function () {
+    return view('payment_save');
+});
+
 Route::get('/payment_accepted', function () {
     return view('payment_accepted');
 });
-Route::get('/payment', function () {
-    return view('payment');
-});
+Route::get('/payment', 'StripePaymentController@index')->name('payment');
 
 /*CRAFT*/
 Route::get('/craft', 'Craft@index')->name('craft');

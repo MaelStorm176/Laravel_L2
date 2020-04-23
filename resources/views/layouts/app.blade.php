@@ -3,8 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
-    <script src="https://kit.fontawesome.com/5b793409e3.js" crossorigin="anonymous"></script>
+    <!-- <script src="https://kit.fontawesome.com/5b793409e3.js" crossorigin="anonymous"></script> -->
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -12,14 +11,12 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/all.css') }}" rel="stylesheet">
+    <!-- <link href="{{ asset('css/all.css') }}" rel="stylesheet"> -->
 </head>
 
 <body>
@@ -69,6 +66,9 @@
                                     </form>
                                 </div>
                             </li>
+                            <li class="nav-item">
+                                <i class="fas fa-shopping-cart ml-1"></i>
+                            </li>
                         @endguest
                     </ul>
                 </div>
@@ -81,6 +81,10 @@
     </div>
 </body>
 </html>
+
+@yield('script')
+
+
 <script type="text/javascript">
     $(window).on('hashchange', function() {
         if (window.location.hash) {

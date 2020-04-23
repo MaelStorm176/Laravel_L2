@@ -15,14 +15,13 @@ class Commande extends Migration
     {
         Schema::create('Commande', function (Blueprint $table) {
             $table->id();
-            $table->unsignedTinyInteger('prix_p');
-            $table->string('nom_p');
-            $table->Integer('id_pizza');
-            $table->string('user_name');
+            $table->unsignedTinyInteger('prix_total');
+            $table->string('num_commande');
+            $table->Integer('id_panier');
+            $table->string('user_email');
             $table->Integer('user_id');
             $table->string('statut_prepa')->default('En cours');
-            $table->string('statut_p')->default('');//payement
-            $table->Integer('user_prepa')->default(0);
+            $table->string('statut_pay')->default('');//payement
             $table->timestamps();
         });
     }
@@ -34,6 +33,6 @@ class Commande extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('commande');
     }
 }

@@ -26,7 +26,7 @@ class Pizza extends Controller
         if($request->ajax()){
             $req = DB::table('pizza')->select('*')->where('id','=',$request['id'])->get();
             foreach ($req as $key){
-                echo $key->photo."_|".$key->nom."_|".$key->description."_|".$key->prix."_|".$key->statut;
+                echo $key->photo."_|".$key->nom."_|".$key->categorie."_|".$key->description_courte."_|".$key->description_longue."_|".$key->prix."_|".$key->statut;
             }
         }
     }
@@ -51,7 +51,8 @@ class Pizza extends Controller
         DB::table("pizza")->insert([
             'nom' => $request["nom_p"],
             'photo' => $imageName1,
-            'description' => $request["description_p"],
+            'description_courte' => $request["description_courte"],
+            'description_longue' => $request["description_longue"],
             'statut' => $request["statut_p"],
             'prix' => $request["prix_p"],
             'promo' => $request["prix_p"]
@@ -73,7 +74,6 @@ class Pizza extends Controller
         $validate_data = Validator::make($request->all(), [
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'nom_p' => 'required',
-            'description_p'=> 'required',
             'prix_p' => 'required|integer|between:0,100'
         ]);
 
@@ -87,7 +87,8 @@ class Pizza extends Controller
         DB::table("pizza")->where('id','=',$request['id_pizza'])->update([
             'nom' => $request["nom_p"],
             'photo' => $imageName1,
-            'description' => $request["description_p"],
+            'description_courte' => $request["description_courte"],
+            'description_longue' => $request["description_longue"],
             'statut' => $request["statut_p"],
             'prix' => $request["prix_p"]
         ]);

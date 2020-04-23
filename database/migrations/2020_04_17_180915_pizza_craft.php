@@ -22,7 +22,6 @@ class PizzaCraft extends Migration
             foreach ($var as $item) {
                 $table->string($item->nom_i)->default('');
             }
-
         });
     }
 

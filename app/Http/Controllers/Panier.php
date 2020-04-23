@@ -14,7 +14,6 @@ class Panier extends Controller
     {
         DB::table('panier')->updateOrInsert([
             'user_id' => auth::user()->id,
-            'payer' => FALSE,
             'id_commande' => auth::user()->id
         ]);
 
@@ -65,16 +64,8 @@ class Panier extends Controller
         return back();
     }
 
-    public function prix_total()
+    public function prix_total($products)
     {
-        $id_panier = auth::user()->id_panier;
-        $quantite = DB::table('contenu_panier')->where('id_panier',"=",$id_panier)->select('quantite')->get();
-
-        $products = DB::table('pizza')
-            ->join('contenu_panier', 'pizza.id', '=', 'contenu_panier.id_pizza')
-            ->where('contenu_panier.id_panier', '=' , $id_panier)
-            ->select('promo','contenu_panier.quantite')
-            ->get();
         $somme = 0;
         foreach ($products as $key) {
             $somme += ($key->promo) * ($key->quantite);
@@ -84,26 +75,52 @@ class Panier extends Controller
 
     public function afficher()
     {
+        $products = $this->get_products();
+        $prix_total = $this->prix_total($products);
+        $quantite_total = $this->quantite_total($products);
+        return view('panier',compact('products','prix_total','quantite_total'));
+    }
+
+    public function quantite_total($products)
+    {
+        $q_tot = 0;
+        foreach ($products as $key)
+        {
+            $q_tot += $key->quantite;
+        }
+        return $q_tot;
+    }
+
+    public function get_products()
+    {
         $id_panier = DB::table('panier')->where('user_id',"=",auth::user()->id)->value('id');
         $products = DB::table('pizza')
             ->join('contenu_panier', 'pizza.id', '=', 'contenu_panier.id_pizza')
             ->where('contenu_panier.id_panier', '=' , $id_panier)
             ->select('promo','contenu_panier.quantite','nom','contenu_panier.id')
             ->get();
-
-        $prix_total = $this->prix_total();
-        return view('panier',compact('products','prix_total'));
+        return $products;
     }
 
-    public function modifier(Request $request)
+    public function modifier(Request $request): void
     {
         //Validation de la requete
         $validate_data = Validator::make($request->all(), [
-            'id_pizza' => 'required|integer',
-            'quantite' => 'required|integer|between:1,100'
+            'id' => 'required|integer',
+            'value' => 'required|integer|between:1,100'
         ]);
         if($validate_data->fails()){
-            return back()->with('message',"Il y a une erreur avec la création de votre pizza.");
+            //return back()->with('message',"Il y a une erreur avec la création de votre pizza.");
         }
+        DB::table('contenu_panier')->where('id','=',$request['id'])->update(['quantite' => $request['value']]);
+        $products = $this->get_products();
+        echo $this->prix_total($products) . ' €' . '_|' . $this->quantite_total($products);
+    }
+
+    public function contenu_supprimer(Request $request)
+    {
+        DB::table('contenu_panier')->where('id','=',$request['id'])->delete();
+        $products = $this->get_products();
+        echo $this->prix_total($products) . ' €' . '_|' . $this->quantite_total($products);
     }
 }

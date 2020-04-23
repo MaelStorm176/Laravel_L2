@@ -21,10 +21,10 @@ class Commentaire extends Controller
                 'value' => 'required|between:0,5'
             ]);
 
-            if($validate_data->fails()) {
+            if($validate_data->fails() || $request['email'] != $user->email) {
                 echo "Il y a une erreur avec votre E-mail ou votre commentaire";
             }
-            else if($request['email'] == $user->email) {   //il faut checker si l'adresse mail rentrée  est la meme que celle en base
+            else{   //il faut checker si l'adresse mail rentrée  est la meme que celle en base
                 DB::table("Commentaire")->insert([
                     'email' => $request["email"],
                     'commentaire' => $request["comm"],

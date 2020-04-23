@@ -24,14 +24,13 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-
                     <div class="card-header">Commandes en cours</div>
                     <table class="table table-striped">
                         <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Type pizza</th>
-                            <th scope="col">Nom client</th>
+                            <th scope="col">Détails commande</th>
+                            <th scope="col">Client</th>
                             <th scope="col">Prix</th>
                             <th scope="col">Statut Paiement</th>
                             <th scope="col">Heure de la commande</th>
@@ -130,6 +129,15 @@
             }
 
         });
+    }
+
+    function afficher(id) {
+        var div = $('div[id="div_'+id+'"]');
+        if (div.css("display") === "none") {
+            div.css("display","block");
+        } else {
+            div.css("display","none");
+        }
     }
 </script>
 

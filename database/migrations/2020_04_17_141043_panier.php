@@ -16,7 +16,6 @@ class Panier extends Migration
         Schema::create('panier', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->boolean('payer');
             $table->foreignId('id_commande');
         });
     }

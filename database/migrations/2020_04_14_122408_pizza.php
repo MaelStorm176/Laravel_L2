@@ -17,8 +17,11 @@ class Pizza extends Migration
             $table->id();
             $table->string('nom')->unique();
             $table->string('photo');
-            $table->string('description');
+            $table->string('categorie')->default('pizza');
+            $table->mediumText('description_courte');
+            $table->text('description_longue');
             $table->string('statut')->default('Disponible');
+            $table->foreignId('nutrition')->nullable()->default(NULL);
             $table->unsignedTinyInteger('prix')->default(0);
             $table->unsignedDecimal('promo',8,2)->default(0);
         });

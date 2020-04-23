@@ -6,7 +6,7 @@
     <thead>
     <tr>
         <th scope="col">#</th>
-        <th scope="col">Type pizza</th>
+        <th scope="col">Détail de la commande</th>
         <th scope="col">Nom client</th>
         <th scope="col">Prix</th>
         <th scope="col">Statut Paiement</th>
@@ -16,28 +16,30 @@
     </tr>
     </thead>
     <tbody>
-    <?php echo Auth::user()->name; ?>
-    @foreach ($products as $value)
-        @if($value->user_id==Auth::user()->id)
-                <tr>
-                    <td>{{ $value->id }}</td>
-                    <td>{{ $value->nom_p }}</td>
-                    <td>{{ $value->user_name }}</td>
-                    <td>{{ $value->prix_p }}</td>
-                    <td>{{ $value->statut_p }}</td>
-                    <td>{{ $value->created_at }}</td>
-                    <td>{{ $value->updated_at }}</td>
-                    <td>{{ $value->statut_prepa }}</td>
+    @if(!empty($products))
+        @foreach ($products as $value)
+            @if($value->user_id == Auth::user()->id) <!-- Si on est le bon user -->
+                    <tr>
+                        <td>{{ $value->id }}</td>
+                        <td>{{ $value->num_commande }}</td>
+                        <td>{{ $value->user_email }}</td>
+                        <td>{{ $value->prix_total }}</td>
+                        <td>{{ $value->statut_pay }}</td>
+                        <td>{{ $value->created_at }}</td>
+                        <td>{{ $value->updated_at }}</td>
+                        <td>{{ $value->statut_prepa }}</td>
+                    </tr>
+                @else
 
-                </tr>
-            @else
-
-        @endif
-    @endforeach
+            @endif
+        @endforeach
+    @endif
     </tbody>
 </table>
-    @if($value->user_id==Auth::user()->id)
-        {!! $products->render() !!}
+    @if(!empty($value))
+        @if($value->user_id==Auth::user()->id)
+            {!! $products->render() !!}
+        @endif
     @endif
 </div>
 <script>
