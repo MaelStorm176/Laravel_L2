@@ -12,8 +12,8 @@
 
         <header class="header mb-0 p-5" style="background:url('img/banniere.jpg');">
             <div class="container">
-                <section class="row justify-content-center">
-                    <div class="col-lg-4">
+                <section class="row">
+                    <div class="col-lg-4 offset-lg-4">
                         <img src="img/ban.png" style="max-width: 80%;">
                         <!--
                         <div class="jumbotron mb-0 text-center">
@@ -21,13 +21,35 @@
                         </div>
                         -->
                     </div>
+                    @guest
+                        @if(Session::get('errors'))
+                            @if ($errors->login)
+                                @foreach($errors->all() as $error)
+                                    <div class="col-lg-3 offset-lg-1">
+                                        <div class="toast mt-5" data-autohide="false">
+                                            <div class="toast-header bg-danger text-white mt-1">
+                                                <span class="fas fa-exclamation-triangle mt-n1 mr-2"></span>
+                                                <strong class="mr-auto">ERREUR</strong>
+                                                <small>A l'instant</small>
+                                                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="toast-body">
+                                                {{ $error }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @endif
+                        @endif
+                    @endguest
                 </section>
             </div>
         </header>
-
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3 rounded-0">
             <div class="container container-nav">
-                <a class="navbar-brand" href="accueil">NOM PIZZERIA</a>
+                <a class="navbar-brand" href="/">NOM PIZZERIA</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -46,37 +68,32 @@
                             <a class="nav-link" href="avis">Avis</a>
                         </li>
                     </ul>
-
                     @guest
                         <div class="navbar-right">
                             <button type="button" id="btn_modal_connexion" class="btn btn-outline-info navbar-btn" data-toggle="modal" data-target="#connexionModal"><span class="fas fa-user mr-2"></span>Connexion</button>
                             <button type="button" id="btn_modal_register" class="btn btn-outline-warning navbar-btn" data-toggle="modal" data-target="#inscriptionModal"><span class="fas fa-pen-alt mr-2"></span>Inscription</button>
                         </div>
-                        @if(Session::get('errors'))
-                            @if ($errors->login)
-                                @foreach($errors->all() as $error)
-                                <span style=" color: #b94a48;font-weight: bold;"><strong>ERREUR {{ $error }}</strong></span>
-                                @endforeach
-                            @endif
-                        @endif
                     @endguest
                     @auth
                         <div class="navbar-right">
-                            <ul class="navbar-nav mr-auto">
-                            <li class="nav-item">
-                                <a class="nav-link" href="avis">{{ Auth::user()->username }}</a>
-                            </li>
-                            <i class="fas fa-shopping-cart ml-1"></i>
-                            <a class="" href="{{ route('logout') }}"
-                               onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                            <div class="dropdown">
+                                <button class="btn btn-outline-info dropdown-toggle navbar-btn mr-1" type="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="fas fa-user-circle mr-2"></span>{{ Auth::user()->username }}
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <a class="dropdown-item" href="#"><span class="fas fa-shopping-cart mr-2"></span>Mon Panier (0)</a>
+                                    <a class="dropdown-item" href="#"><span class="fas fa-credit-card mr-2"></span>Mes Commandes</a>
+                                    <a class="dropdown-item" href="#"><span class="fas fa-cogs mr-2"></span>Mes Paramères</a>
+                                </div>
+                            </div>
+                            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                 <button type="button" class="btn btn-outline-danger navbar-btn"><span class="fas fa-door-open mr-2"></span>{{ __('Logout') }}</button>
                             </a>
-
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 @csrf
                             </form>
-                            </ul>
+                            </div>
                         </div>
                     @endauth
                 </div>
@@ -123,8 +140,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Retour</button>
-                            <button type="submit" class="btn btn-primary">Connexion</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Retour</button>
+                                <button type="submit" class="btn btn-primary">Connexion</button>
                             </div>
                         </form>
                     </div>
@@ -143,11 +160,9 @@
                         </div>
                         <form method="POST" action="{{ route('register') }}">
                             @csrf
-
-                            <div class="form-group row">
-                                <label for="username" class="col-md-4 col-form-label text-md-right">{{ __('Pseudonyme') }}</label>
-
-                                <div class="col-md-6">
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="username">{{ __('Pseudonyme') }}</label>
                                     <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" autofocus>
 
                                     @error('username')
@@ -155,13 +170,10 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                     @enderror
+
                                 </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="first_name" class="col-md-4 col-form-label text-md-right">{{ __('Prénom') }}</label>
-
-                                <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="first_name">{{ __('Prénom') }}</label>
                                     <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" required autocomplete="first_name">
 
                                     @error('first_name')
@@ -169,13 +181,10 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                     @enderror
+
                                 </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="last_name" class="col-md-4 col-form-label text-md-right">{{ __('Nom') }}</label>
-
-                                <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="last_name">{{ __('Nom') }}</label>
                                     <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" required autocomplete="last_name">
 
                                     @error('last_name')
@@ -183,13 +192,10 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                     @enderror
+                               
                                 </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Adresse e-mail') }}</label>
-
-                                <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="email">{{ __('Adresse e-mail') }}</label>
                                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
 
                                     @error('email')
@@ -197,13 +203,10 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                     @enderror
+
                                 </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Mot de passe') }}</label>
-
-                                <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="password">{{ __('Mot de passe') }}</label>
                                     <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
 
                                     @error('password')
@@ -211,35 +214,30 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                     @enderror
+
                                 </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirmation du mot de passe') }}</label>
-
-                                <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="password-confirm">{{ __('Confirmation du mot de passe') }}</label>
                                     <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                                 </div>
                             </div>
-
-                            <div class="form-group row mb-0">
-                                <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        {{ __('Register') }}
-                                    </button>
-                                </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Retour</button>
+                                <button type="button" class="btn btn-warning">{{ __('Register') }}</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
         @endguest
-
-
         <script>
             $(function () {
                 $('[data-toggle="tooltip"]').tooltip()
-            })
+            });
+   
+            $(document).ready(function(){
+                $('.toast').toast('show');
+            }); 
         </script>
     </body>
 </html>
