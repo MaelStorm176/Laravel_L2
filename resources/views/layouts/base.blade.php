@@ -52,7 +52,6 @@
             <div class="container container-nav">
 
                 <a class="navbar-brand" href="{{ route('/') }}">NOM PIZZERIA</a>
-                <a class="navbar-brand" href="/">NOM PIZZERIA</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -72,9 +71,6 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('avis')}}">Avis</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{route('panier')}}">Votre panier</a>
-                        </li>
                     </ul>
                     @guest
                         <div class="navbar-right">
@@ -90,8 +86,8 @@
                                     <span class="fas fa-user-circle mr-2"></span>{{ Auth::user()->username }}
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <a class="dropdown-item" href="#"><span class="fas fa-shopping-cart mr-2"></span>Mon Panier (0)</a>
-                                    <a class="dropdown-item" href="#"><span class="fas fa-store mr-2"></span>Mes Commandes</a>
+                                    <a class="dropdown-item" href="{{route('panier')}}"><span class="fas fa-shopping-cart mr-2"></span>Mon Panier (0)</a>
+                                    <a class="dropdown-item" href="{{route('historique_commande')}}"><span class="fas fa-store mr-2"></span>Mes Commandes</a>
                                     <a class="dropdown-item" href="{{ route('parametres') }}"><span class="fas fa-cogs mr-2"></span>Mes Paramères</a>
                                 </div>
                             </div>
@@ -205,7 +201,7 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                     @enderror
-                               
+
                                 </div>
                                 <div class="form-group">
                                     <label for="email">{{ __('Adresse e-mail') }}</label>
@@ -247,10 +243,10 @@
             $(function () {
                 $('[data-toggle="tooltip"]').tooltip()
             });
-   
+
             $(document).ready(function(){
                 $('.toast').toast('show');
-            }); 
+            });
         </script>
     </body>
 </html>
