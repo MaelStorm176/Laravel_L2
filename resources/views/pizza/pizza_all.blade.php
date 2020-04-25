@@ -68,7 +68,6 @@
     @endif
 @endsection
 
-@section('script')
     <script type="text/javascript">
     //Vide le formulaire afin d'ajouter une pizza
     function ajouter(){
@@ -129,4 +128,3 @@
         });
     }
     </script>
-@endsection

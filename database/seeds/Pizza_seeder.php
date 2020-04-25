@@ -23,7 +23,7 @@ class Pizza_seeder extends Seeder
                 'description_courte' => Str::random(10),
                 'description_longue' => Str::random(50),
                 'statut' => 'Disponible',
-                'nutrition' => random_int(0,10),
+                'nutrition' => $i,
                 'prix' => $prix,
                 'promo' => $prix
             ]);

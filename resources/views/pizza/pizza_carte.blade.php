@@ -5,7 +5,7 @@
         <section class="row">
             <div class="col-lg-12">
                 <div class="card bg-success text-white text-center p-3 font-weight-bold font-italic mb-3">
-                    <h5 class="mb-0">NOS ENTREES</h5>
+                    <h5 class="mb-0">NOS PIZZAS</h5>
                 </div>
                 <div class="row row-cols-1 row-cols-md-2">
                     @foreach($pizza as $key)
@@ -26,7 +26,11 @@
                                         </div>
                                         <div class="col-md-8">
                                             <div class="card-body">
-                                                <div class="badge badge-primary p-2 float-right text-white">{{$key->promo}} €</div>
+                                                @if($key->promo < $key->prix)
+                                                    <div class="badge badge-danger p-2 float-right text-white"><del>{{$key->prix}}</del> {{$key->promo}} €</div>
+                                                @else
+                                                    <div class="badge badge-primary p-2 float-right text-white"> {{$key->promo}} €</div>
+                                                @endif
                                                 <h5 class="card-title mt-1">{{$key->nom}}</h5>
                                                 <p class="card-text text-justify">{{$key->description_courte}}</p>
                                                 <div class="row justify-content-center">
@@ -54,7 +58,11 @@
                                         </div>
                                         <div class="col-md-8">
                                             <div class="card-body">
-                                                <div class="badge badge-primary p-2 float-right text-white">10€</div>
+                                                @if($key->promo < $key->prix)
+                                                    <div class="badge badge-danger p-2 float-right text-white"><del>{{$key->prix}}</del> {{$key->promo}} €</div>
+                                                @else
+                                                    <div class="badge badge-primary p-2 float-right text-white"> {{$key->promo}} €</div>
+                                                @endif
                                                 <h5 class="card-title mt-1">{{$key->nom}}</h5>
                                                 <p class="card-text text-justify">(Description/Ingrédients) {{$key->description_courte}}</p>
                                                 <div class="row justify-content-center">
@@ -317,3 +325,77 @@
         </section>
     </div>
 @endsection
+<script type="text/javascript">
+
+    //Vide le formulaire afin d'ajouter une pizza
+    function ajouter(){
+        $('#exampleModalLongTitle').html('Ajouter une pizza');
+        $('#formu').prop('action','{{route('pizza.upload')}}');
+        $('#upload').html('Ajouter');
+        $('#nom_p').val('');
+        $('#categorie').val('');
+        $('#description_courte').val('');
+        $('#description_longue').val('');
+        $('#prix_p').val('');
+        $('#pet-select').val('');
+        $('#image_affiche').hide();
+        $('#image_base').val("");
+    }
+
+    //Rempli le formulaire afin de modifier la pizza selectionnée
+    function modifier(id) {
+        $('#exampleModalLongTitle').html('Modifier pizza');
+        $('#formu').prop('action','{{route('pizza.modifier')}}');
+        $('#upload').html('Modifier');
+        $('#id_pizza').val(id);
+        var dummy = Date.now();
+        $.ajax({
+            url :'afficher_form',
+            type : 'GET',
+            dataType : 'html',
+            data : {dummy:dummy, id:id},
+            success : function(code_html, statut){
+                var dataretour = code_html.split('_|');
+                $('#image_affiche').show();
+                $('#image_base').val(dataretour[0]);
+                $('#image_affiche').attr("src",dataretour[0]);
+                $('#nom_p').val(dataretour[1]);
+                $('#categorie').val(dataretour[2]);
+                $('#description_courte').val(dataretour[3]);
+                $('#description_longue').val(dataretour[4]);
+                $('#prix_p').val(dataretour[5]);
+                $('#statut_p').val(dataretour[6]);
+
+                $('#sodium').val(dataretour[7]);
+                $('#fibres').val(dataretour[8]);
+                $('#dont_satures').val(dataretour[9]);
+                $('#lipides').val(dataretour[10]);
+                $('#dont_sucres').val(dataretour[11]);
+                $('#glucides').val(dataretour[12]);
+                $('#proteines').val(dataretour[13]);
+                $('#energies').val(dataretour[14]);
+            },
+
+            error : function(resultat, statut, erreur){
+                alert('Erreur avec la requete Ajax');
+            },
+        });
+    }
+
+    function supprimer(id){
+        var dummy = Date.now();
+        $.ajax({
+            url :'pizza.supprimer',
+            type : 'GET',
+            dataType : 'html',
+            data : {dummy:dummy, id:id},
+            success : function(code_html, statut){
+                $('div[id="'+id+'"]').remove();
+            },
+
+            error : function(resultat, statut, erreur){
+                alert('Erreur avec la requete Ajax');
+            },
+        });
+    }
+</script>

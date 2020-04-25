@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.base')
 <!-- Material Design Bootstrap -->
 <link href="/css/mdb.min.css" rel="stylesheet">
 @section('content')
@@ -52,7 +52,6 @@
         </div>
         @endif
 @endsection
-@section('script')
 <script type="text/javascript">
     function refresh(value,id) {
         if(value <= 0){
@@ -100,4 +99,3 @@
         });
     }
 </script>
-@endsection

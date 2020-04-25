@@ -188,7 +188,6 @@
     <!--Main layout-->
 @endsection
 
-@section('script')
 <!-- Initializations -->
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="js/mdb.min.js"></script>
@@ -242,6 +241,5 @@
         });
     }
 </script>
-@endsection
 
 

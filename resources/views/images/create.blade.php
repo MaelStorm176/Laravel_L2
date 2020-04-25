@@ -37,7 +37,6 @@
         </form>
     @endcomponent
 @endsection
-@section('script')
     <script>
         $(() => {
             $('input[type="file"]').on('change', (e) => {
@@ -53,4 +52,3 @@
             })
         })
     </script>
-@endsection

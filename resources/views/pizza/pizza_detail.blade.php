@@ -1,8 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.base')
 <head>
     <!-- Material Design Bootstrap -->
-    <link href="css/mdb.min.css" rel="stylesheet">
-    <link href="css/pizza.css" rel="stylesheet">
+    <link href="../css/mdb.min.css" rel="stylesheet">
 </head>
 @section('content')
 @foreach($pizza as $key)
@@ -132,12 +131,11 @@
     </div>
 </main>
 <!--Main layout-->
-
 @endsection
 
 <!-- SCRIPTS -->
 <!-- MDB core JavaScript -->
-<script type="text/javascript" src="js/mdb.min.js"></script>
+<script type="text/javascript" src="../js/mdb.min.js"></script>
 <!-- Initializations -->
 <script type="text/javascript">
     function afficher_promo() {

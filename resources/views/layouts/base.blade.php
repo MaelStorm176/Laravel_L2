@@ -5,16 +5,16 @@
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
         <meta charset="uft-8">
-        <link rel="shortcut icon" href="img/favicon.png">
+        <link rel="shortcut icon" href="../img/favicon.png">
         <title>NOM PIZZERIA</title>
     </head>
     <body>
 
-        <header class="header mb-0 p-5" style="background:url('img/banniere.jpg');">
+        <header class="header mb-0 p-5" style="background:url('../img/banniere.jpg');">
             <div class="container">
                 <section class="row justify-content-center">
                     <div class="col-lg-4">
-                        <img src="img/ban.png" style="max-width: 80%;">
+                        <img src="../img/ban.png" style="max-width: 80%;">
                         <!--
                         <div class="jumbotron mb-0 text-center">
                             <h2 class="mb-0">LOGO PIZZERIA</h2>
@@ -27,7 +27,7 @@
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3 rounded-0">
             <div class="container container-nav">
-                <a class="navbar-brand" href="accueil">NOM PIZZERIA</a>
+                <a class="navbar-brand" href="/">NOM PIZZERIA</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -37,13 +37,16 @@
                             <a class="nav-link" href="{{route('pizza_all')}}">Notre Carte</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="horaires">Nos Horaires</a>
+                            <a class="nav-link" href="{{route('horaires')}}">Nos Horaires</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="engagements">Nos Engagements</a>
+                            <a class="nav-link" href="{{route('engagements')}}">Nos Engagements</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="avis">Avis</a>
+                            <a class="nav-link" href="{{route('avis')}}">Avis</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('panier')}}">Votre panier</a>
                         </li>
                     </ul>
 
@@ -125,6 +128,11 @@
                             <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Retour</button>
                             <button type="submit" class="btn btn-primary">Connexion</button>
+                            @if (Route::has('password.request'))
+                                <a class="btn btn-link" href="{{ route('password.request') }}">
+                                    Mot de passe oublié ?
+                                </a>
+                            @endif
                             </div>
                         </form>
                     </div>

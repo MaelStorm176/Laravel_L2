@@ -8,7 +8,7 @@
                     <section class="row">
                         <div class="col-lg-2"><strong class="panel-title">Offre du moment:</strong></div>
                         <marquee class="col-lg-10" onmouseout="this.start();" onmouseover="this.stop();" >
-                            ex: 2 Pizzas achetés, 1 offerte! ou prix PizzaX baissé! ou -15% sur toutes les Pizzas! (A voir)
+                            Promotions ! @foreach($pizza as $key) @if($key->promo < $key->prix) {{$key->nom}} -> <strong>{{$key->promo}} € </strong>  @endif @endforeach
                         </marquee>
                     </section>
                 </div>
@@ -65,15 +65,13 @@
                             <div class="card bg-danger mb-3">
                                 <div class="card-body">
                                     <marquee onmouseout="this.start();" onmouseover="this.stop();">
-                                        <a href="#">
-                                            <img class="mr-3 img-thumbnail" src="img/pizza.jpg" alt="" data-toggle="tooltip" data-placement="bottom" title="Pizza X"/>
-                                        </a>
-                                        <a href="#">
-                                            <img class="mr-3 img-thumbnail" src="img/pizza.jpg" alt="" data-toggle="tooltip" data-placement="bottom" title="Pizza Y"/>
-                                        </a>
-                                        <a href="#">
-                                            <img class="mr-3 img-thumbnail" src="img/pizza.jpg" alt="" data-toggle="tooltip" data-placement="bottom" title="Pizza Z"/>
-                                        </a>
+                                        @foreach($pizza as $key)
+                                            <div style="width: 150px; height: 150px; display: inline-block;">
+                                                <a href="pizza_all/{{$key->nom}}">
+                                                    <img class="mr-3 img-thumbnail" src="{{$key->photo}}"  alt="" data-toggle="tooltip" data-placement="bottom" title="{{$key->nom}}" />
+                                                </a>
+                                            </div>
+                                        @endforeach
                                     </marquee>
                                 </div>
                             </div>

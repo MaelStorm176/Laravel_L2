@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,7 +36,6 @@ Route::post('pizza.promotion','Pizza@promotion')->name('promotion');
 Route::get('panier','Panier@afficher')->name('panier');
 Route::get('panier.creer','Panier@creer')->name('panier.creer');
 Route::get('panier.ajouter','Panier@ajouter')->name('panier.ajouter');
-Route::get('panier.prix','Panier@prix_total')->name('panier.prix');
 Route::get('panier.modifier','Panier@modifier')->name('panier.modifier');
 Route::get('panier.contenu_supprimer','Panier@contenu_supprimer')->name('panier.contenu_supprimer');
 
@@ -73,18 +74,17 @@ Route::get('/clear-cache', function() {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
 Route::get('/', function(){
-    return view('accueil');
+    $pizza = DB::table('pizza')->select('*')->where('statut','=','Disponible')->get();
+    return view('accueil')->with('pizza',$pizza);
 })->name('/');
 
-Route::get('/engagements', function(){
+Route::get('engagements', function(){
     return view('engagements');
-});
-Route::get('/avis', function(){
+})->name('engagements');
+Route::get('avis', function(){
     return view('avis');
-});
-Route::get('/horaires', function(){
+})->name('avis');
+Route::get('horaires', function(){
     return view('horaires');
-});
+})->name('horaires');
