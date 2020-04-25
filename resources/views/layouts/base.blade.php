@@ -49,7 +49,7 @@
         </header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3 rounded-0">
             <div class="container container-nav">
-                <a class="navbar-brand" href="/">NOM PIZZERIA</a>
+                <a class="navbar-brand" href="{{ route('/') }}">NOM PIZZERIA</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -83,8 +83,8 @@
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                     <a class="dropdown-item" href="#"><span class="fas fa-shopping-cart mr-2"></span>Mon Panier (0)</a>
-                                    <a class="dropdown-item" href="#"><span class="fas fa-credit-card mr-2"></span>Mes Commandes</a>
-                                    <a class="dropdown-item" href="#"><span class="fas fa-cogs mr-2"></span>Mes Paramères</a>
+                                    <a class="dropdown-item" href="#"><span class="fas fa-store mr-2"></span>Mes Commandes</a>
+                                    <a class="dropdown-item" href="{{ route('parametres') }}"><span class="fas fa-cogs mr-2"></span>Mes Paramères</a>
                                 </div>
                             </div>
                             <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

@@ -85,6 +85,11 @@ Route::get('/engagements', function(){
 Route::get('/avis', function(){
     return view('avis');
 });
+
+Route::get('/parametres', function(){
+    return view('parametres');
+})->name('parametres');
+
 Route::get('/horaires', function(){
     return view('horaires');
 });
