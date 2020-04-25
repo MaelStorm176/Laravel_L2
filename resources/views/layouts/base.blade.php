@@ -223,7 +223,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Retour</button>
-                                <button type="button" class="btn btn-warning">{{ __('Register') }}</button>
+                                <button type="submit" class="btn btn-warning">{{ __('Register') }}</button>
                             </div>
                         </form>
                     </div>
