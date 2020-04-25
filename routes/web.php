@@ -75,7 +75,6 @@ Route::get('/clear-cache', function() {
 Auth::routes();
 
 Route::get('/', function(){
-
     $pizza = DB::table('pizza')->select('*')->where('statut','=','Disponible')->get();
     return view('accueil')->with('pizza',$pizza);
 })->name('/');
@@ -84,12 +83,14 @@ Route::get('/', function(){
 Route::get('engagements', function(){
     return view('engagements');
 })->name('engagements');
-Route::get('avis', function(){
+
+Route::get('avis', function() {
     return view('avis');
-Route::get('/parametres', function(){
+})->name('avis');
+Route::get('parametres', function(){
     return view('parametres');
 })->name('parametres');
 
-Route::get('/horaires', function(){
+Route::get('horaires', function(){
     return view('horaires');
 })->name('horaires');
