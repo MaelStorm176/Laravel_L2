@@ -18,6 +18,7 @@ class Coupon extends Migration
             $table->string('code');
             $table->integer('remise'); // En %
             $table->boolean('valide');
+            $table->date('date_limite');
         });
     }
 
