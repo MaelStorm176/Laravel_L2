@@ -4,6 +4,9 @@
     <button type="button" id="bouton_ajout" onclick="ajouter()" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModalCenter">
         Ajouter une pizza
     </button>
+    <button type="button" id="bouton_code" onclick="ajoutercode()" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModalCenterCode">
+        Ajouter un code
+    </button>
     <!-- Modal -->
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -102,6 +105,34 @@
                     <button type="submit" id="upload" class="btn btn-primary">Upload</button>
                 </div>
                 </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="exampleModalCenterCode" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitleCode">Ajouter un code</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('code.upload') }}" id="formucode" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div>
+                            <input type="text" name="remise" placeholder="Remise" id="description_p" class="form-control">
+                            </br>
+                            <input type="date" name="date_limite" id="date_limite">
+                            </br>
+                            <input type="hidden" name="id_code" id="id_code">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" id="upload" class="btn btn-primary">Publier</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

@@ -101,7 +101,7 @@ class StripePaymentController extends Controller
             foreach($coupon as $key) {
                 $code = $request['code'];
                 if ($code == $key->code) {
-                    $bool = 1;
+                    $bool = DB::table('coupon')->where('code',"=", $key->code)->value('valide');
                     $remise = DB::table('coupon')->where('code',"=", $key->code)->value('remise');
                     $remise = (100-$remise)/100;
                     echo $bool.'/'.$remise.'/'.$code;

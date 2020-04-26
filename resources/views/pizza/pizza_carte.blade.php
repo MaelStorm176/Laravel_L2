@@ -342,6 +342,14 @@
         $('#image_base').val("");
     }
 
+    function ajoutercode(){
+        $('#exampleModalLongTitleCode').html('Ajouter un code');
+        $('#formucode').prop('action','{{route('code.upload')}}');
+        $('#upload').html('Ajouter');
+        $('#code').val('');
+        $('#remise').val('');
+    }
+
     //Rempli le formulaire afin de modifier la pizza selectionnée
     function modifier(id) {
         $('#exampleModalLongTitle').html('Modifier pizza');

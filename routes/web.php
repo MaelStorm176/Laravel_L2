@@ -30,6 +30,7 @@ Route::get('afficher_form','Pizza@afficher_form')->name('afficher_form');
 Route::get('pizza.supprimer','Pizza@supprimer')->name('pizza.supprimer');
 Route::get('pizza_all/{pizza_nom}','Pizza@detail');
 Route::post('pizza.promotion','Pizza@promotion')->name('promotion');
+Route::post('code.upload','CodeController@upload')->name('code.upload');
 
 
 /*PANIER*/
