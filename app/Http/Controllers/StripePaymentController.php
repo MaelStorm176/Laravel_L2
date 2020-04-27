@@ -101,6 +101,11 @@ class StripePaymentController extends Controller
             foreach($coupon as $key) {
                 $code = $request['code'];
                 if ($code == $key->code) {
+                    $date = DB::table('coupon')->where('code',"=", $key->code)->value('date_limite');
+                    if($date < date("Y-m-d"))
+                    {
+                        DB::table('coupon')->where('code',"=", $key->code)->delete();
+                    }
                     $bool = DB::table('coupon')->where('code',"=", $key->code)->value('valide');
                     $remise = DB::table('coupon')->where('code',"=", $key->code)->value('remise');
                     $remise = (100-$remise)/100;
