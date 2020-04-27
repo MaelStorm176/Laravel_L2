@@ -4,7 +4,7 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Dashboard</div>
+                    <div class="card-header">Historique de vos commandes</div>
                     @auth
                         @if(Auth::user()->id==1 && Auth::user()->username=="admin")
                             <div id="tag_container">
@@ -116,7 +116,7 @@
             success : function(code_html, statut){
                 //$(code_html).appendTo("#commentaires"); // On passe code_html à jQuery() qui va nous créer l'arbre DOM !
                 $('tr[id="'+id+'"]').remove();
-                $('#input-toast').text('Merci de votre commentaire !');
+                $('#input-toast').text('Commande validée (Payement + préparation) !');
                 $('.toast').toast('show').slideDown();
             },
 

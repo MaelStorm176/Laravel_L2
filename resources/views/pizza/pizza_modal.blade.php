@@ -67,9 +67,9 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><input type="number" step="0.1" class="form-control" id="sodium" name="sodium" required></td>
-                                        <td><input type="number" step="0.1" class="form-control" id="fibres" name="fibres" required></td>
-                                        <td><input type="number" step="0.1" class="form-control" id="dont_satures" name="dont_satures" required></td>
+                                        <td><input type="number" step="0.1" class="form-control" id="sodium" name="sodium" min="0" required></td>
+                                        <td><input type="number" step="0.1" class="form-control" id="fibres" name="fibres" min="0" required></td>
+                                        <td><input type="number" step="0.1" class="form-control" id="dont_satures" name="dont_satures" min="0" required></td>
                                     </tr>
                                 </tbody>
                                 <thead class="thead-dark">
@@ -81,9 +81,9 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><input type="number" step="0.1" class="form-control" id="lipides" name="lipides" required></td>
-                                        <td><input type="number" step="0.1" class="form-control" id="dont_sucres" name="dont_sucres" required></td>
-                                        <td><input type="number" step="0.1" class="form-control" id="glucides" name="glucides" required></td>
+                                        <td><input type="number" step="0.1" class="form-control" id="lipides" name="lipides" min="0" required></td>
+                                        <td><input type="number" step="0.1" class="form-control" id="dont_sucres" name="dont_sucres" min="0" required></td>
+                                        <td><input type="number" step="0.1" class="form-control" id="glucides" name="glucides" min="0" required></td>
                                     </tr>
                                 </tbody>
                                 <thead class="thead-dark">
@@ -94,8 +94,8 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><input type="number" step="0.1" class="form-control" id="proteines" name="proteines" required></td>
-                                        <td><input type="number" step="0.1" class="form-control" id="energies" name="energies" required></td>
+                                        <td><input type="number" step="0.1" class="form-control" id="proteines" name="proteines" min="0" required></td>
+                                        <td><input type="number" step="0.1" class="form-control" id="energies" name="energies" min="0" required></td>
                                     </tr>
                                 </tbody>
                             </table>

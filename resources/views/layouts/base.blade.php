@@ -86,7 +86,7 @@
                                     <span class="fas fa-user-circle mr-2"></span>{{ Auth::user()->username }}
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <a class="dropdown-item" href="{{route('panier')}}"><span class="fas fa-shopping-cart mr-2"></span>Mon Panier (0)</a>
+                                    <a class="dropdown-item" href="{{route('panier')}}"><span class="fas fa-shopping-cart mr-2"></span>Mon Panier ()</a>
                                     <a class="dropdown-item" href="{{route('historique_commande')}}"><span class="fas fa-store mr-2"></span>Mes Commandes</a>
                                     <a class="dropdown-item" href="{{ route('parametres') }}"><span class="fas fa-cogs mr-2"></span>Mes Paramères</a>
                                 </div>

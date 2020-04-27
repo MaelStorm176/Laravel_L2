@@ -1,6 +1,3 @@
-<button type="button"  class="btn btn-outline-primary" data-toggle="modal" onclick="myFunction()">
-    Afficher historique des commandes de la mort
-</button>
 <div  id="myDIV"  >
 <table class="table table-striped">
     <thead>

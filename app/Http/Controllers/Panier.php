@@ -75,10 +75,13 @@ class Panier extends Controller
 
     public function afficher()
     {
-        $products = $this->get_products();
-        $prix_total = $this->prix_total($products);
-        $quantite_total = $this->quantite_total($products);
-        return view('panier',compact('products','prix_total','quantite_total'));
+        if (auth::check()) {//Si le user est loggé
+            $products = $this->get_products();
+            $prix_total = $this->prix_total($products);
+            $quantite_total = $this->quantite_total($products);
+            return view('panier', compact('products', 'prix_total', 'quantite_total'));
+        }
+        return view('panier');
     }
 
     public function quantite_total($products)

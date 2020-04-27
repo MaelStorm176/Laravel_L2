@@ -40,9 +40,7 @@ class Commande extends Controller
         }
     }
     public function valider(Request $request){
-
         DB::table('commande')->where('id','=',$request['id'])->update(['statut_prepa'=>'Validé','updated_at'=>date('Y-m-d H:i:s')]);
-        return redirect('/')->with('message','mon message');
     }
     public static function historique(){ //affichage du dernier commentaire
         $commande = DB::table('commande')->select('*')->where('statut_prepa','!=','En cours')->paginate(5);

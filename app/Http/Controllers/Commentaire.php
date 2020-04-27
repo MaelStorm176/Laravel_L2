@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class Commentaire extends Controller
 {
     public function index(){
-    	return view('commentaire');
+        $commentaires = $this->afficher();
+    	return view('avis',compact('commentaires','pseudo'));
     }
 
     public function ajout(Request $request){
@@ -44,12 +46,8 @@ class Commentaire extends Controller
     }
 
     public function afficher(){ //affichage du dernier commentaire
-    	$top_comm = DB::table('Commentaire')->orderBy('id','DESC')->select('commentaire','note')->first();
-    	echo $top_comm->commentaire;
-    	echo " <br/> ";
-    	for ($i=0; $i < $top_comm->note; $i++) {
-    		echo '<a id="star_comm" value="0">☆</a>';
-    	}
+    	$top_comm = DB::table('Commentaire')->orderBy('id','DESC')->select('commentaire','note')->get();
+    	return $top_comm;
     }
 
 }

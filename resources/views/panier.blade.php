@@ -2,13 +2,15 @@
 <!-- Material Design Bootstrap -->
 <link href="/css/mdb.min.css" rel="stylesheet">
 @section('content')
-    <input type="hidden" value="{{$products}}" id="products">
     <div class="content" id="content">
-        <div class="">
+        <div>
+        @auth
         @if(auth::user()->id_panier != NULL)
+            <input type="hidden" value="{{$products}}" id="products">
             <div class="col-md-4 mb-4">
                 <h4 class="d-flex justify-content-between align-items-center mb-3">
-                    <span class="text-muted">Votre panier</span>
+                    <span class="text-muted">Votre panier </span>
+
                     <span class="badge badge-secondary badge-pill" id="quantite_total">{{$quantite_total}} articles</span>
                 </h4>
                 <ul class="list-group mb-3 z-depth-1">
@@ -33,7 +35,8 @@
                                 <h6 class="my-0" ><input type="number" style="width: 30%" value="{{$key->quantite}}" onchange="refresh($(this).val(),{{$key->id}})"></h6>
                                 <small class="text-muted"></small>
                             </div>
-                            <span class="text-muted" style="width: 30%;">{{$key->promo}} €</span>
+                            <span class="text-muted" style="width: 30%;">{{$key->promo}} € </span> <i id="supp_{{$key->id}}" onclick="supprimer({{$key->id}});" class="fas fa-times" style="cursor: pointer;"></i>
+
                         </li>
                     @endforeach
                     <li class="list-group-item d-flex justify-content-between lh-condensed" id="div_prix_total">
@@ -44,13 +47,27 @@
                         <span class="text-muted" style="width: 30%;"><strong id="prix_total"> {{$prix_total}} € </strong></span>
                     </li>
                 </ul>
-                <a href="{{route('payment')}}"><button class="btn btn-secondary btn-md waves-effect m-0">Valider et passer la commande</button></a>
+                @if($prix_total > 0)
+                    <a href="{{route('payment')}}"><button class="btn btn-secondary btn-md waves-effect m-0">Valider et passer la commande</button></a>
+                @endif
             </div>
         </div>
         @else
-            Votre panier est Vide !
-        </div>
         @endif
+        @endauth
+        @guest
+            <h1 class=" alert alert-danger"> Vous devez être connecté afin de bénéficier d'un panier </h1>
+        @endguest
+    </div>
+
+
+
+
+    @include('toast')
+
+
+
+
 @endsection
 <script type="text/javascript">
     function refresh(value,id) {
@@ -98,4 +115,8 @@
             },
         });
     }
+
+    $( "#target" ).click(function() {
+        alert( "Handler for .click() called." );
+    });
 </script>

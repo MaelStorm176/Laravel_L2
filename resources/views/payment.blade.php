@@ -1,7 +1,7 @@
 @extends('layouts.app')
 <head>
     <!-- Material Design Bootstrap -->
-     <link href="/css/mdb.min.css" rel="stylesheet">
+    <link href="/css/mdb.min.css" rel="stylesheet">
 </head>
 @section('content')
     <!--Main layout-->
@@ -20,12 +20,12 @@
 
                         <!--Card content-->
                         <form class="card-body"
-                            role="form"
-                            action="{{ route('stripe.post') }}"
-                            method="post"
-                            data-cc-on-file="false"
-                            data-stripe-publishable-key="{{ env('STRIPE_KEY') }}"
-                            id="payment-form">
+                              role="form"
+                              action="{{ route('stripe.post') }}"
+                              method="post"
+                              data-cc-on-file="false"
+                              data-stripe-publishable-key="{{ env('STRIPE_KEY') }}"
+                              id="payment-form">
                             @csrf
                             <?php
                             $user =Auth::user()->id;
@@ -34,6 +34,7 @@
                             <input value="<?php echo $email;?>" name="user_email" type="hidden">
                             <input value="<?php echo $user;?>" name="user_id" type="hidden">
                             <input value="{{$prix_total}}" name="prix_total" id="prix_total" type="hidden">
+                            <input value="{{$prix=$prix_total}}" name="prix" id="prix" type="hidden">
                             <input value="{{$products}}" name="products" type="hidden">
                             <input value="com_{{auth::user()->id}}_{{$prix_total}}" name="num_commande" type="hidden">
                             <!--Grid row-->
@@ -44,7 +45,7 @@
 
                                     <!--firstName-->
                                     <div class="md-form ">
-                                        <input type="text" id="firstName" class="form-control" placeholder="Prénom" value="{{auth::user()->first_name}}">
+                                        <input type="text" id="firstName" class="form-control" placeholder="Prénom" value="{{auth::user()->first_name}}" maxlength="25">
                                     </div>
 
                                 </div>
@@ -55,7 +56,7 @@
 
                                     <!--lastName-->
                                     <div class="md-form">
-                                        <input type="text" id="lastName" class="form-control" placeholder="Nom de famille" value="{{auth::user()->last_name}}">
+                                        <input type="text" id="lastName" class="form-control" placeholder="Nom de famille" value="{{auth::user()->last_name}}" maxlength="25">
                                     </div>
 
                                 </div>
@@ -66,7 +67,7 @@
 
                             <!--address-->
                             <div class="md-form mb-5">
-                                <input type="text" id="address" placeholder="Adresse" class="form-control">
+                                <input type="text" id="address" placeholder="Adresse" name="address" class="form-control" maxlength="50">
                             </div>
 
                             <!-- BOUTONS RADIO PAYPAL / CC  -->
@@ -84,37 +85,25 @@
                                 <!-- NOM CARTE CREDIT -->
                                 <div class="col-md-6 mb-3">
                                     <label for="cc-name">Nom sur votre carte</label>
-                                    <input type="text" class="form-control" id="cc-name" placeholder="Ex : JEAN DUPONT" required>
+                                    <input type="text" class="form-control" id="cc-name" name="card_name" placeholder="Ex : JEAN DUPONT" maxlength="50" required>
                                     <small class="text-muted">Veuillez écrire le nom présent sur votre carte en majuscule</small>
-                                    <div class="invalid-feedback">
-                                        Le nom est requis
-                                    </div>
                                 </div>
                                 <!-- N° CARTE CREDIT -->
                                 <div class="col-md-6 mb-3">
                                     <label for="cc-number">N° Carte de crédit</label>
-                                    <input type="text" class="form-control" id="cc-number" name="card_number" placeholder="Ex : 5678 2345 7418 5693" required>
-                                    <div class="invalid-feedback">
-                                        Le N° de carte est requis
-                                    </div>
+                                    <input type="text" class="form-control" id="cc-number" name="card_number" placeholder="Ex : 5678 2345 7418 5693" maxlength="16" required>
                                 </div>
                             </div>
                             <div class="row">
                                 <!-- DATE EXPIRATION -->
                                 <div class="col-md-3 mb-3">
                                     <label for="cc-expiration">Expiration</label>
-                                    <input type="text" class="form-control" id="cc-expiration" name="card_mm_yyyy" placeholder="MM/YYYY" required>
-                                    <div class="invalid-feedback">
-                                        La date d'expiration est requise
-                                    </div>
+                                    <input type="text" class="form-control" id="cc-expiration" name="card_mm_yyyy" placeholder="MM/YYYY" maxlength="7" required>
                                 </div>
                                 <!-- CVV -->
                                 <div class="col-md-3 mb-3">
                                     <label for="cc-expiration">CVV</label>
-                                    <input type="text" class="form-control" id="card_cvc" name="card_cvc" placeholder="Ex : 123" required>
-                                    <div class="invalid-feedback">
-                                        Le code de sécurité est requis
-                                    </div>
+                                    <input type="number" class="form-control" id="card_cvc" name="card_cvc" placeholder="Ex : 123" min="0" max="999" required>
                                 </div>
                             </div>
                             <hr class="mb-4">
@@ -175,6 +164,7 @@
                         </div>
                     </div>
                     <span style="color:red; display:none;" id="invalide">Code invalide</span>
+                    <span style="color:green; display:none;" id="valide">Code valide</span>
                     <!-- Promo code -->
 
                 </div>
@@ -204,7 +194,7 @@
 
     function testvalidite() {
         const code = $("#code").val();
-        var prix = $("#prix_total").val();
+        var prix = $("#prix").val();
 
         $.ajax({
             url : 'testvalidite',
@@ -215,10 +205,12 @@
                 var res = code_html.split('/');
                 var remise;
                 if(res[0] == 1) {
+                    $("#valide").show();
                     $("#invalide").hide();
+                    $("#affichage").css("display","flex");
                     $("#affichage").show();
                     prix*=res[1];
-                    remise = -($("#prix_total").val()-prix);
+                    remise = -($("#prix").val()-prix);
                     $("#prix_total").val(prix);
                     $("#total").html(prix+" €");
                     $("#remise").html(remise+" €");
@@ -226,6 +218,7 @@
 
                 }
                 else {
+                    $("#valide").hide();
                     $("#invalide").show();
                 }
             },

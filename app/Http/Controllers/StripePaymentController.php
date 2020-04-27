@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
-use Session;
 use Stripe;
 
 class StripePaymentController extends Controller
@@ -51,19 +51,17 @@ class StripePaymentController extends Controller
 
     public function stripePost(Request $request)
     {
-        /*
         $validate_data = Validator::make($request->all(), [
             'card_name' => 'required',
             'card_number' => 'required',
-            'card_cvc' => 'required',
+            'card_cvc' => 'required|integer|min:0',
             'card_mm_yyyy' => 'required',
+            'prix_total' => 'required|integer|min:1|max:255'
         ]);
 
         if($validate_data->fails()) {
-            return redirect('/pizza_all');
-            Session::flash('error', 'Payment successful!');
+            return redirect('/panier')->with('message',"Votre paiement n'a pas pu être effectué.");
         }
-        */
 
         Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
         Stripe\Charge::create ([
@@ -90,7 +88,9 @@ class StripePaymentController extends Controller
         //JE VIDE LE PANIER
         DB::table('contenu_panier')->where('id_panier','=',$id_panier)->delete();
 
-        Session::flash('success', 'Payment successful!');
+        //J'AJOUTE L'ADRESSE DANS LA TABLE USERS
+        DB::table('users')->where('id','=',$request->user_id)->update(['adresse'=>$request->address]);
+
         return redirect('/payment_accepted');
     }
 
