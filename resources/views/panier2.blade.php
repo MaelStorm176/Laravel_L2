@@ -20,18 +20,18 @@
                             <td class="align-middle">Pizza1</td>
                             <td class="align-middle">3</td>
                             <td class="align-middle">24€</td>
-                            <td class="align-middle"><button type="button" class="btn btn-warning">Voir détails</button></td>
+                            <td class="align-middle"><button type="button" class="btn btn-info text-white mr-1">Voir détails</button><button type="button" class="btn btn-danger">Supprimer</button></td>
                         </tr>
                         <tr>
                             <td class="align-middle">Pizza4</td>
                             <td class="align-middle">2</td>
                             <td class="align-middle">18€</td>
-                            <td class="align-middle"><button type="button" class="btn btn-warning">Voir détails</button></td>
+                            <td class="align-middle"><button type="button" class="btn btn-info text-white mr-1">Voir détails</button><button type="button" class="btn btn-danger">Supprimer</button></td>
                         </tr>
                         <tr>
-                            <td class="bg-secondary text-white align-middle">Total</td>
+                            <td class="bg-secondary text-white align-middle">TOTAL</td>
                             <td colspan="2" class="bg-secondary text-white align-middle">42€</td>
-                            <td class="bg-secondary text-white"><button type="button" class="btn btn-danger text-white">Commander</button></td>
+                            <td class="bg-secondary text-white"><button type="button" class="btn btn-warning">Commander</button></td>
 
                         </tr>
                     </tbody>
