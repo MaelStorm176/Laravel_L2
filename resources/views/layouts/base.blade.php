@@ -11,11 +11,10 @@
     <body>
 
 
-        <header class="header mb-0 p-5" style="background:url('../img/banniere.jpg');">
+        <header class="header mb-0 p-5" style="background:url('img/banniere.jpg');">
             <div class="container">
-
-
-                        <img src="../img/ban.png" style="max-width: 80%;">
+                    <div class="col-lg-4 offset-lg-4">
+                        <img src="img/ban.png" style="max-width: 80%;"> 
                         <!--
                         <div class="jumbotron mb-0 text-center">
                             <h2 class="mb-0">LOGO PIZZERIA</h2>
