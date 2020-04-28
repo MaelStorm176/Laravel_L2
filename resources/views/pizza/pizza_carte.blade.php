@@ -17,8 +17,8 @@
                                         @auth
                                             @if(Auth::user()->id==1 && Auth::user()->username=="admin")
                                                 <div style="z-index: 6; position: absolute;">
-                                                    <i class="fas fa-edit" onclick="modifier({{$key->id}})" data-toggle="modal" data-target="#exampleModalCenter"></i> <br/> <br/>
-                                                    <i class="fas fa-trash" onclick="supprimer({{$key->id}})" style="z-index: 6; position: absolute;"></i>
+                                                    <button type="button" class="btn btn-primary" onclick="modifier({{$key->id}})" data-toggle="modal" data-target="#exampleModalCenter"><i class="fas fa-edit"></i></button> <br/> <br/>
+                                                    <button type="button" class="btn btn-primary" onclick="supprimer({{$key->id}})"><i class="fas fa-trash"></i></button>
                                                 </div>
                                             @endif
                                         @endauth
@@ -49,8 +49,8 @@
                                         @auth
                                             @if(Auth::user()->id==1 && Auth::user()->username=="admin")
                                                 <div style="z-index: 6; position: absolute;">
-                                                    <i class="fas fa-edit" onclick="modifier({{$key->id}})" data-toggle="modal" data-target="#exampleModalCenter"></i> <br/> <br/>
-                                                    <i class="fas fa-trash" onclick="supprimer({{$key->id}})" style="z-index: 6; position: absolute;"></i>
+                                                    <button type="button" class="btn btn-primary" onclick="modifier({{$key->id}})" data-toggle="modal" data-target="#exampleModalCenter"><i class="fas fa-edit"></i></button> <br/> <br/>
+                                                    <button type="button" class="btn btn-primary" onclick="supprimer({{$key->id}})"><i class="fas fa-trash"></i></button>
                                                 </div>
                                             @endif
                                         @endauth

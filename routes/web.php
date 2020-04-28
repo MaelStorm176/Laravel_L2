@@ -73,8 +73,11 @@ Route::get('/clear-cache', function() {
     return "Cache is cleared";
 });
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
+
+
+/* ACCUEIL */
 Route::get('/', function(){
     $pizza = DB::table('pizza')->select('*')->where('statut','=','Disponible')->get();
     return view('accueil')->with('pizza',$pizza);
