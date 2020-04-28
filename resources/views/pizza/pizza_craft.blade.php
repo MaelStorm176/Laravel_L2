@@ -7,7 +7,7 @@
                 <div class="card">
                     <div class="card-header">Craft une pizza</div>
                     @auth
-                        @if(Auth::user()->id==1 && Auth::user()->username=="admin")
+                        @if(Auth::user()->role=='admin')
                             <button type="button" onclick="ajouter()" class="btn btn-outline-primary" data-toggle="modal" data-target="#putain">
                                 Ajouter un ingrédient
                             </button>
@@ -60,7 +60,7 @@
                                 <th scope="col">Ingrédient</th>
                                 <th scope="col">Ajouter</th>
                                 <th scope="col">Prix</th>
-                                @if(Auth::user()->id==1 && auth::user()->username=="admin")
+                                @if(Auth::user()->role=='admin')
                                     <th scope="col">Modifier</th>
                                     <th scope="col">Supprimer</th>
                                 @endif
@@ -77,7 +77,7 @@
                                         <input class="form-check-input" name="ingredient_{{$var}}" type="checkbox" id="inlineCheckbox1" value="{{$value->nom_i}}">
                                     </div></td>
                                 <td>{{ $value->prix_i }}€</td>
-                                @if(Auth::user()->id==1 && Auth::user()->username=="admin")
+                                @if(Auth::user()->role=='admin')
 
 
                                     <td><button type="button" onclick="modifier({{$value->id}})" class="btn btn-outline-primary" data-toggle="modal" data-target="#putain">

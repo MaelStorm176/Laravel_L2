@@ -39,7 +39,7 @@
                             <span class="badge red mr-1">Bestseller</span>
                         </a>
                         @auth
-                            @if(Auth::user()->id==1 && Auth::user()->username=="admin")
+                            @if(Auth::user()->role=='admin')
                             <a onclick="afficher_promo()">
                                 <span class="badge badge-danger mr-1">Appliquer une promotion</span>
                             </a>

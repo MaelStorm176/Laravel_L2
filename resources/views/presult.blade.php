@@ -13,7 +13,7 @@
     </tr>
     </thead>
     <tbody>
-    @if(auth::user()->id==1 && auth::user()->username=="admin")
+    @if(Auth::user()->role=='admin')
     @foreach ($products as $value)
         <tr>
             <td>{{ $value->id }}</td>

@@ -15,7 +15,7 @@
                                     <div class="row no-gutters">
                                         <div class="col-md-4">
                                         @auth
-                                            @if(Auth::user()->id==1 && Auth::user()->username=="admin")
+                                            @if(Auth::user()->role=='admin')
                                                 <div style="z-index: 6; position: absolute;">
                                                     <button type="button" class="btn btn-primary" onclick="modifier({{$key->id}})" data-toggle="modal" data-target="#exampleModalCenter"><i class="fas fa-edit"></i></button> <br/> <br/>
                                                     <button type="button" class="btn btn-primary" onclick="supprimer({{$key->id}})"><i class="fas fa-trash"></i></button>
@@ -47,7 +47,7 @@
                                     <div class="row no-gutters">
                                         <div class="col-md-4">
                                         @auth
-                                            @if(Auth::user()->id==1 && Auth::user()->username=="admin")
+                                            @if(Auth::user()->role=='admin')
                                                 <div style="z-index: 6; position: absolute;">
                                                     <button type="button" class="btn btn-primary" onclick="modifier({{$key->id}})" data-toggle="modal" data-target="#exampleModalCenter"><i class="fas fa-edit"></i></button> <br/> <br/>
                                                     <button type="button" class="btn btn-primary" onclick="supprimer({{$key->id}})"><i class="fas fa-trash"></i></button>

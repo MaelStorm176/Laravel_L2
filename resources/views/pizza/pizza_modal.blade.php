@@ -1,5 +1,5 @@
 @auth
-    @if(Auth::user()->id==1 && Auth::user()->username=="admin")
+    @if(Auth::user()->role=='admin')
     <!-- Button trigger modal -->
     <button type="button" id="bouton_ajout" onclick="ajouter()" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModalCenter">
         Ajouter une pizza

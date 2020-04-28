@@ -6,7 +6,7 @@
                 <div class="card">
                     <div class="card-header">Historique de vos commandes</div>
                     @auth
-                        @if(Auth::user()->id==1 && Auth::user()->username=="admin")
+                        @if(Auth::user()->role=='admin')
                             <div id="tag_container">
                                 @include('presult')
                             </div>
@@ -15,7 +15,7 @@
                                 @include('presult2')
                             </div>
                         @endif
-                        @if(Auth::user()->id==1 && Auth::user()->username=="admin")
+                        @if(Auth::user()->role=='admin')
                 </div>
             </div>
         </div>

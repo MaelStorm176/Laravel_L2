@@ -75,7 +75,10 @@ Route::get('/clear-cache', function() {
 
 Auth::routes(['verify' => true]);
 
-
+Route::get('/table_vide',function (){
+   $requete = DB::table('users')->select('id')->get();
+   return $requete;
+});
 
 /* ACCUEIL */
 Route::get('/', function(){
