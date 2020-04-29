@@ -1,4 +1,7 @@
 @extends('layouts.base')
+@section('head')
+    @include('toast')
+@endsection
 @section('content')
     <div class="container">
         <section class="row">
