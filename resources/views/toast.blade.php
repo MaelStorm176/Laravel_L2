@@ -1,15 +1,14 @@
 <!-- TOASTS -->
-<div class="toast fixed-bottom" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false">
-    <div class="toast-header">
-        <!-- <img src="..." class="rounded mr-2" alt="..."> !-->
+<div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false">
+    <div class="toast-header bg-success text-white mt-1">
+        <span class="fas fa-exclamation-triangle mt-n1 mr-2"></span>
         <strong class="mr-auto">Information</strong>
-        <small class="text-muted"><1 min</small>
+        <small>A l'instant</small>
         <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
-    <div class="toast-body" id="input-toast">
-    </div>
+    <div class="toast-body" id="input-toast"></div>
 </div>
 
 <!-- RECEPTION DE MESSAGE -->

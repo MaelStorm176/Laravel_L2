@@ -5,14 +5,13 @@
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
         <meta charset="uft-8">
-        <link rel="shortcut icon" href="../img/favicon.png">
+        <link rel="shortcut icon" href="img/favicon.png">
         <title>NOM PIZZERIA</title>
     </head>
     <body>
-
-
         <header class="header mb-0 p-5" style="background:url('img/banniere.jpg');">
             <div class="container">
+                <section class="row">
                     <div class="col-lg-4 offset-lg-4">
                         <img src="img/ban.png" style="max-width: 80%;"> 
                         <!--
@@ -21,12 +20,13 @@
                         </div>
                         -->
                     </div>
-                    @guest
-                        @if(Session::get('errors'))
-                            @if ($errors->login)
-                                @foreach($errors->all() as $error)
-                                    <div class="col-lg-3 offset-lg-1">
-                                        <div class="toast mt-5" data-autohide="false">
+                    <div class="col-lg-3 offset-lg-1">
+                        @yield('head')
+                        @guest
+                            @if(Session::get('errors'))
+                                @if ($errors->login)
+                                    @foreach($errors->all() as $error)
+                                        <div id="toastCo" class="toast" data-autohide="false">
                                             <div class="toast-header bg-danger text-white mt-1">
                                                 <span class="fas fa-exclamation-triangle mt-n1 mr-2"></span>
                                                 <strong class="mr-auto">ERREUR</strong>
@@ -39,11 +39,11 @@
                                                 {{ $error }}
                                             </div>
                                         </div>
-                                    </div>
-                                @endforeach
+                                    @endforeach
+                                @endif
                             @endif
-                        @endif
-                    @endguest
+                        @endguest
+                    </div>
                 </section>
             </div>
         </header>
@@ -244,7 +244,7 @@
             });
 
             $(document).ready(function(){
-                $('.toast').toast('show');
+                $('#toastCo').toast('show');
             });
         </script>
     </body>
