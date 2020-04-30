@@ -42,8 +42,7 @@ class CustomResetPasswordNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        $link = url( "/password/reset/?token=" . $this->token );
-
+        $link = url( "/password/reset/" . $this->token );
        return ( new MailMessage )
            ->greeting('Bonjour')
            ->from('pizzeria.l2.reims@gmail.com')

@@ -23,7 +23,6 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('adresse')->nullable()->default(NULL);
             $table->string('password');
-            $table->foreignId('id_panier')->nullable()->default(NULL);
             $table->rememberToken();
             $table->timestamps();
         });

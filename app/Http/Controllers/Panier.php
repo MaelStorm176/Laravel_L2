@@ -14,12 +14,7 @@ class Panier extends Controller
     {
         DB::table('panier')->updateOrInsert([
             'user_id' => auth::user()->id,
-            'id_commande' => auth::user()->id
-        ]);
-
-        $id_panier = DB::table('panier')->where('user_id',"=",auth::user()->id)->value('id');
-        auth::user()->update([
-            'id_panier' => $id_panier
+            'type_panier' => FALSE
         ]);
     }
 
@@ -32,16 +27,22 @@ class Panier extends Controller
             'quantite' => 'required|integer|between:1,100'
         ]);
         if($validate_data->fails()){
-            return back()->with('message',"Il y a une erreur avec la création de votre pizza.");
+            return back()->with('message',"Il y a une erreur avec l'ajout de votre article.");
         }
         /*********************************/
-
+        $id_panier = DB::table('panier')
+            ->where('user_id',"=",auth::user()->id)
+            ->where('type_panier','=',FALSE)
+            ->value('id');
         //Si l'utilisateur n'a pas de panier, on lui en creer un
-        if(auth::user()->id_panier == NULL){
+        if(Empty($id_panier)){
             $this->creer();
         }
 
-        $id_panier = DB::table('panier')->where('user_id',"=",auth::user()->id)->value('id');
+        $id_panier = DB::table('panier')
+            ->where('user_id',"=",auth::user()->id)
+            ->where('type_panier','=',FALSE)
+            ->value('id');
         $pizza_and_quantite = DB::table('contenu_panier')->where('id_panier',"=",$id_panier)->select('id_pizza','quantite')->get();
         $id_pizza = $request['id_pizza'];
         $quantite = $request['quantite'];
@@ -96,7 +97,10 @@ class Panier extends Controller
 
     public function get_products()
     {
-        $id_panier = DB::table('panier')->where('user_id',"=",auth::user()->id)->value('id');
+        $id_panier = DB::table('panier')
+            ->where('user_id',"=",auth::user()->id)
+            ->where('type_panier','=',FALSE)
+            ->value('id');
         $products = DB::table('pizza')
             ->join('contenu_panier', 'pizza.id', '=', 'contenu_panier.id_pizza')
             ->where('contenu_panier.id_panier', '=' , $id_panier)

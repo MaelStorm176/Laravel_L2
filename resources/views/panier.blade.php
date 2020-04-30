@@ -11,14 +11,14 @@
                         <section class="row">
                             <h5 class="col-4 offset-4 mb-0">MON PANIER</h5>
                             <h5 class="col-1 offset-3 mb-0">
-                                <span class="badge badge-secondary badge-pill px-2 py-1" id="quantite_total">{{$quantite_total}} articles</span>
+                                <span class="badge badge-secondary badge-pill px-2 py-1" id="quantite_total">{{$quantite_total ?? 0}} articles</span>
                             </h5>
                         </section>
                     </div>
                 </div>
                 @auth
-                    @if(auth::user()->id_panier != NULL)
-                        <input type="hidden" value="{{$products}}" id="products">        
+                    @if(!Empty($products))
+                        <input type="hidden" value="{{$products}}" id="products">
                         <table class="table table-hover table-bordered mb-3 text-center">
                             <thead class="bg-primary text-white">
                                 <tr>
@@ -43,7 +43,10 @@
                                 @endforeach
                                 <tr>
                                     <td class="bg-secondary text-white align-middle">TOTAL TTC</td>
-                                    <td colspan="2" class="bg-secondary text-white align-middle"><span id="prix_total">{{$prix_total}} €</span></td>
+                                    <td colspan="2" class="bg-secondary text-white align-middle"><span id="prix_total">{{$prix_total}} € </span> <br/>
+                                        <i id="attention" class="fas fa-exclamation-triangle"></i>
+                                    <em><small>(Votre commande ne doit pas dépasser 255 €)</small></em>
+                                    </td>
                                     <td class="bg-secondary text-white">
                                         @if($prix_total > 0)
                                             <a href="{{route('payment')}}" class="btn btn-warning">Commander</a>
@@ -62,9 +65,6 @@
             </div>
         </section>
     </div>
-
-    @include('toast')
-
 @endsection
 <script type="text/javascript">
     function refresh(value,id) {
@@ -112,8 +112,4 @@
             },
         });
     }
-
-    $( "#target" ).click(function() {
-        alert( "Handler for .click() called." );
-    });
 </script>

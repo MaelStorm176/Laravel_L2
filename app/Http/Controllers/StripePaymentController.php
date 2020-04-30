@@ -28,7 +28,10 @@ class StripePaymentController extends Controller
 
     public function commande_finale()
     {
-        $id_panier = auth::user()->id_panier;
+        $id_panier = DB::table('panier')
+            ->where('user_id',"=",auth()->user()->id)
+            ->where('type_panier','=',FALSE)
+            ->value('id');
         $products = DB::table('pizza')
             ->join('contenu_panier', 'pizza.id', '=', 'contenu_panier.id_pizza')
             ->where('contenu_panier.id_panier', '=' , $id_panier)
@@ -53,14 +56,15 @@ class StripePaymentController extends Controller
     {
         $validate_data = Validator::make($request->all(), [
             'card_name' => 'required',
-            'card_number' => 'required',
+            'card_number' => 'required|size:16',
             'card_cvc' => 'required|integer|min:0',
             'card_mm_yyyy' => 'required',
-            'prix_total' => 'required|integer|min:1|max:255'
+            'prix_total' => 'required|numeric|min:1|max:255'
         ]);
 
         if($validate_data->fails()) {
-            return redirect('/panier')->with('message',"Votre paiement n'a pas pu être effectué.");
+            session(['message' => 'Il y a une erreur']);
+            return redirect('/panier');
         }
 
         Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
@@ -72,13 +76,15 @@ class StripePaymentController extends Controller
         ]);
 
         //J'INSERE EN BASE LA COMMANDE
-        $id_panier = DB::table('panier')->where('user_id',"=",$request->user_id)->value('id');
+        $id_panier = DB::table('panier')
+            ->where('user_id',"=",$request->user_id)
+            ->where('type_panier','=',FALSE)
+            ->value('id');
         DB::table("commande")->insert([
             'prix_total' =>$request->prix_total,
             'num_commande' =>$request->num_commande.'_'.time(),
-            'id_panier' => $id_panier,
             'user_id'=>$request->user_id,
-            'user_email'=>$request->user_email,
+            'id_panier' => $id_panier,
             'statut_prepa'=>'En cours',
             'statut_pay'=>'Validé',
             'created_at' => date('Y-m-d H:i:s'),
@@ -86,7 +92,8 @@ class StripePaymentController extends Controller
         ]);
 
         //JE VIDE LE PANIER
-        DB::table('contenu_panier')->where('id_panier','=',$id_panier)->delete();
+        //DB::table('contenu_panier')->where('id_panier','=',$id_panier)->delete();
+        DB::table('panier')->where('id','=',$id_panier)->update(['type_panier' => TRUE]);
 
         //J'AJOUTE L'ADRESSE DANS LA TABLE USERS
         DB::table('users')->where('id','=',$request->user_id)->update(['adresse'=>$request->address]);

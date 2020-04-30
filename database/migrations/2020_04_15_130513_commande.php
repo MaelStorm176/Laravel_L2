@@ -15,14 +15,18 @@ class Commande extends Migration
     {
         Schema::create('Commande', function (Blueprint $table) {
             $table->id();
-            $table->unsignedTinyInteger('prix_total');
+            $table->unsignedDecimal('prix_total',8,2)->default(0);
             $table->string('num_commande');
-            $table->Integer('id_panier');
-            $table->string('user_email');
-            $table->Integer('user_id');
+            $table->foreignId('user_id');
+            $table->foreignId('id_panier');
             $table->string('statut_prepa')->default('En cours');
             $table->string('statut_pay')->default('');//payement
             $table->timestamps();
+        });
+
+        Schema::table('Commande',function (Blueprint $table){
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('id_panier')->references('id')->on('panier');
         });
     }
 

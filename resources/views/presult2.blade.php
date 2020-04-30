@@ -19,7 +19,7 @@
                         <tr>
                             <td>{{ $value->id }}</td>
                             <td>{{ $value->num_commande }}</td>
-                            <td>{{ $value->user_email }}</td>
+                            <td>{{ Auth::user()->email }}</td>
                             <td>{{ $value->prix_total }}</td>
                             <td>{{ $value->statut_pay }}</td>
                             <td>{{ $value->created_at }}</td>
@@ -37,13 +37,3 @@
         @endif
     @endif
 </div>
-<script>
-    function myFunction() {
-        var x = document.getElementById("myDIV");
-        if (x.style.display === "none") {
-            x.style.display = "block";
-        } else {
-            x.style.display = "none";
-        }
-    }
-</script>

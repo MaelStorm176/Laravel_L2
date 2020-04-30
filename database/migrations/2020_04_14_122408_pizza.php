@@ -21,9 +21,13 @@ class Pizza extends Migration
             $table->mediumText('description_courte')->nullable();
             $table->text('description_longue')->nullable();
             $table->string('statut')->default('Disponible');
-            $table->foreignId('nutrition')->unique()->nullable()->default(NULL);
+            $table->foreignId('nutrition')->unsigned()->index();
             $table->unsignedDecimal('prix',8,2)->default(0);
             $table->unsignedDecimal('promo',8,2)->default(0);
+        });
+
+        Schema::table('Pizza',function (Blueprint $table){
+            $table->foreign('nutrition')->references('id')->on('nutrition');
         });
     }
 

@@ -100,11 +100,3 @@ Route::get('parametres', function(){
 Route::get('horaires', function(){
     return view('horaires');
 })->name('horaires');
-
-Route::get('commandes', function(){
-    return view('commande');
-})->name('commandes');
-
-Route::get('panier2', function(){
-    return view('panier2');
-});

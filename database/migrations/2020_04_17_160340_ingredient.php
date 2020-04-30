@@ -28,6 +28,6 @@ class Ingredient extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('ingredient');
     }
 }

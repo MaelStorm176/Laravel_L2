@@ -19,9 +19,11 @@ class PizzaCraft extends Migration
             $var=DB::table('ingredient')->select('*')->get();
             $table->id();
             $table->Integer('user_id');
+            $table->unsignedTinyInteger('prix_total_i');
             foreach ($var as $item) {
                 $table->string($item->nom_i)->default('');
             }
+
         });
     }
 
@@ -33,6 +35,5 @@ class PizzaCraft extends Migration
     public function down()
     {
         Schema::dropIfExists('craft_pizza');
-        $this->up();
     }
 }

@@ -35,75 +35,122 @@
                                     <th scope="col">Statut Préparation</th>
                                 </tr>
                             </thead>
-                            <tbody id="afficher_commande"></tbody>
+                            <tbody id="afficher_commande">
+
+                            </tbody>
                         </table>
                     @endif
             </div>
         </section>
     </div>
     @endauth
+
+
+    <!-- Modal Connexion -->
+    <div class="modal fade" id="commandesModal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-info text-white">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Détail de la commande</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div id="append_here">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Retour</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<button onclick="charger_commande(0,0)">CLICK</button>
+
 @endsection
 
-<script type="text/javascript">
 
-    function myFunction() {
-        var x = document.getElementById("myDIV");
-        if (x .style.display === "none") {
-            x.style.display = "block";
-        } else {
-            x.style.display = "none";
+    <script type="text/javascript">
+
+
+        function afficher(id) {
+            charger_commande(1,id);
+            /*
+            var div = $('div[id="div_'+id+'"]');
+            if (div.css("display") === "none") {
+                $('#append_here').html(div);
+                div.css("display","block");
+            }
+            */
+
         }
-    }
+        function charger_commande(typeAction,idaffiche) {
 
-    function charger_commande(){
+            var dummy = Date.now();
+            $.ajax({
+                url: "afficher_commande",
+                type: 'GET',
+                dataType: 'html',
+                data: {dummy: dummy,typeAction:typeAction,idaffiche:idaffiche},
+                success: function (code_html, statut) {
+                if (typeAction==0)
+                    $('#afficher_commande').html(code_html);
+                else if (typeAction==1)
+                    $('#append_here').html(code_html);
+                },
+                error: function (resultat, statut, erreur) {
+                    alert('Erreur avec la requete Ajax');
+                },
+            });
+        }
+        function valider(id){
+            $.ajax({
+                url : 'valider',
+                type : 'GET',
+                dataType : 'html',
+                data : {id:id},
+                success : function(code_html, statut){
+                    $('tr[id="'+id+'"]').remove();
+                    $('#input-toast').text('Commande validée (Payement + préparation) !');
+                    $('.toast').toast('show').slideDown();
+                },
+
+                error : function(resultat, statut, erreur){
+                    alert('Erreur avec la requete Ajax');
+                },
+
+                complete : function(resultat, statut){
+
+                }
+
+            });
+        }
+
+
+
+/*
         setTimeout( function(){
             // on lance une requête AJAX
+            var dummy = Date.now();
             $.ajax({
                 url : "afficher_commande",
                 type : 'GET',
-                success : function(html){
-                    $('#afficher_commande').html(html); // on veut ajouter les nouveaux messages au début du bloc #messages
-                }
+                dataType : 'html',
+                data : {dummy:dummy},
+                success : function(code_html,statut){
+                    //$('#afficher_commande').append(code_html); // on veut ajouter les nouveaux messages au début du bloc #messages
+                    alert(code_html);
+                },
+                error : function(resultat, statut, erreur){
+                    alert('Erreur avec la requete Ajax');
+                },
             });
 
             charger_commande(); // on relance la fonction
 
-        }, 10000); // on exécute le chargement toutes les 5 secondes
-    }
-
-    charger_commande();
-
-    function valider(id){
-        $.ajax({
-            url : 'valider',
-            type : 'GET',
-            dataType : 'html',
-            data : {id:id},
-            success : function(code_html, statut){
-                //$(code_html).appendTo("#commentaires"); // On passe code_html à jQuery() qui va nous créer l'arbre DOM !
-                $('tr[id="'+id+'"]').remove();
-                $('#input-toast').text('Commande validée (Payement + préparation) !');
-                $('.toast').toast('show').slideDown();
-            },
-
-            error : function(resultat, statut, erreur){
-                alert('Erreur avec la requete Ajax');
-            },
-
-            complete : function(resultat, statut){
-
-            }
-
-        });
-    }
-
-    function afficher(id) {
-        var div = $('div[id="div_'+id+'"]');
-        if (div.css("display") === "none") {
-            div.css("display","block");
-        } else {
-            div.css("display","none");
-        }
-    }
-</script>
-
+        }, 5000); // on exécute le chargement toutes les 10 secondes
+        */
+    </script>

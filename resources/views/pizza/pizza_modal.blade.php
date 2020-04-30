@@ -45,7 +45,7 @@
                             <textarea name="description_longue" id="description_longue" class="form-control" rows="5"></textarea>
                             <br/>
                             <label>Prix (Euros €)</label>
-                            <input type="number" name="prix_p" placeholder="Prix" id="prix_p" class="form-control" required>
+                            <input type="number" step="0.01" name="prix_p" placeholder="Prix" id="prix_p" class="form-control" required>
                             <br/>
                             <input type="hidden" name="id_pizza" id="id_pizza">
                             <label>Disponibilité de votre article</label>

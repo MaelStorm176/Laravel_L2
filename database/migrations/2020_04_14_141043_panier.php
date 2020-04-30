@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Coupon extends Migration
+class Panier extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,14 @@ class Coupon extends Migration
      */
     public function up()
     {
-        Schema::create('coupon', function (Blueprint $table) {
+        Schema::create('panier', function (Blueprint $table) {
             $table->id();
-            $table->string('code')->unique();
-            $table->integer('remise'); // En %
-            $table->boolean('valide');
-            $table->date('date_limite');
+            $table->foreignId('user_id');
+            $table->boolean('type_panier')->default(FALSE);
+        });
+
+        Schema::table('panier',function (Blueprint $table){
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -29,6 +31,6 @@ class Coupon extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('coupon');
+        Schema::dropIfExists('panier');
     }
 }

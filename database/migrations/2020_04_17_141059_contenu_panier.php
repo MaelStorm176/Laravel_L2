@@ -15,9 +15,14 @@ class ContenuPanier extends Migration
     {
         Schema::create('contenu_panier', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_panier');
-            $table->foreignId('id_pizza');
+            $table->foreignId('id_panier')->unsigned()->index();
+            $table->foreignId('id_pizza')->unsigned()->index();
             $table->unsignedSmallInteger('quantite');
+        });
+
+        Schema::table('contenu_panier',function (Blueprint $table){
+            $table->foreign('id_panier')->references('id')->on('panier');
+            $table->foreign('id_pizza')->references('id')->on('pizza');
         });
     }
 
