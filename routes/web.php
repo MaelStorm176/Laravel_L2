@@ -97,7 +97,7 @@ Route::get('/table_vide',function (){
    $requete = DB::table('users')->select('id')->get();
    return $requete;
 });
-
+/**/
 /* ACCUEIL */
 Route::get('/', function(){
     $pizza = DB::table('pizza')->select('*')->where('statut','=','Disponible')->get();
