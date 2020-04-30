@@ -101,7 +101,8 @@ Route::get('/table_vide',function (){
 /* ACCUEIL */
 Route::get('/', function(){
     $pizza = DB::table('pizza')->select('*')->where('statut','=','Disponible')->get();
-    return view('accueil')->with('pizza',$pizza);
+    $carousel=DB::table('accueil_carousel')->select('*')->get();
+    return view('accueil')->with('pizza',$pizza)->with('carousel',$carousel);
 })->name('/');
 /*ACCUEIL CAROUSEL*/
 Route::post('/modif_carousel', 'Accueil_Carousel@modifier')->name('accueil_carousel');
