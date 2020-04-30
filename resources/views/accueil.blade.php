@@ -20,35 +20,135 @@
                     <section class="row">
                         <div class="col-lg-12">
                             <!-- Carousel -->
-                            <div id="carouselExampleIndicators" class="mb-3 carousel slide" data-ride="carousel">
-                                <ol class="carousel-indicators">
-                                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                                </ol>
-                                <div class="carousel-inner">
-                                    <div class="carousel-item active">
-                                        <img src="img/carousel.jpg" class="d-block w-100" alt="First slide">
-                                        <div class="carousel-caption d-none d-md-block jumbotron p-3 text-center text-info shadow">
-                                            <h5>First slide label</h5>
-                                            <p class="m-0">Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-                                        </div>
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img src="img/carousel.jpg" class="d-block w-100" alt="Second slide">
-                                        <div class="carousel-caption d-none d-md-block jumbotron p-3 text-center text-info shadow">
-                                            <h5>Second slide label</h5>
-                                            <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                        </div>
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img src="img/carousel.jpg" class="d-block w-100" alt="Third slide">
-                                        <div class="carousel-caption d-none d-md-block jumbotron p-3 text-center text-info shadow">
-                                            <h5>Third slide label</h5>
-                                            <p class="m-0">Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-                                        </div>
-                                    </div>
+                            @if ($message = Session::get('error'))
+                                <div class="alert alert-danger" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert">×</button>
+                                    <strong>{{ $message }}</strong>
+
                                 </div>
+                            @endif
+                            @auth()
+
+                                @if(Auth::user()->id==1 && Auth::user()->username=="admin")
+                                    <button type="button"  class="btn btn-outline-primary" data-toggle="modal" data-target="#modal_carousel_ajouter">
+                                        Ajouter un element au carousel
+                                    </button>
+                                    <button type="button"  class="btn btn-outline-primary" data-toggle="modal" data-target="#modal_carousel">
+                                        Modifier carousel
+                                    </button>
+
+                                    <div class="modal fade" id="modal_carousel_ajouter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">AJouter un element au carousel</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form action="{{route('accueil_carousel_ajouter')}}" id="formu_carousel" method="post" enctype="multipart/form-data">
+                                                        @csrf
+                                                        <div class="form-group row" >
+                                                            <label for="staticEmail" class="col-sm-3 col-form-label">Image</label>
+                                                            <div class="col-sm-5" style="margin-bottom: 1.5em">
+                                                                <input type="file" name="image_carousel" id="image_carousel_{{$key->id}}"  class="form-control" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row" >
+                                                            <label for="staticEmail" class="col-sm-3 col-form-label">Titre carousel</label>
+                                                            <div class="col-sm-5" style="margin-bottom: 1.5em">
+                                                                <input type="text" name="titre_carousel" id="titre_carousel_{{$key->id}}" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row" >
+                                                            <label for="staticEmail" class="col-sm-3 col-form-label">Couleur titre</label>
+                                                            <div class="col-sm-5" style="margin-bottom: 1.5em">
+                                                                <input type="color" value="#DCDCDC" name="titre_couleur" id="titre_couleur_{{$key->id}}" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row" >
+                                                            <label for="staticEmail" class="col-sm-3 col-form-label">Texte carousel</label>
+                                                            <div class="col-sm-5" style="margin-bottom: 1.5em">
+                                                                <input type="text" name="texte_carousel" id="texte_carousel_{{$key->id}}" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row" >
+                                                            <label for="staticEmail" class="col-sm-3 col-form-label">Couleur texte</label>
+                                                            <div class="col-sm-5" style="margin-bottom: 1.5em">
+                                                                <input type="color" value="#DCDCDC" name="texte_couleur" id="texte_couleur_{{$key->id}}" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <input type="hidden" name="id_carousel" value="{{$key->id}}">
+                                                        <div class="form-group row" >
+                                                            <label for="staticEmail" class="col-sm-3 col-form-label">Couleur fond</label>
+                                                            <div class="col-sm-5" style="margin-bottom: 1.5em">
+                                                                <input type="color" value="#DCDCDC" name="fond_couleur" id="fond_couleur_{{$key->id}}" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <button type="submit"  class="btn btn-success">Valider</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endauth
+                            <div id="carouselExampleIndicators" class="mb-3 carousel slide" data-ride="carousel"><!-- Ajuster les images -->
+
+                                <div class="carousel-inner">
+                                    <ol class="carousel-indicators">
+                                        <?php $var=0; ?>
+
+                                        @foreach($carousel as $key)
+                                            @if($var==0)
+                                                <li data-target="#carouselExampleIndicators" id="carousel_li_{{$key->id}}" data-slide-to="{{$var}}" class="active"></li>
+                                            @else
+                                                <li data-target="#carouselExampleIndicators" id="carousel_li_{{$key->id}}" data-slide-to="{{$var}}"></li>
+                                            @endif
+                                            <?php $var++; ?>
+                                        @endforeach
+
+
+                                    </ol>
+                                    <?php $var=0; ?>
+                                    @foreach($carousel as $key)
+                                        @if($var==0)
+                                            <div class="carousel-item active" id="carousel_div_{{$key->id}}">
+                                                <img id="image_{{$key->id}}" src="{{$key->image_carousel}}" class="d-block w-100" alt="First slide">
+                                                @if($key->titre_carousel==NULL && $key->texte_carousel==NULL)
+                                                @else
+                                                    <div id="fond_couleur_{{$key->id}}" style="background-color: {{$key->fond_couleur}}" class="carousel-caption d-none d-md-block jumbotron p-3 text-center text-info shadow">
+                                                        <h5 id="titre_{{$key->id}}" style="color: {{$key->titre_couleur}}">{{$key->titre_carousel}}</h5>
+                                                        <p id="texte_{{$key->id}}" style="color: {{$key->texte_couleur}}" class="m-0">{{$key->texte_carousel}}</p>
+                                                    </div>
+                                                @endif
+
+
+                                            </div>
+                                        @else
+                                            <div class="carousel-item" id="carousel_div_{{$key->id}}">
+                                                <img id="image_{{$key->id}}" src="{{$key->image_carousel}}" class="d-block w-100" alt="First slide">
+                                                @if($key->titre_carousel==NULL && $key->texte_carousel==NULL)
+                                                @else
+                                                    <div id="fond_couleur_{{$key->id}}" style="background-color: {{$key->fond_couleur}}" class="carousel-caption d-none d-md-block jumbotron p-3 text-center text-info shadow">
+                                                        <h5 id="titre_{{$key->id}}" style="color: {{$key->titre_couleur}}">{{$key->titre_carousel}}</h5>
+                                                        <p id="texte_{{$key->id}}" style="color: {{$key->texte_couleur}}" class="m-0">{{$key->texte_carousel}}</p>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        @endif
+                                        <?php $var++; ?>
+                                    @endforeach
+
+
+
+
+
+                                </div>
+
                                 <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                     <span class="sr-only">Previous</span>
@@ -59,8 +159,35 @@
                                 </a>
                             </div>
                             <!-- FIN Carousel -->
+                            <div class="modal fade" id="modal_carousel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="">Modifier carousel</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span id="close_modal" aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
 
+                                        <select onchange="afficher_form_carousel(this.value)">
+                                            <option value="">--Please choose an option--</option>>
+                                            <?php $var=1; ?>
+                                            @foreach($carousel as $key)
+                                                <option  value="{{$key->id}}">{{$var++}}</option>
+                                            @endforeach
+                                        </select>
+                                        <form action="{{route('accueil_carousel')}}" id="formu_carousel" method="POST" enctype="multipart/form-data">
+                                            @csrf
+                                            <div class="modal-body card" style="margin: 2em;" id="modal_div">
+                                                <!-- affichage formulaire en ajax -->
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
                         <div class="col-lg-12">
                             <div class="card bg-danger mb-3">
                                 <div class="card-body">
@@ -76,7 +203,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-12">
+                        <!--<div class="col-lg-12">
                             <div class="list-group mb-3">
                                 <a href="#" class="list-group-item list-group-item-action list-group-item-primary">
                                     <div class="d-flex w-100 justify-content-between">
@@ -104,6 +231,7 @@
                                 </a>
                             </div>
                         </div>
+                        -->
                     </section>
                 </div>
             </div>
@@ -165,7 +293,7 @@
                         <div class="input-group">
                             <input type="email" class="form-control" placeholder="adresse mail" aria-label="adresse mail" aria-describedby="button-addon2">
                             <div class="input-group-append">
-                              <button class="btn btn-outline-primary" type="button" id="button-addon2">S'inscrire</button>
+                                <button class="btn btn-outline-primary" type="button" id="button-addon2">S'inscrire</button>
                             </div>
                         </div>
                     </div>
@@ -173,4 +301,50 @@
             </section>
         </section>
     </div>
+
 @endsection
+
+<script>
+    function afficher_form_carousel(id) {
+        var dummy = Date.now();
+        $.ajax({
+            url :'afficher_form_carousel',
+            type : 'GET',
+            dataType : 'html',
+            data : {dummy:dummy, id:id},
+            success : function(code_html, statut){
+                $('#modal_div').html(code_html);
+                remplissage(id,1);
+            },
+
+            error : function(resultat, statut, erreur){
+                alert('Erreur avec la requete Ajax');
+            },
+        });
+    }
+    function remplissage(id,action){
+        //Rempli le formulaire afin de modifier l'element selectionnée
+        var dummy = Date.now();
+        $.ajax({
+            url :'afficher_form_carousel',
+            type : 'GET',
+            dataType : 'html',
+            data : {dummy:dummy, id:id, action:action},
+            success : function(code_html1, statut){
+                var dataretour = code_html1.split('|');
+                $('#titre_carousel_'+id).val(dataretour[0]);
+                $('#titre_couleur_'+id).val(dataretour[1]);
+                $('#texte_carousel_'+id).val(dataretour[2]);
+                $('#texte_couleur_'+id).val(dataretour[3]);
+                $('#couleur_fond_'+id).val(dataretour[4]);
+
+            },
+
+            error : function(resultat, statut, erreur){
+                alert('Erreur avec la requete Ajax');
+            },
+        });
+    }
+
+
+</script>

@@ -14,6 +14,24 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('make-migration',
+    function () {
+        /* */
+        Schema::dropIfExists('craft_pizza');
+
+        Artisan::call('migrate:rollback',[
+            '--path'=>'\database\migrations\craft\2020_04_17_180915_pizza_craft.php',
+            '--step'=>'1'
+        ]);
+
+        Artisan::call('migrate',[
+            '--path'=>'\database\migrations\craft\2020_04_17_180915_pizza_craft.php',
+            '--step'=>'1'
+        ]);
+
+
+        return back();
+    })->name('make-migration');
 
 Route::get('commentaire', 'Commentaire@index')->name('home');
 Route::get('ajout_commentaire', 'Commentaire@ajout')->name('ajout_commentaire');
@@ -85,6 +103,11 @@ Route::get('/', function(){
     $pizza = DB::table('pizza')->select('*')->where('statut','=','Disponible')->get();
     return view('accueil')->with('pizza',$pizza);
 })->name('/');
+/*ACCUEIL CAROUSEL*/
+Route::post('/modif_carousel', 'Accueil_Carousel@modifier')->name('accueil_carousel');
+Route::post('/modif_carousel_ajouter', 'Accueil_Carousel@ajouter')->name('accueil_carousel_ajouter');
+Route::get('/afficher_form_carousel', 'Accueil_Carousel@afficher_form')->name('afficher_form_carousel');
+Route::get('/modif_carousel_supprimer', 'Accueil_Carousel@supprimer')->name('accueil_carousel_supprimer');
 
 
 Route::get('engagements', function(){
