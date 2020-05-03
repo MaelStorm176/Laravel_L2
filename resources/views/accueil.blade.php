@@ -28,7 +28,6 @@
                                 </div>
                             @endif
                             @auth()
-
                                 @if(Auth::user()->id==1 && Auth::user()->username=="admin")
                                     <button type="button"  class="btn btn-outline-primary" data-toggle="modal" data-target="#modal_carousel_ajouter">
                                         Ajouter un element au carousel
