@@ -49,6 +49,8 @@ Route::get('pizza.supprimer','Pizza@supprimer')->name('pizza.supprimer');
 Route::get('pizza_all/{pizza_nom}','Pizza@detail');
 Route::post('pizza.promotion','Pizza@promotion')->name('promotion');
 Route::post('code.upload','CodeController@upload')->name('code.upload');
+Route::post('categorie.upload','Pizza@categorie_upload')->name('categorie.upload');
+
 
 
 /*PANIER*/

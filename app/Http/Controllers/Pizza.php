@@ -67,11 +67,6 @@ class Pizza extends Controller
         }
 
         /* INSERTION NUTRITION */
-
-
-        //if ($request["description_courte"] == null) $request["description_courte"]="";
-
-
         DB::table('nutrition')
             ->insert([
             'Sodium'       => $request["sodium"],
@@ -204,5 +199,11 @@ class Pizza extends Controller
         }
         DB::table("pizza")->where('id','=',$request['id'])->update(['promo' => $prix_promo]);
         return back();
+    }
+
+    public function categorie_upload(Request $request)
+    {
+        DB::table('categorie')->updateOrInsert(['nom' => $request['remise']]);
+        return back()->with('message','Votre catégorie a été ajouté');
     }
 }
