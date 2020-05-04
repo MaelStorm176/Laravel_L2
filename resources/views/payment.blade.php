@@ -1,181 +1,134 @@
-@extends('layouts.app')
-<head>
-    <!-- Material Design Bootstrap -->
-    <link href="/css/mdb.min.css" rel="stylesheet">
-</head>
+@extends('layouts.base')
 @section('content')
-    <!--Main layout-->
-    <main class="mt-5 pt-4">
-        <div class="container wow fadeIn">
-            <!-- Heading -->
-            <h2 class="my-5 h2 text-center">Paiement</h2>
-            <!--Grid row-->
-            <div class="row">
-
-                <!--Grid column-->
-                <div class="col-md-8 mb-4">
-
-                    <!--Card-->
-                    <div class="card">
-
-                        <!--Card content-->
-                        <form class="card-body"
-                              role="form"
-                              action="{{ route('stripe.post') }}"
-                              method="post"
-                              data-cc-on-file="false"
-                              data-stripe-publishable-key="{{ env('STRIPE_KEY') }}"
-                              id="payment-form">
-                            @csrf
-                            <?php
-                            $user =Auth::user()->id;
-                            $email =Auth::user()->email;
-                            ?>
-                            <input value="<?php echo $email;?>" name="user_email" type="hidden">
-                            <input value="<?php echo $user;?>" name="user_id" type="hidden">
-                            <input value="{{$prix_total}}" name="prix_total" id="prix_total" type="hidden">
-                            <input value="{{$prix=$prix_total}}" name="prix" id="prix" type="hidden">
-                            <input value="{{$products}}" name="products" type="hidden">
-                            <input value="com_{{auth::user()->id}}_{{$prix_total}}" name="num_commande" type="hidden">
-                            <!--Grid row-->
-                            <div class="row">
-
-                                <!--Grid column-->
-                                <div class="col-md-6 mb-2">
-
-                                    <!--firstName-->
-                                    <div class="md-form ">
-                                        <input type="text" id="firstName" class="form-control" placeholder="Prénom" value="{{auth::user()->first_name}}" maxlength="25">
+    <div class="container">
+        <section class="row">
+            <div class="col-lg-9">
+                <form role="form" action="{{ route('stripe.post') }}" method="post" data-cc-on-file="false" data-stripe-publishable-key="{{ env('STRIPE_KEY') }}" id="payment-form">
+                    @csrf
+                    <?php
+                        $user =Auth::user()->id;
+                        $email =Auth::user()->email;
+                    ?>
+                    <input value="<?php echo $email;?>" name="user_email" type="hidden">
+                    <input value="<?php echo $user;?>" name="user_id" type="hidden">
+                    <input value="{{$prix_total}}" name="prix_total" id="prix_total" type="hidden">
+                    <input value="{{$prix=$prix_total}}" name="prix" id="prix" type="hidden">
+                    <input value="{{$products}}" name="products" type="hidden">
+                    <input value="com_{{auth::user()->id}}_{{$prix_total}}" name="num_commande" type="hidden">
+                    <div class="card border-info mb-3">
+                        <div class="card-header bg-info text-white">Identité et Lieu de livraison<span class="fas fa-map-pin float-right mt-1"></span></div>
+                        <div class="card-body">
+                            <section class="row">
+                                <!-- NOM DESTINATAIRE -->
+                                <div class="col-lg-6 mb-3">
+                                    <input type="text" id="firstName" class="form-control" placeholder="Prénom" value="{{auth::user()->first_name}}" maxlength="25" required>
+                                </div>
+                                <!-- PRENOM DESTINATAIRE -->
+                                <div class="col-lg-6 mb-3">
+                                    <input type="text" id="lastName" class="form-control" placeholder="Nom de famille" value="{{auth::user()->last_name}}" maxlength="25" required>
+                                </div>
+                                <!-- ADRESSE DE LIVRAISON -->
+                                <div class="col-lg-12">
+                                    <input type="text" id="address" placeholder="Adresse" name="address" class="form-control" maxlength="50" required>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                    <div class="card border-secondary mb-3">
+                        <div class="card-header bg-secondary text-white">Paiement<span class="fas fa-hand-holding-usd float-right mt-1"></span></div>
+                        <div class="card-body">
+                            <section class="row justify-content-center">
+                                <div class="col pr-0">
+                                    <div class="form-check form-check-inline float-right">
+                                        <label class="form-check-label mr-1" for="credit">Carte de crédit</label>
+                                        <input class="form-check-input" type="radio" id="credit" name="paymentMethod" checked required>
                                     </div>
-
                                 </div>
-                                <!--Grid column-->
-
-                                <!--Grid column-->
-                                <div class="col-md-6 mb-2">
-
-                                    <!--lastName-->
-                                    <div class="md-form">
-                                        <input type="text" id="lastName" class="form-control" placeholder="Nom de famille" value="{{auth::user()->last_name}}" maxlength="25">
+                                <div class="col pl-0">
+                                    <div class="form-check form-check-inline float-left">
+                                        <input class="form-check-input" type="radio" id="paypal" name="paymentMethod" required>
+                                        <label class="form-check-label" for="paypal">Paypal</label>
                                     </div>
-
+                                </div>                                
+                            </section>
+                            <section class="row">
+                                <!-- NUMERO CARTE DE CREDIT -->
+                                <div class="col-lg-8 mb-3">
+                                    <label for="cc-number">N° Carte de crédit</label>
+                                    <input type="text" class="form-control" id="cc-number" name="card_number" placeholder="Ex : 5678 2345 7418 5693" maxlength="16" required>
                                 </div>
-                                <!--Grid column-->
-
-                            </div>
-                            <!--Grid row-->
-
-                            <!--address-->
-                            <div class="md-form mb-5">
-                                <input type="text" id="address" placeholder="Adresse" name="address" class="form-control" maxlength="50">
-                            </div>
-
-                            <!-- BOUTONS RADIO PAYPAL / CC  -->
-                            <div class="d-block my-3">
-                                <div class="custom-control custom-radio">
-                                    <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked required>
-                                    <label class="custom-control-label" for="credit">Carte de crédit</label>
+                                <!-- DATE EXPIRATION -->
+                                <div class="col-lg-4 mb-3">
+                                    <label for="cc-expiration">Expiration</label>
+                                    <input type="text" class="form-control" id="cc-expiration" name="card_mm_yyyy" placeholder="MM/YYYY" maxlength="7" required>
                                 </div>
-                                <div class="custom-control custom-radio">
-                                    <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required>
-                                    <label class="custom-control-label" for="paypal">Paypal</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <!-- NOM CARTE CREDIT -->
-                                <div class="col-md-6 mb-3">
+                                <!-- NOM SUR LA CARTE -->
+                                <div class="col-lg-8 mb-3">
                                     <label for="cc-name">Nom sur votre carte</label>
                                     <input type="text" class="form-control" id="cc-name" name="card_name" placeholder="Ex : JEAN DUPONT" maxlength="50" required>
                                     <small class="text-muted">Veuillez écrire le nom présent sur votre carte en majuscule</small>
                                 </div>
-                                <!-- N° CARTE CREDIT -->
-                                <div class="col-md-6 mb-3">
-                                    <label for="cc-number">N° Carte de crédit</label>
-                                    <input type="text" class="form-control" id="cc-number" name="card_number" placeholder="Ex : 5678 2345 7418 5693" maxlength="16" required>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <!-- DATE EXPIRATION -->
-                                <div class="col-md-3 mb-3">
-                                    <label for="cc-expiration">Expiration</label>
-                                    <input type="text" class="form-control" id="cc-expiration" name="card_mm_yyyy" placeholder="MM/YYYY" maxlength="7" required>
-                                </div>
                                 <!-- CVV -->
-                                <div class="col-md-3 mb-3">
+                                <div class="col-lg-4 mb-3">
                                     <label for="cc-expiration">CVV</label>
                                     <input type="number" class="form-control" id="card_cvc" name="card_cvc" placeholder="Ex : 123" min="0" max="999" required>
                                 </div>
-                            </div>
-                            <hr class="mb-4">
-                            <!-- BOUTON DE VALIDATION -->
-                            <button class="btn btn-primary btn-lg btn-block" type="submit">Valider le paiement</button>
-
-                        </form>
-
-                    </div>
-                    <!--/.Card-->
-
-                </div>
-                <!--Grid column-->
-
-                <!--Grid column-->
-                <div class="col-md-4 mb-4">
-
-                    <!-- Heading -->
-                    <h4 class="d-flex justify-content-between align-items-center mb-3">
-                        <span class="text-muted">Votre panier</span>
-                        <span class="badge badge-secondary badge-pill">{{$q_tot}} articles</span>
-                    </h4>
-
-                    <!-- Panier -->
-                    <ul class="list-group mb-3 z-depth-1">
-                        @foreach($products as $key)
-                            <li class="list-group-item d-flex justify-content-between lh-condensed">
-                                <div>
-                                    <h6 class="my-0">{{$key->nom}} x {{$key->quantite}}</h6>
-                                    <small class="text-muted">{{$key->statut}}</small>
+                                <!-- BOUTTON VALIDER -->
+                                <div class="col-lg-12">
+                                    <button class="btn btn-primary w-100" type="submit">Valider le paiement</button>
                                 </div>
-                                <span class="text-muted">{{$key->promo}} €</span>
-                            </li>
-                        @endforeach
-                        <li id="affichage" style="display:none;" class="list-group-item justify-content-between bg-light">
-                            <div class="text-success">
-                                <h6 class="my-0">Promo code</h6>
-                                <small id="affcode"></small>
-                            </div>
-                            <span class="text-success" id="remise"></span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between lh-condensed">
-                            <div>
-                                <h6 class="my-0">TOTAL</h6>
-                                <small class="text-muted">TTC</small>
-                            </div>
-                            <span id="total" class="text-muted"><strong> {{$prix_total}} € </strong></span>
-                        </li>
-                    </ul>
-                    <!-- Panier -->
-
-                    <!-- Promo code -->
-                    <!-- Promo code -->
-                    <div class="input-group">
-                        <input type="text" name="code" id="code" class="form-control" placeholder="Code promo" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                        <div class="input-group-append">
-                            <button class="btn btn-secondary btn-md waves-effect m-0" onclick="testvalidite()">APPLIQUER</button>
+                            </section>
                         </div>
                     </div>
-                    <span style="color:red; display:none;" id="invalide">Code invalide</span>
-                    <span style="color:green; display:none;" id="valide">Code valide</span>
-                    <!-- Promo code -->
-
-                </div>
-                <!--Grid column-->
-
+                </form>
             </div>
-            <!--Grid row-->
-
-        </div>
-    </main>
-    <!--Main layout-->
+            <div class="col-lg-3">
+                <div class="card border-success mb-3">
+                    <div class="card-header bg-success text-white">Votre Panier<span class="badge badge-secondary badge-pill float-right mt-1">{{$q_tot}} articles</span></div>
+                    <div class="card-body">
+                        <ul class="list-group mb-3 z-depth-1">
+                            @foreach($products as $key)
+                                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                    <div>
+                                        <h6 class="my-0">{{$key->nom}} x {{$key->quantite}}</h6>
+                                        <small class="text-muted">{{$key->statut}}</small>
+                                    </div>
+                                    <span class="text-muted">{{$key->promo}} €</span>
+                                </li>
+                            @endforeach
+                            <li id="affichage" style="display:none;" class="list-group-item justify-content-between bg-light">
+                                <div class="text-success">
+                                    <h6 class="my-0">Promo code</h6>
+                                    <small id="affcode"></small>
+                                </div>
+                                <span class="text-success" id="remise"></span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                <div>
+                                    <h6 class="my-0">TOTAL</h6>
+                                    <small class="text-muted">TTC</small>
+                                </div>
+                                <span id="total" class="text-muted"><strong> {{$prix_total}} € </strong></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card text-white border-danger mb-3">
+                    <div class="card-header bg-danger">Code Promo<span class="fas fa-gift float-right mt-1"></span></div>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <input type="text" name="code" id="code" class="form-control" placeholder="Code promo" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-primary btn-md waves-effect m-0" onclick="testvalidite()">UTILISER</button>
+                            </div>
+                        </div>
+                        <span style="color:red; display:none;" id="invalide">Code invalide</span>
+                        <span style="color:green; display:none;" id="valide">Code valide</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 @endsection
 
 <!-- Initializations -->
