@@ -28,7 +28,7 @@
                                 </div>
                             @endif
                             @auth()
-                                @if(Auth::user()->id==1 && Auth::user()->username=="admin")
+                                @if(Auth::user()->role=='admin')
                                     <button type="button"  class="btn btn-outline-primary" data-toggle="modal" data-target="#modal_carousel_ajouter">
                                         Ajouter un element au carousel
                                     </button>
@@ -172,7 +172,7 @@
                                             <option value="">--Please choose an option--</option>>
                                             <?php $var=1; ?>
                                             @foreach($carousel as $key)
-                                                <option  value="{{$key->id}}">{{$var++}}</option>
+                                                <option id="optioncarousel{{$key->id}}"  value="{{$key->id}}">{{$var++}}</option>
                                             @endforeach
                                         </select>
                                         <form action="{{route('accueil_carousel')}}" id="formu_carousel" method="POST" enctype="multipart/form-data">

@@ -40,39 +40,46 @@
             </div>
             <div class="col-lg-6">
                 <div class="card border-info mb-3">
-                    <div class="card-header bg-info text-white">Mes cartes de paiement enregistrés<span class="fas fa-credit-card float-right mt-1"></span></div>
+                    <div class="card-header bg-info text-white">Mon profil<span class="fas fa-user-alt float-right mt-1"></span></div>
                     <div class="card-body">
-                        <table class="table table-hover table-bordered mb-0 text-center">
-                            <thead class="bg-primary text-white">
-                                <tr>
-                                    <th scope="col">Propriétaire</th>
-                                    <th scope="col">Numéro</th>
-                                    <th scope="col">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">DUPONT Jean</th>
-                                    <td>XXXX-XXXX-XXXX-5732</td>
-                                    <td><span class="fas fa-trash-alt"></span></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">DUPONT Jean</th>
-                                    <td>XXXX-XXXX-XXXX-5732</td>
-                                    <td><span class="fas fa-trash-alt"></span></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">DUPONT Jean</th>
-                                    <td>XXXX-XXXX-XXXX-5732</td>
-                                    <td><span class="fas fa-trash-alt"></span></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">DUPONT Jean</th>
-                                    <td>XXXX-XXXX-XXXX-5732</td>
-                                    <td><span class="fas fa-trash-alt"></span></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <form method="get" action="{{ route('update') }}">
+                            @csrf
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="username">{{ __('Pseudonyme') }}</label>
+                                    <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{auth::user()->username}}" required autocomplete="username" autofocus>
+
+                                    @error('username')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="first_name">{{ __('Prénom') }}</label>
+                                    <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ auth::user()->first_name }}" required autocomplete="first_name">
+
+                                    @error('first_name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="last_name">{{ __('Nom') }}</label>
+                                    <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ auth::user()->last_name }}" required autocomplete="last_name">
+
+                                    @error('last_name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" name="bouton" class="btn btn-primary">Confirmer les changements</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

@@ -16,12 +16,12 @@ class Commande extends Controller
                 ->where('contenu_panier.id_panier', '=' , $request['idaffiche'])
                 ->select('contenu_panier.quantite','nom')
                 ->get();
-            return view('vue',compact('request','products'));
+            return view('historique_ajax',compact('request','products'));
         }
         elseif ($request['typeAction'] == 0)
         {
             $commande = DB::table('commande')->select('*')->where('statut_prepa','=','En cours')->get();
-            return view('vue',compact('request','commande'));
+            return view('historique_ajax',compact('request','commande'));
         }
         else
         {

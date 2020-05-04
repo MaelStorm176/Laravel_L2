@@ -8,7 +8,7 @@
     <button type="button" id="bouton_code" onclick="ajoutercode()" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModalCenterCode">
         Ajouter un code
     </button>
-    <button type="button" id="bouton_code" onclick="ajouter_categorie()" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModalCenterCode">
+    <button type="button" id="bouton_code" onclick="ajouterCate()" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModalCenterCode">
         Ajouter une catégorie
     </button>
     <!-- Modal -->

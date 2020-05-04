@@ -17,8 +17,9 @@ class Pizza extends Controller
     //Permet d'afficher le carousel des pizzas n'importe où
     public static function afficher()
     {
+        $categorie = DB::table('categorie')->select('*')->get();
         $pizza = DB::table('pizza')->select('*')->get();
-        return view('pizza.pizza_carousel')->with('pizza',$pizza);
+        return view('pizza.pizza_carousel',compact('categorie','pizza'));
     }
 
     //Permet de pré-remplir le formulaire de modification de pizza
@@ -132,7 +133,6 @@ class Pizza extends Controller
         }
         */
         $id_nutrition = DB::table('pizza')->where('id','=',$request['id_pizza'])->select('nutrition')->value('nutrition');
-
         DB::table('nutrition')
             ->where('id','=',$id_nutrition)
             ->update([
@@ -181,7 +181,21 @@ class Pizza extends Controller
     public function detail($pizza_nom)
     {
         $pizza = DB::table("pizza")->select('*')->where('nom','=',$pizza_nom)->get();
-        return view('pizza.pizza_detail')->with('pizza',$pizza);
+        return view('pizza.pizza_detail',compact('pizza'));
+    }
+
+    public function nutrition(Request $request)
+    {
+        if ($request->ajax()){
+            $nutrition = DB::table('nutrition')->where('id', '=', $request['id'])->select('*')->get();
+            foreach ($nutrition as $key2) {
+                echo $key2->Sodium . "_|" . $key2->Fibres . "_|" . $key2->Dont_satures . "_|" . $key2->Lipides . "_|" . $key2->Dont_sucres . "_|" . $key2->Glucides . "_|" . $key2->Proteines . "_|" . $key2->Energies;
+            }
+        }
+        else
+        {
+            abort(404);
+        }
     }
 
     //Permet d'appliquer une promotion à un produit

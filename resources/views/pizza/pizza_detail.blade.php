@@ -10,23 +10,6 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                @auth
-                    @if(Auth::user()->role=='admin')
-                        <a onclick="afficher_promo()">
-                            <span class="badge badge-danger mb-3">Appliquer une promotion</span>
-                        </a>
-                        <div class="input-group mb-3" id="div-promotion" style="display: none;">
-                            <form action="{{route('promotion')}}" method="post">
-                                @csrf
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon1">%</span>
-                                    <input type="hidden" value="{{$key->id}}" name="id">
-                                    <input type="number" class="form-control" id="input-promotion" name="promotion" placeholder="Promotion">
-                                </div>
-                            </form>
-                        </div>
-                    @endif
-                @endauth
                 <div class="card border-success mb-3">
                     <div class="card-header bg-success text-white">
                         <h2 class="text-center align-bottom mb-0">{{$key->nom}}</h2>
@@ -47,6 +30,24 @@
                                 @else
                                     <div class="badge badge-primary p-2 float-right text-white">{{$key->prix}} €</div>
                                 @endif
+                                    @if(Auth::user()->role=='admin')
+                                        <a onclick="afficher_promo()">
+                                            <span class="badge badge-danger mb-3 ">Appliquer une promotion</span>
+                                        </a>
+                                        <div class="input-group mb-3" id="div-promotion" style="display: none;">
+                                            <form action="{{route('promotion')}}" method="post">
+                                                @csrf
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon1">%</span>
+                                                    <input type="hidden" value="{{$key->id}}" name="id">
+                                                    <input type="number" class="form-control" id="input-promotion" name="promotion" placeholder="Promotion">
+                                                    <button class="btn btn-outline-success" type="submit">Valider</button>
+                                                </div>
+
+                                            </form>
+                                        </div>
+                                    @endif
+
                                 <h4 class="mb-3"><u>Description:</u></h4>
                                 <p class="card-text text-justify mb-3">{{$key->description_longue}}</p>
                                 <div class="row justify-content-center">
@@ -77,11 +78,12 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-12">
+            <div class="col-lg-12" >
                 <div class="card bg-danger text-white text-center p-3 font-weight-bold font-italic mb-3">
                     <h5 class="mb-0">Valeurs Nutritionnelles</h5>
+                    <i onclick="afficher_nutri({{$key->nutrition}},'{{$key->nom}}')" class="fas fa-angle-down float-right" style="cursor: pointer"></i>
                 </div>
-                <table class="table table-bordered">
+                <table id="table_nutrition" class="table table-bordered" style="display: none;">
                     <thead class="bg-info">
                         <tr>
                             <th scope="col">Sodium (mg)</th>
@@ -123,5 +125,43 @@
 <script type="text/javascript">
     function afficher_promo() {
         $('#div-promotion').show();
+    }
+    function afficher_nutri(id,nom) {
+        var display =  $("#table_nutrition").css("display");
+        if(display!="none")
+        {
+            $("#table_nutrition").attr("style", "display:none");
+        }
+        else
+        {
+            remplissage_tab(id,nom);
+            $('#table_nutrition').show();
+            $('#table_nutrition').effect("slide","slow");
+        }
+    }
+
+    function remplissage_tab(id,nom)
+    {
+        var dummy = Date.now();
+        $.ajax({
+            url :nom+'/remplissage_tab',
+            type : 'get',
+            dataType : 'html',
+            data : {dummy:dummy, id:id},
+            success : function(code_html, statut){
+                var dataretour = code_html.split('_|');
+                $('#sodium').val(dataretour[0]);
+                $('#fibres').val(dataretour[1]);
+                $('#dont_satures').val(dataretour[2]);
+                $('#lipides').val(dataretour[3]);
+                $('#dont_sucres').val(dataretour[4]);
+                $('#glucides').val(dataretour[5]);
+                $('#proteines').val(dataretour[6]);
+                $('#energies').val(dataretour[7]);
+            },
+            error : function(resultat, statut, erreur){
+                alert('Erreur avec la requete Ajax');
+            },
+        });
     }
 </script>

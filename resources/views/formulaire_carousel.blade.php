@@ -52,6 +52,7 @@ function supprimer(id){
     success : function(code_html, statut){
         $('div[id="carousel_div_'+id+'"]').remove();
         $('li[id="carousel_li_'+id+'"]').remove();
+        $('option[id="optioncarousel'+id+'"]').remove();
         $('#close_modal').click();
     },
 

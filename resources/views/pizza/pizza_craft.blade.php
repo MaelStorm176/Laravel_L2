@@ -53,7 +53,6 @@
                                 </div>
                             </div>
                         </div>
-                        salut les amis !
                         <table style="vertical-align: baseline; text-align: center" >
                             <thead>
                             <tr>

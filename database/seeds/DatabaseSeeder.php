@@ -14,5 +14,6 @@ class DatabaseSeeder extends Seeder
         $this->call(Nutrition_seeder::class);
         $this->call(Pizza_seeder::class);
         $this->call(Coupon_Seeder::class);
+        $this->call(Carousel_seeder::class);
     }
 }

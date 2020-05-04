@@ -47,9 +47,11 @@ Route::get('pizza_all', 'Pizza@all')->name('pizza_all');
 Route::get('afficher_form','Pizza@afficher_form')->name('afficher_form');
 Route::get('pizza.supprimer','Pizza@supprimer')->name('pizza.supprimer');
 Route::get('pizza_all/{pizza_nom}','Pizza@detail');
+Route::get('pizza_all/{pizza_nom}/remplissage_tab','Pizza@nutrition');
 Route::post('pizza.promotion','Pizza@promotion')->name('promotion');
 Route::post('code.upload','CodeController@upload')->name('code.upload');
 Route::post('categorie.upload','Pizza@categorie_upload')->name('categorie.upload');
+
 
 
 
@@ -106,22 +108,26 @@ Route::get('/', function(){
     $carousel=DB::table('accueil_carousel')->select('*')->get();
     return view('accueil')->with('pizza',$pizza)->with('carousel',$carousel);
 })->name('/');
+
 /*ACCUEIL CAROUSEL*/
 Route::post('/modif_carousel', 'Accueil_Carousel@modifier')->name('accueil_carousel');
 Route::post('/modif_carousel_ajouter', 'Accueil_Carousel@ajouter')->name('accueil_carousel_ajouter');
 Route::get('/afficher_form_carousel', 'Accueil_Carousel@afficher_form')->name('afficher_form_carousel');
 Route::get('/modif_carousel_supprimer', 'Accueil_Carousel@supprimer')->name('accueil_carousel_supprimer');
 
+/* PARAMETRE */
+Route::get('update', 'ParametresController@update')->name('update');
+Route::get('parametres', function(){
+    return view('parametres');
+})->name('parametres');
+
+/*********************/
 
 Route::get('engagements', function(){
     return view('engagements');
 })->name('engagements');
 
 Route::get('avis', 'Commentaire@index')->name('avis');
-
-Route::get('parametres', function(){
-    return view('parametres');
-})->name('parametres');
 
 Route::get('horaires', function(){
     return view('horaires');

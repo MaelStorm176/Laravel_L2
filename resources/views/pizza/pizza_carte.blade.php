@@ -159,8 +159,23 @@
         $('#exampleModalLongTitleCode').html('Ajouter un code');
         $('#formucode').prop('action','{{route('code.upload')}}');
         $('#upload').html('Ajouter');
-        $('#code').val('');
+        $('#id_code').val('');
+        $('#remise_label').html('Remise que le code applique sur la commande (en %)');
         $('#remise').val('');
+        $('#remise').prop('placeholder',"Remise");
+        $('#date_limite').show();
+        $('#date_label').show();
+    }
+
+    function ajouterCate(){
+        $('#exampleModalLongTitleCode').html('Ajouter une catégorie');
+        $('#formucode').prop('action','{{route('categorie.upload')}}');
+        $('#remise_label').html("Entrez le nom d'une catégorie (Pizza, boisson, dessert...)");
+        $('#remise').val('');
+        $('#remise').prop('placeholder',"Catégorie");
+        $('#id_code').val('');
+        $('#date_limite').hide();
+        $('#date_label').hide();
     }
     //Rempli le formulaire afin de modifier la pizza selectionnée
     function modifier(id) {
