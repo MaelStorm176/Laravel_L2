@@ -43,9 +43,11 @@
                             </select>
                             <br/><br/>
                             <label>Description brève de l'article</label>
+                            <small><i>(Optionnel)</i></small>
                             <textarea name="description_courte" id="description_courte" class="form-control" rows="3"></textarea>
                             <br/>
                             <label>Description détaillée de l'article</label>
+                            <small><i>(Optionnel)</i></small>
                             <textarea name="description_longue" id="description_longue" class="form-control" rows="5"></textarea>
                             <br/>
                             <label>Prix (Euros €)</label>

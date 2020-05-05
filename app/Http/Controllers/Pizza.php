@@ -17,9 +17,9 @@ class Pizza extends Controller
     //Permet d'afficher le carousel des pizzas n'importe où
     public static function afficher()
     {
-        $categorie = DB::table('categorie')->select('*')->get();
+
         $pizza = DB::table('pizza')->select('*')->get();
-        return view('pizza.pizza_carousel',compact('categorie','pizza'));
+        return view('pizza.pizza_carousel',compact('pizza'));
     }
 
     //Permet de pré-remplir le formulaire de modification de pizza
@@ -105,8 +105,9 @@ class Pizza extends Controller
 
     //Selectionne toutes les pizzas afin de les afficher
     public function all(){
+        $categorie = DB::table('categorie')->select('*')->get();
         $pizza = DB::table('pizza')->orderBy('id','desc')->get();
-        return view('pizza.pizza_carte')->with('pizza',$pizza); //je retourne la vue pizza_all avec une variable nommée $pizza
+        return view('pizza.pizza_carte',compact('pizza','categorie')); //je retourne la vue pizza_all avec une variable nommée $pizza
     }
 
     //Modifie une pizza

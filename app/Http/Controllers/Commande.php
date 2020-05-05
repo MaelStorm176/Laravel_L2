@@ -2,10 +2,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
-use Session;
 class Commande extends Controller
 {
     public function afficher_comm(Request $request){ //affichage du dernier commentaire
