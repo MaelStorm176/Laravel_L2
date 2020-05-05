@@ -118,6 +118,8 @@ Route::get('update', 'ParametresController@update')->name('update');
 Route::get('parametres', function(){
     return view('parametres');
 })->name('parametres');
+Route::get('conf_email', 'ParametresController@verify')->name('conf_email');
+Route::get('verif_email', 'ParametresController@verif_email');
 
 /*********************/
 

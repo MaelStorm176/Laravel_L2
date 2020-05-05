@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ParametresController extends Controller
@@ -18,6 +19,20 @@ class ParametresController extends Controller
             ]);
         }
         return back();
+    }
+
+    public function verify()
+    {
+        return redirect('email/verify');
+    }
+
+    protected function verif_email()
+    {
+        DB::table("users")->where('id', '=', auth::user()->id)->update([
+            'role' => 'verifie'
+        ]);
+
+        return view('/parametres');
     }
 
 }

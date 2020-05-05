@@ -4,18 +4,14 @@
         <section class="row">
             <div class="col-lg-6">
                 <div class="card border-success mb-3">
-                    <div class="card-header bg-success text-white">Change ton adresse mail<span class="fas fa-envelope float-right mt-1"></span></div>
+                    <div class="card-header bg-success text-white">Vérifie ton adresse mail<span class="fas fa-envelope float-right mt-1"></span></div>
                     <div class="card-body">
-                        <form>
-                            <div class="form-group">
-                                <label for="inputEmail3">Nouveau E-mail</label>
-                                <input type="email" class="form-control" id="inputEmail3">
-                            </div>
-                            <div class="form-group">
-                                <label for="inputEmail4">Retape ton nouveau e-mail</label>
-                                <input type="email" class="form-control" id="inputEmail4">
-                            </div>
-                            <button type="submit" class="btn btn-primary w-100">Valider</button>
+                        <form method="get" action="{{ route('conf_email') }}">
+                            @if(auth::user()->role == 'verifie')
+                                <span class="alert-success">Email vérifié !</span>
+                            @else
+                                <button type="submit" class="btn btn-primary w-100">Valider</button>
+                            @endif
                         </form>
                     </div>
                 </div>
