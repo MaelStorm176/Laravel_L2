@@ -103,11 +103,9 @@ Route::get('/table_vide',function (){
 });
 /**/
 /* ACCUEIL */
-Route::get('/', function(){
-    $pizza = DB::table('pizza')->select('*')->where('statut','=','Disponible')->get();
-    $carousel=DB::table('accueil_carousel')->select('*')->get();
-    return view('accueil')->with('pizza',$pizza)->with('carousel',$carousel);
-})->name('/');
+Route::get('/','HomeController@index')->name('/');
+Route::get('horaires','HomeController@horaires')->name('horaires');
+Route::post('horaires.modif','HomeController@horaires_modif')->name('horaires.modif');
 
 /*ACCUEIL CAROUSEL*/
 Route::post('/modif_carousel', 'Accueil_Carousel@modifier')->name('accueil_carousel');
@@ -130,7 +128,3 @@ Route::get('engagements', function(){
 })->name('engagements');
 
 Route::get('avis', 'Commentaire@index')->name('avis');
-
-Route::get('horaires', function(){
-    return view('horaires');
-})->name('horaires');
