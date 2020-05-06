@@ -19,7 +19,7 @@ class Pizza_seeder extends Seeder
             DB::table('pizza')->insert([
                 'nom' => 'Pizza'.$i,
                 'photo' => 'images/img_seed/'.$i.'.jpg',
-                'categorie' => 'pizza',
+                'categorie' => 'pizzas',
                 'description_courte' => Str::random(10),
                 'description_longue' => Str::random(50),
                 'statut' => 'Disponible',
