@@ -30,27 +30,14 @@
                     </div>
                     <div class="col-lg-3 offset-lg-1">
                         @yield('head')
-                        @guest
-                            @if(Session::get('errors'))
-                                @if ($errors->login)
-                                    @foreach($errors->all() as $error)
-                                        <div id="toastCo" class="toast" data-autohide="false">
-                                            <div class="toast-header bg-danger text-white mt-1">
-                                                <span class="fas fa-exclamation-triangle mt-n1 mr-2"></span>
-                                                <strong class="mr-auto">ERREUR</strong>
-                                                <small>A l'instant</small>
-                                                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="toast-body">
-                                                {{ $error }}
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                @endif
-                            @endif
-                        @endguest
+                        @if(Session::get('errors'))
+                            @foreach($errors->all() as $error)
+                                <script>$(function (){ erreur('{{$error}}')});</script>
+                            @endforeach
+                        @endif
+                        @if(session()->has('message'))
+                            <script>$(function (){ success('{{session()->get('message')}}')});</script>
+                        @endif
                     </div>
                 </section>
             </div>
@@ -93,7 +80,7 @@
                                     <span class="fas fa-user-circle mr-2"></span>{{ Auth::user()->username }}
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <a class="dropdown-item" href="{{route('panier')}}"><span class="fas fa-shopping-cart mr-2"></span>Mon Panier ()</a>
+                                    <a class="dropdown-item" href="{{route('panier')}}"><span class="fas fa-shopping-cart mr-2"></span>Mon Panier</a>
                                     <a class="dropdown-item" href="{{route('historique_commande')}}"><span class="fas fa-store mr-2"></span>Mes Commandes</a>
                                     <a class="dropdown-item" href="{{ route('parametres') }}"><span class="fas fa-cogs mr-2"></span>Mes Paramères</a>
                                 </div>
@@ -246,14 +233,23 @@
                 </div>
             </div>
         @endguest
+        <script type="text/javascript" src="{{asset('js/dist/Notifier.min.js')}}"></script>
         <script>
             $(function () {
                 $('[data-toggle="tooltip"]').tooltip()
             });
 
-            $(document).ready(function(){
-                $('#toastCo').toast('show');
-            });
+            function success(message) {
+                var notifier = new Notifier();
+                notifier.notify("success", message);
+            }
+
+            function erreur(message) {
+                var notifier = new Notifier();
+                notifier.notify("error", message);
+            }
         </script>
     </body>
+
+@yield('script')
 </html>

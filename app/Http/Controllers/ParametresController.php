@@ -9,16 +9,16 @@ use Illuminate\Support\Facades\DB;
 class ParametresController extends Controller
 {
 
-    public function update()
+    public function update(Request $request)
     {
-        if (isset($_GET['bouton'])) {
+        if (isset($request['bouton'])) {
             DB::table("users")->update([
-                'username' => $_GET["username"],
-                'first_name' => $_GET["first_name"],
-                'last_name' => $_GET["last_name"]
+                'username' => $request["username"],
+                'first_name' => $request["first_name"],
+                'last_name' => $request["last_name"]
             ]);
         }
-        return back();
+        return back()->with('message','Vos informations ont bien été enregistré');
     }
 
     public function verify()

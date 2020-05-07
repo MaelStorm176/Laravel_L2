@@ -114,8 +114,7 @@
                 data : {id:id},
                 success : function(code_html, statut){
                     $('tr[id="'+id+'"]').remove();
-                    $('#input-toast').text('Commande validée (Payement + préparation) !');
-                    $('.toast').toast('show').slideDown();
+                    success('Commande validée (Payement + préparation) !');
                 },
 
                 error : function(resultat, statut, erreur){

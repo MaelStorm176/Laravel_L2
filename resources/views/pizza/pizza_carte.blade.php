@@ -102,6 +102,8 @@
         </section>
     </div>
 @endsection
+
+@section('script')
 <script type="text/javascript">
     //Vide le formulaire afin d'ajouter une pizza
     function ajouter(){
@@ -132,7 +134,7 @@
     function ajouterCate(){
         $('#exampleModalLongTitleCode').html('Ajouter une catégorie');
         $('#formucode').prop('action','{{route('categorie.upload')}}');
-        $('#remise_label').html("Entrez le nom d'une catégorie (Pizza, boisson, dessert...)");
+        $('#remise_label').html("Entrez le nom d'une catégorie (Pizzas, boissons, desserts...)");
         $('#remise').val('');
         $('#remise').prop('placeholder',"Catégorie");
         $('#id_code').val('');
@@ -193,3 +195,4 @@
     }
     $('.collapse').collapse();
 </script>
+@endsection

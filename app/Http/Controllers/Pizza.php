@@ -9,19 +9,6 @@ use Illuminate\Support\Facades\Validator;
 class Pizza extends Controller
 {
 
-    public function index()
-    {
-        return view('pizza.pizza_index');
-    }
-
-    //Permet d'afficher le carousel des pizzas n'importe où
-    public static function afficher()
-    {
-
-        $pizza = DB::table('pizza')->select('*')->get();
-        return view('pizza.pizza_carousel',compact('pizza'));
-    }
-
     //Permet de pré-remplir le formulaire de modification de pizza
     public function afficher_form(Request $request){
         if($request->ajax()){

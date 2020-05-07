@@ -40,7 +40,6 @@ Route::get('afficher_comm', 'Commentaire@afficher')->name('afficher_comm');
 
 
 /*PIZZA */
-Route::get('pizza_index', 'Pizza@index')->name('pizza_index');
 Route::post('pizza.upload','Pizza@upload')->name('pizza.upload');
 Route::post('pizza.modifier','Pizza@modifier')->name('pizza.modifier');
 Route::get('pizza_all', 'Pizza@all')->name('pizza_all');

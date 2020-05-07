@@ -25,10 +25,6 @@ class Pizza extends Migration
             $table->unsignedDecimal('prix',8,2)->default(0);
             $table->unsignedDecimal('promo',8,2)->default(0);
         });
-
-        Schema::table('Pizza',function (Blueprint $table){
-            $table->foreign('nutrition')->references('id')->on('nutrition');
-        });
     }
 
     /**

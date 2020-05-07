@@ -244,10 +244,12 @@
                     </div>
                 </div>
                 <div class="card text-white border-danger mb-3">
-                    <div class="card-header bg-danger">Notre Localisation<span class="fas fa-map-marked-alt float-right mt-1"></span></div>
+                    <div class="card-header bg-danger">Notre Localisation<span class="fas fa-map-marked-alt float-right mt-1"></span>
+                        <p><small>n°112 rue de la gare,<br>51100 REIMS</small></p>
+                    </div>
                     <div class="card-body">
                         <section class="row">
-                            <div class="col text-center text-info jumbotron p-1 mb-0">n°112 rue de la gare,<br>51100 REIMS</div>
+                            <div><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2602.004943824818!2d4.1130172159140965!3d49.2952494778007!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e99d86f90099cd%3A0x33bb405513e3549d!2sPlace%20de%20la%20Gare%2C%2051100%20Reims!5e0!3m2!1sfr!2sfr!4v1588795280366!5m2!1sfr!2sfr" width="225" height="200" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe></div>
                         </section>
                     </div>
                 </div>

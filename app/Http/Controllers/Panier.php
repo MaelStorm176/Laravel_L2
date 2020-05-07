@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Session;
 
 
 class Panier extends Controller
@@ -18,7 +19,6 @@ class Panier extends Controller
         ]);
     }
 
-
     public function ajouter(Request $request)
     {
         //Validation de la requete
@@ -27,7 +27,7 @@ class Panier extends Controller
             'quantite' => 'required|integer|between:1,100'
         ]);
         if($validate_data->fails()){
-            return back()->with('message',"Il y a une erreur avec l'ajout de votre article.");
+            return back()->with('errors',"Il y a une erreur avec l'ajout de votre article.");
         }
         /*********************************/
         $id_panier = DB::table('panier')
@@ -54,6 +54,7 @@ class Panier extends Controller
                 DB::table('contenu_panier')->where('id_pizza','=',$id_pizza)->update([
                     'quantite' => $somme
                 ]);
+                Session::flash('message','Cet article a été ajouté à votre panier');
                 return back();
             }
         }
@@ -62,6 +63,7 @@ class Panier extends Controller
             'id_pizza' => $id_pizza,
             'quantite' => $quantite
         ]);
+        Session::flash('message','Cet article a été ajouté à votre panier');
         return back();
     }
 

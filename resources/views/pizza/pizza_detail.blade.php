@@ -30,6 +30,7 @@
                                 @else
                                     <div class="badge badge-primary p-2 float-right text-white">{{$key->prix}} €</div>
                                 @endif
+                                @auth
                                     @if(Auth::user()->role=='admin')
                                         <a onclick="afficher_promo()">
                                             <span class="badge badge-danger mb-3 ">Appliquer une promotion</span>
@@ -47,7 +48,7 @@
                                             </form>
                                         </div>
                                     @endif
-
+                                @endauth
                                 <h4 class="mb-3"><u>Description:</u></h4>
                                 <p class="card-text text-justify mb-3">{{$key->description_longue}}</p>
                                 <div class="row justify-content-center">
@@ -67,9 +68,7 @@
                                             </form>
                                         @endauth
                                         @guest
-                                            <a href="{{route('login')}}">
-                                                <button class="btn btn-primary">Pour commander, connectez vous !</button>
-                                            </a>
+                                                <button class="btn btn-primary" data-toggle="modal" data-target="#connexionModal">Pour commander, connectez vous !</button>
                                         @endguest
                                     </div>
                                 </div>
