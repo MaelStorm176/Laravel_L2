@@ -49,7 +49,7 @@
                                         <input class="form-check-input" type="radio" id="paypal" name="paymentMethod" required>
                                         <label class="form-check-label" for="paypal">Paypal</label>
                                     </div>
-                                </div>                                
+                                </div>
                             </section>
                             <section class="row">
                                 <!-- NUMERO CARTE DE CREDIT -->
@@ -71,7 +71,7 @@
                                 <!-- CVV -->
                                 <div class="col-lg-4 mb-3">
                                     <label for="cc-expiration">CVV</label>
-                                    <input type="number" class="form-control" id="card_cvc" name="card_cvc" placeholder="Ex : 123" min="0" max="999" required>
+                                    <input type="number" class="form-control" id="card_cvc" name="card_cvc" placeholder="Ex : 123" min="0" max="999" maxlength="3" required>
                                 </div>
                                 <!-- BOUTTON VALIDER -->
                                 <div class="col-lg-12">

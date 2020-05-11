@@ -3,13 +3,17 @@
         <?php $categorie = DB::table('categorie')->select('*')->get(); ?>
     <!-- Button trigger modal -->
     <button type="button" id="bouton_ajout" onclick="ajouter()" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModalCenter">
-        Ajouter une pizza
+        Ajouter un article
     </button>
     <button type="button" id="bouton_code" onclick="ajoutercode()" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModalCenterCode">
         Ajouter un code
     </button>
     <button type="button" id="bouton_code" onclick="ajouterCate()" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModalCenterCode">
         Ajouter une catégorie
+    </button>
+
+    <button type="button" id="bouton_code" class="btn btn-outline-primary" data-toggle="modal" data-target="#MenuModal">
+        Ajouter un menu
     </button>
     <!-- Modal -->
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -26,6 +30,7 @@
                         @csrf
                         <div>
                             <label>Image de votre article</label>
+                            <small><i>(Selectionnez une image aux dimensions carrées, ex : 200 x 200)</i></small>
                             <br/>
                             <input type="file" name="image" id="image" class="form-control" required style="width:300px; display: inline-block;" onchange="update_Photo();">
                             <input type="hidden" name="image_base" id="image_base">
@@ -56,7 +61,7 @@
                             <input type="hidden" name="id_pizza" id="id_pizza">
                             <label>Disponibilité de votre article</label>
                             <select name="statut_p" class="custom-select" id="statut_p">
-                                <option value="">-- Disponibilité --</option>
+                                <option value="">>-- Disponibilité --<</option>
                                 <option value="Disponible">Disponible</option>
                                 <option value="Indisponible">Indisponible</option>
                             </select>
@@ -107,17 +112,14 @@
                             </table>
                         </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" id="upload" class="btn btn-primary">Upload</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                    <button type="submit" id="upload" class="btn btn-primary">Ajouter</button>
                 </div>
                 </form>
                 </div>
             </div>
         </div>
     </div>
-
-
-
     <div class="modal fade" id="exampleModalCenterCode" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -140,7 +142,7 @@
                             <input type="hidden" name="id_code" id="id_code">
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                             <button type="submit" id="upload" class="btn btn-primary">Ajouter</button>
                         </div>
                     </form>
@@ -149,6 +151,72 @@
         </div>
     </div>
     <!-- FIN DU MODAL -->
+
+
+
+
+
+
+
+
+
+        <div class="modal fade" id="MenuModal" tabindex="-1" role="dialog" aria-labelledby="MenuModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content" style="overflow:scroll; height:750px;">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="MenuModalLongTitle">Création d'un menu</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ route('menu.upload') }}" id="formulaire_menu" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div>
+                                <label>Nom du menu</label>
+                                <input type="text" name="nom_m" placeholder="Nom" id="nom_m" class="form-control" required>
+                                <br/>
+
+                                <label>Contenu du menu</label>
+                                <ul>
+                                @foreach($categorie as $cate)
+                                    <li>
+                                        <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                                            <input type="checkbox" name="categorie" class="custom-control-input" id="check_box_{{$cate->nom}}" value="{{$cate->nom}}">
+                                            <label class="custom-control-label" for="check_box_{{$cate->nom}}">{{$cate->nom}}</label>
+                                        </div>
+                                    </li>
+                                    <ul>
+                                        <li>
+                                            <div id="aff_{{$cate->nom}}">
+
+                                            </div>
+                                        </li>
+                                    </ul>
+                                @endforeach
+                                </ul>
+                                <br/>
+
+                                <label>Description détaillée du menu</label>
+                                <small><i>(Optionnel)</i></small>
+                                <textarea name="description_m" id="description_m" class="form-control" rows="5"></textarea>
+                                <br/>
+
+                                <label>Prix (Euros €)</label>
+                                <input type="number" step="0.01" name="prix_m" placeholder="Prix" id="prix_m" class="form-control" required>
+                                <br/>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                                <button type="submit" id="upload" class="btn btn-primary">Créer</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- FIN DU MODAL -->
 @endif
 @endauth
 

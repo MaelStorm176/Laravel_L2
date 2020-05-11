@@ -20,14 +20,15 @@
         <header class="header mb-0 p-5" style="background:url('@yield('ban')img/banniere.jpg');">
             <div class="container">
                 <section class="row">
-                    <div class="col-lg-4 offset-lg-4">
+                    <img src="@yield('logo')img/ban.png" class="col-lg-4 offset-lg-4" style="max-width: 80%;">
+                    <!-- <div class="col-lg-4 offset-lg-4">
                         <img src="@yield('logo')img/ban.png" style="max-width: 80%;">
-                        <!--
+                        
                         <div class="jumbotron mb-0 text-center">
                             <h2 class="mb-0">LOGO PIZZERIA</h2>
                         </div>
-                        -->
-                    </div>
+                        
+                    </div> -->
                     <div class="col-lg-3 offset-lg-1">
                         @yield('head')
                         @if(Session::get('errors'))
@@ -45,7 +46,7 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3 rounded-0">
             <div class="container container-nav">
 
-                <a class="navbar-brand" href="{{ route('/') }}">NOM PIZZERIA</a>
+                <a class="navbar-brand" href="{{ route('/') }}">{{ config('app.name') }}</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -65,6 +66,11 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('avis')}}">Avis</a>
                         </li>
+                        @auth
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('admin')}}">Admin</a>
+                            </li>
+                        @endauth
                     </ul>
                     @guest
                         <div class="navbar-right">
@@ -98,7 +104,8 @@
             </div>
         </nav>
         @yield('content')
-        <footer class="bg-dark page-footer py-3 text-white text-center">
+        <div class="w-100 p-3 text-white">--</div>
+        <footer class="bg-dark page-footer fixed-bottom py-3 text-white text-center">
             © 2020 Copyright:
             <a href="#">LIEN DU SITE</a>
         </footer>

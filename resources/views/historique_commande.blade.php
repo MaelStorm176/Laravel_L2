@@ -6,10 +6,10 @@
     <div class="container">
         <section class="row">
             <div class="col-lg-12">
-                <div class="card bg-success text-white text-center p-3 font-weight-bold font-italic mb-3" data-toggle="modal" onclick="myFunction()">
-                    <h5 class="mb-0">HISTORIQUE DE VOS COMMANDES</h5>
-                </div>
                 @auth
+                    <div class="card bg-success text-white text-center p-3 font-weight-bold font-italic mb-3" data-toggle="modal" onclick="myFunction()">
+                        <h5 class="mb-0">HISTORIQUE DE VOS COMMANDES</h5>
+                    </div>
                     @if(Auth::user()->role=='admin')
                         <div id="tag_container">
                             @include('presult')

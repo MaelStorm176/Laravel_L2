@@ -24,7 +24,7 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="{{ route('ajouter_ingredient') }}" id="formu" method="POST" enctype="multipart/form-data">
+                                        <form action="{{ route('craft_ajouter_ingredient') }}" id="formu" method="POST" enctype="multipart/form-data">
                                             @csrf
                                             <div class="form-group row" >
                                                 <label for="staticEmail" class="col-sm-3 col-form-label">Image</label>
@@ -66,7 +66,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <form action="{{route('craft.ajouter')}}" method="post">
+                            <form action="{{route('craft_ajouter')}}" method="post">
                             @csrf
                             <!-- {{$var=1}}-->
                         @foreach ($ingredients as $value)
@@ -110,7 +110,7 @@
     //Vide le formulaire afin d'ajouter une pizza
     function ajouter(){
         $('#exampleModalLongTitle').html('Ajouter un ingrédient');
-        $('#formu').prop('action','{{route('ajouter_ingredient')}}');
+        $('#formu').prop('action','{{route('craft_ajouter_ingredient')}}');
         $('#image_i').val('');
         $('#nom_i').val('');
         $('#prix_i').val('');
@@ -144,7 +144,7 @@
     function supprimer(id){
         var dummy = Date.now();
         $.ajax({
-            url :'supprimer_ingredient',
+            url :'craft_supprimer_ingredient',
             type : 'GET',
             dataType : 'html',
             data : {dummy:dummy, id:id},

@@ -1,6 +1,5 @@
 @extends('layouts.base')
 @section('content')
-
     <div class="container">
         <section class="row">
             <div class="col-lg-12">
@@ -24,18 +23,10 @@
                                 <div class="alert alert-danger" role="alert">
                                     <button type="button" class="close" data-dismiss="alert">×</button>
                                     <strong>{{ $message }}</strong>
-
                                 </div>
                             @endif
                             @auth()
                                 @if(Auth::user()->role=='admin')
-                                    <button type="button"  class="btn btn-outline-primary" data-toggle="modal" data-target="#modal_carousel_ajouter">
-                                        Ajouter un element au carousel
-                                    </button>
-                                    <button type="button"  class="btn btn-outline-primary" data-toggle="modal" data-target="#modal_carousel">
-                                        Modifier carousel
-                                    </button>
-
                                     <div class="modal fade" id="modal_carousel_ajouter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                         <div class="modal-dialog modal-lg">
                                             <div class="modal-content">
@@ -202,35 +193,53 @@
                                 </div>
                             </div>
                         </div>
-                        <!--<div class="col-lg-12">
-                            <div class="list-group mb-3">
-                                <a href="#" class="list-group-item list-group-item-action list-group-item-primary">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h4 class="mb-1">NOM Prénom</h4>
-                                        <span class="badge badge-success p-2 rounded-circle shadow">5/5</span>
+                        <!-- LES 3 DERNIERS COMMENTAIRES -->
+                        <div class="col-lg-12">
+                            <div class="list-group mb-3 border-0">
+                                <a href="#" class="list-group-item list-group-item-action list-group-item-primary p-0 mb-3 rounded border border-secondary">
+                                    <div class="d-flex justify-content-between bg-success text-white text-center w-100 py-3 px-5 rounded-top">
+                                        <em><h4 class="mt-2">NOM Prénom</h4></em>
+                                        <div class="badge badge-secondary p-3 rounded-circle">
+                                            <span class="fas fa-star mr-1 text-warning"></span>
+                                            <span class="fas fa-star mr-1 text-warning"></span>
+                                            <span class="fas fa-star mr-1 text-warning"></span>
+                                            <span class="fas fa-star mr-1 text-warning"></span>
+                                            <span class="fas fa-star text-warning"></span>
+                                         </div>
                                     </div>
-                                    <p class="mb-1 text-justify">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                                    <small>20/04/2020</small>
+                                    <p class="mb-1 text-justify py-4 px-5">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                                    <div class="bg-secondary text-white text-center w-100 p-2">
+                                        <small>Posté le 20/04/2020 à 16h15</small>
+                                    </div>
                                 </a>
-                                <a href="#" class="list-group-item list-group-item-action list-group-item-secondary">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h4 class="mb-1">NOM Prénom</h4>
-                                        <span class="badge badge-warning p-2 rounded-circle text-white shadow">3/5</span>
+                                <a href="#" class="list-group-item list-group-item-action list-group-item-primary p-0 mb-3 rounded border border-secondary">
+                                    <div class="d-flex justify-content-between bg-warning text-white text-center w-100 py-3 px-5 rounded-top">
+                                        <em><h4 class="mt-2">NOM Prénom</h4></em>
+                                        <div class="badge badge-secondary p-3 rounded-circle">
+                                            <span class="fas fa-star mr-1 text-warning"></span>
+                                            <span class="fas fa-star mr-1 text-warning"></span>
+                                            <span class="fas fa-star text-warning"></span>
+                                        </div>
                                     </div>
-                                    <p class="mb-1 text-justify">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                                    <small class="text-muted">20/04/2020</small>
+                                    <p class="mb-1 text-justify p-4">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                                    <div class="bg-secondary text-white text-center w-100 p-2">
+                                        <small>Posté le 20/04/2020 à 16h15</small>
+                                    </div>
                                 </a>
-                                <a href="#" class="list-group-item list-group-item-action list-group-item-primary">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h4 class="mb-1">NOM Prénom</h4>
-                                        <span class="badge badge-danger p-2 rounded-circle shadow">1/5</span>
+                                <a href="#" class="list-group-item list-group-item-action list-group-item-primary p-0 mb-3 rounded border border-secondary">
+                                    <div class="d-flex justify-content-between bg-danger text-white text-center w-100 py-3 px-5 rounded-top">
+                                        <em><h4 class="mt-2">NOM Prénom</h4></em>
+                                        <div class="badge badge-secondary p-3 rounded-circle">
+                                            <span class="fas fa-star text-warning"></span>
+                                        </div>
                                     </div>
-                                    <p class="mb-1 text-justify">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                                    <small class="text-muted">20/04/2020</small>
+                                    <p class="mb-1 text-justify p-4">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                                    <div class="bg-secondary text-white text-center w-100 p-2">
+                                        <small>Posté le 20/04/2020 à 16h15</small>
+                                    </div>
                                 </a>
                             </div>
                         </div>
-                        -->
                     </section>
                 </div>
             </div>

@@ -20,21 +20,5 @@ class HomeController extends Controller
         $horaires = DB::table('horaires')->select('*')->get();
         return view('horaires')->with('horaires',$horaires);
     }
-    public function horaires_modif(Request $request)
-    {
-        $validate_data = Validator::make($request->all(), [
-            'midi_modif' => 'required|string',
-            'soir_modif' => 'required|string'
-        ]);
-        if($validate_data->fails()){
-            return back()->with('error',"Il y a une erreur avec la modification de votre horaire.");
-        }
-
-        DB::table('horaires')->where('id','=',$request['id_modif'])->update([
-           'midi' => $request['midi_modif'],
-            'soir' => $request['soir_modif']
-        ]);
-
-        return back()->with('message',"Votre horaire a été modifié.");
-    }
+    
 }

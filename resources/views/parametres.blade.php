@@ -4,13 +4,10 @@
         <section class="row">
             <div class="col-lg-6">
                 <div class="card border-success mb-3">
-                    <div class="card-header bg-success text-white">Vérifie ton adresse mail<span class="fas fa-envelope float-right mt-1"></span>
-
-                    </div>
+                    <div class="card-header bg-success text-white">Vérifie ton adresse mail<span class="fas fa-envelope float-right mt-1"></span></div>
                     <div class="card-body">
-
                         <p><em>Faire vérifier votre adresse e-mail vous permettra de poster des commentaires sur notre site.
-                                Vous bénéficierez aussi de points vous offrant de nombreuses réductions et avantages !<em></p>
+                                Vous bénéficierez aussi de points vous offrant de nombreuses réductions et avantages !</em></p>
                         <form method="get" action="{{ route('conf_email') }}">
                             @if(auth::user()->role == 'verifie')
                                 <span class="alert-success">Email vérifié !</span>
@@ -21,7 +18,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-10">
+            <div class="col-lg-6">
                 <div class="card border-danger mb-3">
                     <div class="card-header bg-danger text-white">Change ton mot de passe<span class="fas fa-lock float-right mt-1"></span></div>
                     <div class="card-body">
@@ -39,7 +36,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-10">
+            <div class="col-lg-6">
                 <div class="card border-info mb-3">
                     <div class="card-header bg-info text-white">Mon profil<span class="fas fa-user-alt float-right mt-1"></span></div>
                     <div class="card-body">
@@ -84,7 +81,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-10">
+            <div class="col-lg-6">
                 <div class="card border-secondary mb-3">
                     <div class="card-header bg-secondary text-white">Mes adresses enregistrées<span class="fas fa-map-pin float-right mt-1"></span></div>
                     <div class="card-body">
