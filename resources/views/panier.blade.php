@@ -42,10 +42,12 @@
                                     </tr>
                                 @endforeach
                                 <tr>
-                                    <td class="bg-secondary text-white align-middle">TOTAL TTC</td>
-                                    <td colspan="2" class="bg-secondary text-white align-middle"><span id="prix_total">{{$prix_total}} € </span> <br/>
+                                    <td class="bg-secondary text-white align-middle">TOTAL TTC
+                                        <br/>
                                         <i id="attention" class="fas fa-exclamation-triangle"></i>
-                                    <em><small>(Votre commande ne doit pas dépasser 255 €)</small></em>
+                                        <em><small>(Votre commande ne doit pas dépasser 255 €)</small></em>
+                                    </td>
+                                    <td colspan="2" class="bg-secondary text-white align-middle"><strong><span id="prix_total">{{$prix_total}} €</span> </strong> <br/>
                                     </td>
                                     <td class="bg-secondary text-white">
                                         @if($prix_total > 0)

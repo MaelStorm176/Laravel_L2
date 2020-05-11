@@ -105,17 +105,15 @@ class Craft extends Controller
         foreach ($table as $key){
             $tmp+=$request['prix_recup_'.$key->id];
             if (!empty($request['ingredient_'.$key->id])){
-            DB::table('craft_pizza')->updateOrInsert([
-                'id'=>$var1+1],[
-                $key->nom_i=>$request['ingredient_'.$key->id],
-                'user_id'=>Auth::user()->id,
-                'prix_total_i'=>$tmp
-            ]);
+                DB::table('craft_pizza')->updateOrInsert([
+                    'id'=>$var1+1],[
+                    $key->nom_i=>$request['ingredient_'.$key->id],
+                    'user_id'=>Auth::user()->id,
+                    'prix_total_i'=>$tmp
+                ]);
             }
-            }
-        return back();
-
-
         }
+        return back();
+    }
 
 }

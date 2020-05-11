@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 
-class Pizza extends Controller
+class Pizza extends Menu
 {
 
     //Permet de pré-remplir le formulaire de modification de pizza
@@ -92,9 +92,10 @@ class Pizza extends Controller
 
     //Selectionne toutes les pizzas afin de les afficher
     public function all(){
+        list($menu,$contenu_menu) = $this->afficher_menu();
         $categorie = DB::table('categorie')->select('*')->get();
         $pizza = DB::table('pizza')->orderBy('id','desc')->get();
-        return view('pizza.pizza_carte',compact('pizza','categorie')); //je retourne la vue pizza_all avec une variable nommée $pizza
+        return view('pizza.pizza_carte',compact('pizza','categorie','menu','contenu_menu')); //je retourne la vue pizza_all avec une variable nommée $pizza
     }
 
     //Modifie une pizza
@@ -117,7 +118,7 @@ class Pizza extends Controller
         ]);
 
         if($validate_data->fails()){
-            return back()->with('message',"Il y a une erreur avec la modification de votre pizza.");
+            return back()->with('error',"Il y a une erreur avec la modification de votre pizza.");
         }
         */
         $id_nutrition = DB::table('pizza')->where('id','=',$request['id_pizza'])->select('nutrition')->value('nutrition');

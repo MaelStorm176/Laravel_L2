@@ -14,12 +14,19 @@
                                     </button>
                                 </div>
                             @endforeach
+                            @if(!Empty($menu))
+                                <div class="col-lg-2 text-center">
+                                    <button class="btn btn-primary text-white w-100" type="button" data-toggle="collapse" data-target="#menu_Collapse" aria-expanded="true" aria-controls="menu_Collapse">
+                                        Nos menus
+                                    </button>
+                                </div>
+                            @endif
+
                         </section>
                     </div>
                 </div>
                 <div class="accordion" id="accordionEx">
                 @foreach($categorie as $cat)
-                    <!-- MENUS COLLAPSE -->
                     <div class="collapse" id="{{$cat->nom}}Collapse" data-parent="#accordionEx">
                         <div class="card bg-success text-white text-center p-3 font-weight-bold font-italic mb-3">
                             <h5 class="mb-0 text-uppercase">NOS {{$cat->nom}}</h5>
@@ -97,6 +104,45 @@
                         </div>
                     </div>
                 @endforeach
+                <div class="collapse" id="menu_Collapse" data-parent="#accordionEx">
+                    <div class="card bg-success text-white text-center p-3 font-weight-bold font-italic mb-3">
+                        <h5 class="mb-0 text-uppercase">NOS MENUS</h5>
+                    </div>
+                    <div class="row row-cols-1 row-cols-md-2">
+                        @foreach($menu as $item)
+                            <div class="col mb-3" id="{{$item->id}}">
+                                <div class="card">
+                                    <div class="row no-gutters">
+                                        <div class="col-md-4">
+                                            @auth
+                                                @if(Auth::user()->role=='admin')
+                                                    <div style="z-index: 6; position: absolute;">
+                                                        <button type="button" class="btn btn-primary" onclick="modifier({{$item->id}})" data-toggle="modal" data-target="#exampleModalCenter"><i class="fas fa-edit"></i></button> <br/> <br/>
+                                                        <button type="button" class="btn btn-primary" onclick="supprimer({{$item->id}})"><i class="fas fa-trash"></i></button>
+                                                    </div>
+                                                @endif
+                                            @endauth
+                                            <img src="{{$key->photo}}" class="rounded-left" style="width:150px; height:150px;">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="card-body">
+                                                @if($item->promo < $item->prix)
+                                                    <div class="badge badge-danger p-2 float-right text-white"><del>{{$item->prix}}</del> {{$item->promo}} €</div>
+                                                @else
+                                                    <div class="badge badge-primary p-2 float-right text-white"> {{$item->promo}} €</div>
+                                                @endif
+                                                <h5 class="card-title mt-1">{{$item->nom}}</h5>
+                                                <p class="card-text text-justify">{{$item->description}}</p>
+                                                <div class="row justify-content-center">
+                                                    <a type="button"  href="pizza_all/{{$item->nom}}" class="col-6 btn btn-primary navbar-btn align-center">Voir le détail</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+
                 </div>
             </div>
         </section>
@@ -193,6 +239,34 @@
             },
         });
     }
+
+    $('input[type="checkbox"][name="categorie"]').change(function() {
+        var dummy = Date.now();
+        const categorie = $(this).val();
+        if(this.checked) {
+            $.ajax({
+                url :'afficher_cat',
+                type : 'GET',
+                dataType : 'html',
+                data : {dummy:dummy, categorie:categorie},
+                success : function(code_html, statut){
+                    $('#aff_'+categorie).html(code_html);
+                },
+                error : function(resultat, statut, erreur){
+                    alert('Erreur avec la requete Ajax');
+                },
+            });
+        }
+        else
+        {
+            $('#aff_'+categorie).empty();
+        }
+    });
+
+
+
+
+
     $('.collapse').collapse();
 </script>
 @endsection

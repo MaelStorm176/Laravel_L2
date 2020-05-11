@@ -20,12 +20,12 @@ Route::get('make-migration',
         Schema::dropIfExists('craft_pizza');
 
         Artisan::call('migrate:rollback',[
-            '--path'=>'\database\migrations\craft\2020_04_17_180915_pizza_craft.php',
+            '--path'=>'\database\migrations\2020_04_17_180915_pizza_craft.php',
             '--step'=>'1'
         ]);
 
         Artisan::call('migrate',[
-            '--path'=>'\database\migrations\craft\2020_04_17_180915_pizza_craft.php',
+            '--path'=>'\database\migrations\2020_04_17_180915_pizza_craft.php',
             '--step'=>'1'
         ]);
 
@@ -51,8 +51,9 @@ Route::post('pizza.promotion','Pizza@promotion')->name('promotion');
 Route::post('code.upload','CodeController@upload')->name('code.upload');
 Route::post('categorie.upload','Pizza@categorie_upload')->name('categorie.upload');
 
-
-
+/*MENU*/
+Route::post('menu.upload','Menu@upload')->name('menu.upload');
+Route::get('afficher_cat','Menu@afficher_cat')->name('afficher_cat');
 
 /*PANIER*/
 Route::get('panier','Panier@afficher')->name('panier');
@@ -83,11 +84,11 @@ Route::get('testvalidite', 'StripePaymentController@testvalidite')->name('testva
 /*CRAFT*/
 Route::get('/craft', 'Craft@index')->name('craft');
 Route::get('/craft', 'Craft@afficher')->name('craft');
-Route::post('ajouter', 'Craft@ajouter')->name('craft.ajouter');
+Route::post('craft_ajouter', 'Craft@ajouter')->name('craft_ajouter');
 Route::post('craft_modifier', 'Craft@modifier')->name('craft_modifier');
 Route::GET('craft_afficher_form', 'Craft@afficher_form')->name('craft_afficher_form');
-Route::post('ajouter_ingredient', 'Craft@ajouter_ingredient')->name('ajouter_ingredient');
-Route::get('supprimer_ingredient', 'Craft@supprimer')->name('supprimer_ingredient');
+Route::post('craft_ajouter_ingredient', 'Craft@ajouter_ingredient')->name('craft_ajouter_ingredient');
+Route::get('craft_supprimer_ingredient', 'Craft@supprimer')->name('craft_supprimer_ingredient');
 
 Route::get('/clear-cache', function() {
     Artisan::call('cache:clear');
