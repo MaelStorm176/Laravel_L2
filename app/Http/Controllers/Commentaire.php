@@ -3,51 +3,95 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class Commentaire extends Controller
 {
-    public function index(){
-        $commentaires = $this->afficher();
-    	return view('avis',compact('commentaires','pseudo'));
+
+    public function voir(){
+        return view('commentaire');
+
     }
 
-    public function ajout(Request $request){
-        if($request->ajax()){
-            $user = auth()->user();
-            $validate_data = Validator::make($request->all(), [
-                'email' => 'required|email',
-                'comm' => 'sometimes|required',
-                'value' => 'required|between:0,5'
-            ]);
+    public function ajout(Request $request)
+    {
+        $user = auth()->user();
+        if (!Empty($user->email_verified_at)) {
+            $nb_commande = DB::table('commande')
+                ->where('user_id','=', $user->id)
+                ->where("statut_pay", "=", "Payé")
+                ->count();
 
-            if($validate_data->fails() || $request['email'] != $user->email) {
-                echo "Il y a une erreur avec votre E-mail ou votre commentaire";
-            }
-            else{   //il faut checker si l'adresse mail rentrée  est la meme que celle en base
-                DB::table("Commentaire")->insert([
-                    'email' => $request["email"],
-                    'commentaire' => $request["comm"],
-                    'note' => $request["value"],
-                    'created_at' => date('Y-m-d H:i:s')
+            $nb_commentaire = DB::table('commentaire')
+                ->where('email','=', $user->email)
+                ->count();
+
+            if ($nb_commentaire < $nb_commande) {
+                $validate_data = Validator::make($request->all(), [
+                    'email' => 'required|email',
+                    'comm' => 'sometimes|required',
+                    'value' => 'required|between:0,5'
                 ]);
+
+                if ($validate_data->fails() || $request['email'] != $user->email) {
+                    echo "Il y a une erreur avec votre E-mail ou votre commentaire";
+                } else {   //il faut checker si l'adresse mail rentrée  est la meme que celle en bas
+                    DB::table("Commentaire")->insert([
+                        'email' => $request["email"],
+                        'username' => $user->username,
+                        'commentaire' => $request["comm"],
+                        'note' => $request["value"],
+                        'created_at' => date('Y-m-d H:i:s')
+                    ]);
+                }
+                $commentaires = $this->com();
+                return view('avis')->with('commentaires', $commentaires);
+            }
+            else {
+                return back()->with('message', 'Vous ne pouvez pas mettre plus de commentaire.');
             }
         }
         else {
-            abort('404');
+            return back()->with('message', 'Votre email doit être vérifié !');
         }
     }
+
     public function clear_db()
     {
-    	Db::table('Commentaire')->delete();
-    	return back()->with('message','Base de commentaire vidée');
+        Db::table('Commentaire')->delete();
+        return back()->with('message','Base de commentaire vidée');
     }
 
-    public function afficher(){ //affichage du dernier commentaire
-    	$top_comm = DB::table('Commentaire')->orderBy('id','DESC')->select('commentaire','note')->get();
-    	return $top_comm;
+    public function afficher(Request $request) { //affichage du dernier commentaire
+        $choix = $request["choix"];
+        if($choix == "moins") {
+            $com = DB::table('commentaire')
+                ->orderBy('note', 'asc')
+                ->get();
+        }
+        else if ($choix == "mieux") {
+            $com = DB::table('commentaire')
+                ->orderBy('note', 'desc')
+                ->get();
+        }
+        else {
+            $com = $this->com();
+        }
+        return view('avis')->with("commentaires", $com);
+    }
+
+    public function com() {
+        $com = DB::table("commentaire")
+            ->orderBy('created_at', 'desc')
+            ->get();
+        return $com;
+    }
+
+    public function afficherdefaut() {
+        $com = $this->com();
+
+        return view('avis')->with("commentaires", $com);
     }
 
 }

@@ -18,6 +18,8 @@ class Commentaire extends Migration
             $table->string('email');
             $table->string('commentaire');
             $table->string('note');
+            $table->string('username');
+
             //$table->timestamp('date')->nullable();
             $table->timestamps();
             });

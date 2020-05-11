@@ -33,10 +33,11 @@ Route::get('make-migration',
         return back();
     })->name('make-migration');
 
-Route::get('commentaire', 'Commentaire@index')->name('home');
-Route::get('ajout_commentaire', 'Commentaire@ajout')->name('ajout_commentaire');
+Route::get('ajout_commentaire', 'Commentaire@ajout')->name('ajout_commentaire')->middleware('verified');
 Route::get('clear_db', 'Commentaire@clear_db')->name('clear_db');
-Route::get('afficher_comm', 'Commentaire@afficher')->name('afficher_comm');
+Route::get('avis','Commentaire@afficherdefaut')->name('avis');
+Route::get('commentaire',"Commentaire@voir")->name('commentaire')->middleware('verified');
+Route::get('afficher', 'Commentaire@afficher')->name('afficher');
 
 
 /*PIZZA */
@@ -126,4 +127,3 @@ Route::get('engagements', function(){
     return view('engagements');
 })->name('engagements');
 
-Route::get('avis', 'Commentaire@index')->name('avis');
