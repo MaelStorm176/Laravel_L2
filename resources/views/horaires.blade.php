@@ -1,6 +1,5 @@
 @extends('layouts.base')
 @section('content')
-
     <div class="container">
         <section class="row">
             <div class="col-lg-12">
@@ -34,55 +33,4 @@
             </div>
         </section>
     </div>
-
-    @auth
-        @if(Auth::user()->role == 'admin')
-            <!-- MODAL -->
-            <div class="modal fade" id="exampleModalCenterCode" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header bg-success">
-                            <h5 class="modal-title" id="exampleModalLongTitleCode">Modifier un horaire</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="{{ route('horaires.modif') }}" id="formucode" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                <table class="table table-bordered text-center">
-                                    <thead class="bg-primary text-white ">
-                                    <tr>
-                                        <th scope="col"></th>
-                                        <th scope="col">Midi</th>
-                                        <th scope="col">Soir</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <th id="jour_modif" class="bg-info text-white" scope="row"></th>
-                                        <td><input name="midi_modif" id="midi_modif" class="form-control" placeholder="Entrez un horaire" required></td>
-                                        <td><input name="soir_modif" id="soir_modif" class="form-control" placeholder="Entrez un horaire" required></td>
-                                        <input name="id_modif" id="id_modif" type="hidden" value="">
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                                    <button type="submit" id="upload" class="btn btn-primary">Modifier</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @endif
-    @endauth
 @endsection
-
-<script type="text/javascript">
-function modifier(nom,id){
-    $('#jour_modif').html(nom);
-    $('#id_modif').val(id);
-}
-</script>

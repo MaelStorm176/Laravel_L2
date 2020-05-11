@@ -206,7 +206,7 @@ class Pizza extends Menu
 
     public function categorie_upload(Request $request)
     {
-        DB::table('categorie')->updateOrInsert(['nom' => $request['remise']]);
+        DB::table('categorie')->updateOrInsert(['nom' => $request['nom']]);
         return back()->with('message','Votre catégorie a été ajouté');
     }
 }
