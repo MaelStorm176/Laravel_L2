@@ -104,7 +104,6 @@ Route::get('/table_vide',function (){
 /* ACCUEIL */
 Route::get('/','HomeController@index')->name('/');
 Route::get('horaires','HomeController@horaires')->name('horaires');
-Route::post('horaires.modif','HomeController@horaires_modif')->name('horaires.modif');
 
 /*ACCUEIL CAROUSEL*/
 Route::post('/modif_carousel', 'Accueil_Carousel@modifier')->name('accueil_carousel');
@@ -119,6 +118,24 @@ Route::get('parametres', function(){
 })->name('parametres');
 Route::get('conf_email', 'ParametresController@verify')->name('conf_email');
 Route::get('verif_email', 'ParametresController@verif_email');
+
+/* ADMINISTRATION */
+Route::get('admin/home', 'Admin@index')->name('admin');
+Route::get('admin/horaires', 'Admin@horaires')->name('adm_horaires');
+Route::post('admin/horaires.modif', 'Admin@horaires_modif')->name('adm_horaires.modif');
+Route::get('admin/secondaire', 'Admin@secondaire')->name('adm_secondaire');
+Route::get('admin/avis', 'Admin@avis')->name('adm_avis');
+Route::get('admin/engagements', 'Admin@engagements')->name('adm_engagements');
+Route::get('admin/general', 'Admin@general')->name('adm_general');
+Route::get('admin/commandes', 'Admin@commandes')->name('adm_commandes');
+Route::get('admin/historique_commandes', 'Admin@historique_commandes')->name('adm_historique_commandes');
+Route::get('admin/informations', 'Admin@informations')->name('adm_informations');
+Route::get('admin/droits', 'Admin@droits')->name('adm_droits');
+Route::get('admin/expulsions', 'Admin@expulsions')->name('adm_expulsions');
+Route::get('admin/codes', 'Admin@codes')->name('adm_codes');
+Route::get('admin/articles', 'Admin@articles')->name('adm_articles');
+Route::get('admin/menus', 'Admin@menus')->name('adm_menus');
+Route::get('admin/promotions', 'Admin@promotions')->name('adm_promotions');
 
 /*********************/
 

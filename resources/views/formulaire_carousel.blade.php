@@ -45,7 +45,7 @@
 function supprimer(id){
     var dummy = Date.now();
     $.ajax({
-        url :'/modif_carousel_supprimer',
+        url :'../modif_carousel_supprimer',
         type : 'GET',
         dataType : 'html',
         data : {dummy:dummy, id:id},
