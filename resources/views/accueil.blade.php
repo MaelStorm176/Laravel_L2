@@ -279,21 +279,13 @@
                     <div class="card-header bg-danger">Nos partenaires<span class="fas fa-handshake float-right mt-1"></span></div>
                     <div class="card-body">
                         <ul class="list-group">
-                            <a href="#" class="text-decoration-none">
-                                <li class="list-group-item list-group-item-primary rounded-0" data-toggle="tooltip" data-placement="left" title="http://partenaire1.com">
-                                    Partenaire1<span class="fas fa-link float-right mt-1"></span>
-                                </li>
-                            </a>
-                            <a href="#" class="text-decoration-none">
-                                <li class="list-group-item list-group-item-secondary rounded-0" data-toggle="tooltip" data-placement="left" title="http://partenaire2.com">
-                                    Partenaire2<span class="fas fa-link float-right mt-1"></span>
-                                </li>
-                            </a>
-                            <a href="#" class="text-decoration-none">
-                                <li class="list-group-item list-group-item-primary rounded-0" data-toggle="tooltip" data-placement="left" title="http://partenaire3.com">
-                                    Partenaire3<span class="fas fa-link float-right mt-1"></span>
-                                </li>
-                            </a>
+                            @foreach($partenaires as $partenaire)
+                                <a href="{{$partenaire->lien}}" class="text-decoration-none">
+                                    <li class="list-group-item list-group-item-primary rounded-0" data-toggle="tooltip" data-placement="left" title="{{$partenaire->lien}}">
+                                        {{$partenaire->nom}}<span class="fas fa-link float-right mt-1"></span>
+                                    </li>
+                                </a>
+                            @endforeach
                         </ul>
                     </div>
                 </div>

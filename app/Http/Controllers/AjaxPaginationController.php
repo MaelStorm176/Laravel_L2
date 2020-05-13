@@ -15,7 +15,7 @@ class AjaxPaginationController extends Controller
      */
     public function ajaxPagination(Request $request)
     {
-        $products = DB::table('commande')->select('*')->where('statut_prepa','!=','En cours')->orderBy('updated_at','DESC')->paginate(5);
+        $products = DB::table('commande')->select('*')->orderBy('updated_at','DESC')->paginate(5);
 
         if ($request->ajax()) {
             return view('presult', compact('products'));

@@ -17,5 +17,6 @@ class DatabaseSeeder extends Seeder
         $this->call(Coupon_Seeder::class);
         $this->call(Carousel_seeder::class);
         $this->call(Horaires_seeder::class);
+        $this->call(Partenaires_seeder::class);
     }
 }

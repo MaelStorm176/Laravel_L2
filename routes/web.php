@@ -53,12 +53,18 @@ Route::post('categorie.upload','Pizza@categorie_upload')->name('categorie.upload
 
 /*MENU*/
 Route::post('menu.upload','Menu@upload')->name('menu.upload');
+Route::post('menu.modifier','Menu@modifier')->name('menu.modifier');
+Route::post('menu.promotion','Menu@promotion')->name('menu.promotion');
+Route::get('menu.supprimer','Menu@supprimer')->name('menu.supprimer');
+Route::get('afficher_form_menu','Menu@afficher_form')->name('afficher_form_menu');
 Route::get('afficher_cat','Menu@afficher_cat')->name('afficher_cat');
+Route::get('pizza_all/menu/{menu_nom}','Menu@detail')->name('afficher_menu');
 
 /*PANIER*/
 Route::get('panier','Panier@afficher')->name('panier');
 Route::get('panier.creer','Panier@creer')->name('panier.creer');
 Route::get('panier.ajouter','Panier@ajouter')->name('panier.ajouter');
+Route::get('panier.ajouter_menu','Panier@ajouter_menu')->name('panier.ajouter_menu');
 Route::get('panier.modifier','Panier@modifier')->name('panier.modifier');
 Route::get('panier.contenu_supprimer','Panier@contenu_supprimer')->name('panier.contenu_supprimer');
 
@@ -131,6 +137,7 @@ Route::get('admin/general', 'Admin@general')->name('adm_general');
 Route::get('admin/commandes', 'Admin@commandes')->name('adm_commandes');
 Route::get('admin/historique_commandes', 'Admin@historique_commandes')->name('adm_historique_commandes');
 Route::get('admin/informations', 'Admin@informations')->name('adm_informations');
+Route::post('admin/informations', 'Admin@informations')->name('adm_informations');
 Route::get('admin/droits', 'Admin@droits')->name('adm_droits');
 Route::get('admin/expulsions', 'Admin@expulsions')->name('adm_expulsions');
 Route::get('admin/codes', 'Admin@codes')->name('adm_codes');
@@ -138,6 +145,9 @@ Route::get('admin/articles', 'Admin@articles')->name('adm_articles');
 Route::get('admin/menus', 'Admin@menus')->name('adm_menus');
 Route::get('admin/promotions', 'Admin@promotions')->name('adm_promotions');
 
+/*PARTENAIRES*/
+Route::get('partenaire_ajout', 'Admin@partenaire_ajout')->name('partenaire_ajout');
+Route::get('partenaire_supprimer', 'Admin@partenaire_supprimer')->name('partenaire_supprimer');
 /*********************/
 
 Route::get('engagements', function(){

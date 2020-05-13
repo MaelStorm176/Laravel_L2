@@ -17,8 +17,8 @@ class StripePaymentController extends Controller
      */
     public function index()
     {
-        list($prix_total,$products,$q_tot) = $this->commande_finale();
-        return view('payment',compact('products','prix_total','q_tot'));
+        list($prix_total,$products,$menu,$q_tot) = $this->commande_finale();
+        return view('payment',compact('products','menu','prix_total','q_tot'));
     }
 
     public function stripe()
@@ -35,7 +35,12 @@ class StripePaymentController extends Controller
         $products = DB::table('pizza')
             ->join('contenu_panier', 'pizza.id', '=', 'contenu_panier.id_pizza')
             ->where('contenu_panier.id_panier', '=' , $id_panier)
-            ->select('promo','contenu_panier.quantite','nom','statut')
+            ->select('*')
+            ->get();
+        $menu = DB::table('menu')
+            ->join('contenu_panier', 'menu.id', '=', 'contenu_panier.id_menu')
+            ->where('contenu_panier.id_panier', '=' , $id_panier)
+            ->select('promo','contenu_panier.quantite','nom','contenu_panier.id')
             ->get();
         $prix_total = 0;
         $q_tot = 0;
@@ -43,7 +48,11 @@ class StripePaymentController extends Controller
             $prix_total += ($key->promo) * ($key->quantite);
             $q_tot += $key->quantite;
         }
-        return array($prix_total,$products,$q_tot);
+        foreach ($menu as $key) {
+            $prix_total += ($key->promo) * ($key->quantite);
+            $q_tot += $key->quantite;
+        }
+        return array($prix_total,$products,$menu,$q_tot);
     }
 
     /**

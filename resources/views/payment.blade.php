@@ -96,6 +96,15 @@
                                     <span class="text-muted">{{$key->promo}} €</span>
                                 </li>
                             @endforeach
+                            @foreach($menu as $key2)
+                                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                    <div>
+                                        <h6 class="my-0">{{$key2->nom}} x {{$key2->quantite}}</h6>
+                                        <small class="text-muted">{{$key->statut}}</small>
+                                    </div>
+                                    <span class="text-muted">{{$key2->promo}} €</span>
+                                </li>
+                            @endforeach
                             <li id="affichage" style="display:none;" class="list-group-item justify-content-between bg-light">
                                 <div class="text-success">
                                     <h6 class="my-0">Promo code</h6>

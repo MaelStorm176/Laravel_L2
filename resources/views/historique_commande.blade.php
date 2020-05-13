@@ -7,7 +7,7 @@
         <section class="row">
             <div class="col-lg-12">
                 @auth
-                    <div class="card bg-success text-white text-center p-3 font-weight-bold font-italic mb-3" data-toggle="modal" onclick="myFunction()">
+                    <div class="card bg-success text-white text-center p-3 font-weight-bold font-italic mb-3">
                         <h5 class="mb-0">HISTORIQUE DE VOS COMMANDES</h5>
                     </div>
                     @if(Auth::user()->role=='admin')

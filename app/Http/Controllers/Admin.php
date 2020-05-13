@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -53,34 +55,74 @@ class Admin extends Controller
     }
 
     public function secondaire()
-    {   
+    {
         $carousel=DB::table('accueil_carousel')->select('*')->get();
-        return view('adm/adm_secondaire')->with('carousel', $carousel);
+        $partenaires = DB::table('partenaires')->select('*')->get();
+        return view('adm/adm_secondaire',compact('carousel','partenaires'));
+    }
+
+    public function partenaire_ajout(Request $request)
+    {
+        DB::table('partenaires')->updateOrInsert([
+            'nom' => $request['nom'],
+            'lien' => $request['lien']
+        ]);
+
+        return redirect('admin/secondaire');
+    }
+
+    public function partenaire_supprimer(Request $request)
+    {
+        DB::table('partenaires')->where('id','=',$request['id'])->delete();
     }
 
     public function commandes()
-    {   
+    {
         return view('adm/adm_commandes');
     }
 
     public function historique_commandes()
-    {   
+    {
         $products = DB::table('commande')->select('*')->where('statut_prepa','!=','En cours')->orderBy('updated_at','DESC')->paginate(5);
         return view('adm/adm_historique_commande', compact('products'));
     }
 
-    public function informations()
-    {   
-        return view('adm/adm_informations');
+    public function informations(Request $request)
+    {
+        if (!empty($request['last_name']) && !empty($request['first_name']))
+        {
+            $users = DB::table('users')
+                ->where('last_name', '=', $request['last_name'])
+                ->where('first_name', '=', $request['first_name'])
+                ->paginate(15);
+        }
+        elseif (!empty($request['last_name']))
+        {
+            $users = DB::table('users')
+                ->where('last_name', '=', $request['last_name'])
+                ->paginate(15);
+        }
+
+        elseif (!empty($request['first_name']))
+        {
+            $users = DB::table('users')
+                ->where('first_name', '=', $request['first_name'])
+                ->paginate(15);
+        }
+        else
+        {
+            $users = DB::table('users')->paginate(15);
+        }
+        return view('adm/adm_informations')->with('users',$users);
     }
-    
+
     public function droits()
-    {   
+    {
         return view('adm/adm_droits');
     }
-    
+
     public function expulsions()
-    {   
+    {
         return view('adm/adm_expulsions');
     }
 
@@ -90,7 +132,7 @@ class Admin extends Controller
     }
 
     public function articles()
-    {   
+    {
         $categorie = DB::table('categorie')->select('*')->get();
         $pizza = DB::table('pizza')->orderBy('id','desc')->get();
         return view('adm/adm_articles',compact('pizza','categorie'));

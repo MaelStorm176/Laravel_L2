@@ -28,6 +28,12 @@
                 <td>{{$key2->quantite}}</td>
             </tr>
             @endforeach
+            @foreach($menu as $key3)
+                <tr>
+                    <td>{{$key3->nom}}</td>
+                    <td>{{$key3->quantite}}</td>
+                </tr>
+            @endforeach
         </tbody>
     </table>
 @endif

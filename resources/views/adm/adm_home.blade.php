@@ -38,7 +38,7 @@
                                     <td><input type="text" class="form-control text-center" placeholder="xx" readonly></td>
                                 </tr>
                             </tbody>
-                        </table>                                        
+                        </table>
                     </div>
                 </div>
             </div>
@@ -75,7 +75,7 @@
                                     <td><input type="text" class="form-control text-center" placeholder="xx" readonly></td>
                                 </tr>
                             </tbody>
-                        </table>         
+                        </table>
                     </div>
                 </div>
             </div>
@@ -112,7 +112,7 @@
                                         <td><input type="text" class="form-control text-center" placeholder="xx" readonly></td>
                                     </tr>
                                 </tbody>
-                            </table>         
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -149,7 +149,7 @@
                                         <td><input type="text" class="form-control text-center" placeholder="xx" readonly></td>
                                     </tr>
                                 </tbody>
-                            </table>         
+                            </table>
                         </div>
                     </div>
                 </div>

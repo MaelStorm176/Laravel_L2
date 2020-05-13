@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\User;
 class Commande extends Controller
 {
     public function afficher_comm(Request $request){ //affichage du dernier commentaire
@@ -13,7 +14,12 @@ class Commande extends Controller
                 ->where('contenu_panier.id_panier', '=' , $request['idaffiche'])
                 ->select('contenu_panier.quantite','nom')
                 ->get();
-            return view('historique_ajax',compact('request','products'));
+            $menu = DB::table('menu')
+                ->join('contenu_panier', 'menu.id', '=', 'contenu_panier.id_menu')
+                ->where('contenu_panier.id_panier', '=' , $request['idaffiche'])
+                ->select('promo','contenu_panier.quantite','nom','contenu_panier.id')
+                ->get();
+            return view('historique_ajax',compact('request','products','menu'));
         }
         elseif ($request['typeAction'] == 0)
         {

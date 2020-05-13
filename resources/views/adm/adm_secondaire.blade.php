@@ -88,21 +88,13 @@
                                 </tr>
                             </thead>
                             <tbody class="bg-secondary text-white">
-                                <tr>
-                                    <td>PARTENAIRE 1</td>
-                                    <td><a href="#">http://partenaire1.com</a></td>
-                                    <td><span class="fas fa-trash-alt"></span></td>
+                            @foreach($partenaires as $partenaire)
+                                <tr id="{{$partenaire->id}}">
+                                    <td>{{$partenaire->nom}}</td>
+                                    <td><a href="{{$partenaire->lien}}">{{$partenaire->lien}}</a></td>
+                                    <td><span class="fas fa-trash-alt" onclick="partenaire_supprimer({{$partenaire->id}})"></span></td>
                                 </tr>
-                                <tr>
-                                    <td>PARTENAIRE 2</td>
-                                    <td><a href="#">http://partenaire2.com</a></td>
-                                    <td><span class="fas fa-trash-alt"></span></td>
-                                </tr>
-                                <tr>
-                                    <td>PARTENAIRE 1</td>
-                                    <td><a href="">http://partenaire3.com</a></td>
-                                    <td><span class="fas fa-trash-alt"></span></td>
-                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                         <button type="button" class="btn btn-primary text-white w-100" data-toggle="modal" data-target="#ajoutModalCenterCode">
@@ -152,19 +144,19 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form class="mb-0">
+            <form class="mb-0" action="{{route('partenaire_ajout')}}">
                 <div class="modal-body">
                     <section class="row">
                         <div class="col-lg-6 mb-3">
                             <label for="nom">Nom</label>
-                            <input type="text" id="nom" class="form-control">
+                            <input type="text" id="nom" name="nom" class="form-control">
                         </div>
                         <div class="col-lg-6 mb-3">
                             <label for="lien">Lien du site</label>
-                            <input type="text" id="lien" class="form-control">
+                            <input type="text" id="lien" name="lien" class="form-control">
                         </div>
                     </section>
-                </div>    
+                </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                     <button type="submit" id="upload" class="btn btn-primary">Ajouter</button>
@@ -257,7 +249,26 @@
         </div>
     </div>
 </div>
+@section('script')
 <script>
+    function partenaire_supprimer(id) {
+        var dummy = Date.now();
+        $.ajax({
+            url : '../partenaire_supprimer',
+            type : 'GET',
+            dataType : 'html',
+            data : {dummy:dummy, id:id},
+            success : function(code_html, statut){
+                $('tr[id="'+id+'"]').remove();
+            },
+
+            error : function(resultat, statut, erreur){
+                alert('Erreur avec la requete Ajax');
+            },
+        });
+    }
+
+
     function afficher_form_carousel(id) {
         var dummy = Date.now();
         $.ajax({
@@ -299,3 +310,4 @@
         });
     }
 </script>
+@endsection
