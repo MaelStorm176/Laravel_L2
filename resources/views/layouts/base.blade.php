@@ -100,6 +100,9 @@
                                 @csrf
                             </form>
                             </div>
+
+                            <i class="fas fa-shopping-cart" style="color:#fff;"></i>
+                            <span class="badge badge-primary badge-pill px-2 py-1" id="quantite_total_panier"><?php echo \App\Http\Controllers\Panier::quantite_total(); ?></span>
                         </div>
                     @endauth
                 </div>

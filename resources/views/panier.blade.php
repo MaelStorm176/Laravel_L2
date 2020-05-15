@@ -87,6 +87,7 @@
             supprimer(id,type);
         }
         else {
+
             var dummy = Date.now();
             $.ajax({
                 url: 'panier.modifier',
@@ -98,6 +99,7 @@
                     var dataretour = code_html.split('_|');
                     $('#prix_total').html(dataretour[0]);
                     $('#quantite_total').html(dataretour[1]+' articles');
+                    $('#quantite_total_panier').html(dataretour[1]);
                 },
 
                 error: function (resultat, statut, erreur) {
@@ -125,6 +127,7 @@
                 }
                 $('#prix_total').html(dataretour[0]);
                 $('#quantite_total').html(dataretour[1]+' articles');
+                $('#quantite_total_panier').html('0');
             },
 
             error : function(resultat, statut, erreur){

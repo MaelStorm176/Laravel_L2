@@ -128,7 +128,8 @@ class Admin extends Controller
 
     public function codes()
     {
-        return view('adm/adm_codes');
+        $coupons = DB::table('coupon')->orderBy('id','desc')->get();
+        return view('adm/adm_codes',compact('coupons'));
     }
 
     public function articles()
@@ -140,11 +141,27 @@ class Admin extends Controller
 
     public function menus()
     {
-        return view('adm/adm_menus');
+        $menus = DB::table('menu')->select('*')->get();
+        $contenu_menu_r = DB::table('contenu_menu')->pluck('id_pizza');
+        $contenu_menu = DB::table('contenu_menu')->select('id_menu','id_pizza')->get();
+        $pizza = DB::table('pizza')->whereIn('id',$contenu_menu_r)->select('nom','categorie','id')->get();
+        return view('adm/adm_menus',compact('pizza','menus','contenu_menu'));
     }
 
     public function promotions()
     {
-        return view('adm/adm_promotions');
+        $pizza = DB::table('pizza')->select('*')->get();
+        $categories = DB::table('categorie')->select('*')->get();
+        return view('adm/adm_promotions',compact('pizza','categories'));
+    }
+
+    public function refresh_article(Request $request)
+    {
+        $articles = DB::table('pizza')->where('categorie','=',$request['nom'])->select('id','nom')->get();
+        echo '<option name="pizza">-- Selectionner --</option>';
+        foreach ($articles as $article)
+        {
+            echo '<option value="'.$article->id.'">'.$article->nom.'</option>';
+        }
     }
 }

@@ -20,7 +20,7 @@ class Commentaire extends Controller
         if (!Empty($user->email_verified_at)) {
             $nb_commande = DB::table('commande')
                 ->where('user_id','=', $user->id)
-                ->where("statut_pay", "=", "Payé")
+                ->where("statut_pay", "=", "Validé")
                 ->count();
 
             $nb_commentaire = DB::table('commentaire')

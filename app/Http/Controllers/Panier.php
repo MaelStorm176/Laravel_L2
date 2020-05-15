@@ -100,7 +100,7 @@ class Panier extends Controller
         foreach ($pizza_and_quantite as $key) {
             if($key->id_menu == $id_menu){
                 $somme = $key->quantite + $quantite;
-                DB::table('contenu_panier')->where('id_pizza','=',$id_menu)->update([
+                DB::table('contenu_panier')->where('id_menu','=',$id_menu)->update([
                     'quantite' => $somme
                 ]);
                 Session::flash('message','Cet article a été ajouté à votre panier');
@@ -139,24 +139,24 @@ class Panier extends Controller
             $products = $products_menu[0];
             $menu = $products_menu[1];
             $prix_total = $this->prix_total($products_menu);
-            $quantite_total = $this->quantite_total($products_menu);
+            $quantite_total = $this->quantite_total();
             return view('panier', compact('products', 'prix_total', 'quantite_total','menu'));
         }
         return view('panier');
     }
 
-    public function quantite_total($products)
+    public static function quantite_total()
     {
-        $q_tot = 0;
-        foreach ($products[0] as $key)
-        {
-            $q_tot += $key->quantite;
-        }
-        foreach ($products[1] as $key)
-        {
-            $q_tot += $key->quantite;
-        }
-        return $q_tot;
+        $quantite_tot = 0;
+        $id_panier = DB::table('panier')
+            ->where('user_id',"=",auth::user()->id)
+            ->where('type_panier','=',FALSE)
+            ->value('id');
+        $quantite_tot += DB::table('contenu_panier')
+            ->where('contenu_panier.id_panier', '=' , $id_panier)
+            ->sum('quantite');
+
+        return $quantite_tot;
     }
 
     public function get_products()

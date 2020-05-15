@@ -23,7 +23,7 @@ class Commande extends Controller
         }
         elseif ($request['typeAction'] == 0)
         {
-            $commande = DB::table('commande')->select('*')->where('statut_prepa','=','En cours')->get();
+            $commande = DB::table('commande')->orderBy('created_at','asc')->where('statut_prepa','=','En cours')->get();
             return view('historique_ajax',compact('request','commande'));
         }
         else

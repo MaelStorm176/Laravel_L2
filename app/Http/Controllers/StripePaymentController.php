@@ -96,8 +96,7 @@ class StripePaymentController extends Controller
             'id_panier' => $id_panier,
             'statut_prepa'=>'En cours',
             'statut_pay'=>'Validé',
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s')
+            'created_at' => date('Y-m-d H:i:s')
         ]);
 
         //JE VIDE LE PANIER

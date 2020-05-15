@@ -24,7 +24,7 @@
                             <h5 class="modal-title w-100 text-center" id="exampleModalCenterTitle">Paiement effectué</h5>
                         </div>
                         <div class="modal-body">
-                            <form action="{{route('home')}}" method="get">
+                            <form action="{{route('historique_commande')}}" method="get">
                                 <button type="submit" class="btn btn-primary w-100">
                                     RETOUR AU SITE
                                     <span class="fas fa-arrow-alt-circle-left mt-1 align-center"></span>

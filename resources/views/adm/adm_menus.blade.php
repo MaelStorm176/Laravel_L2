@@ -38,7 +38,7 @@
                                 <div class="col-lg-6">
                                     <button type="submit" class="btn btn-primary w-100">CREER</button>
                                 </div>
-                            </section>            
+                            </section>
                         </form>
                     </div>
                 </div>
@@ -48,108 +48,45 @@
                     <div class="card-header bg-info text-white">Liste des menus<span class="fas fa-bars mt-1 float-right"></span></div>
                     <div class="card-body">
                         <section class="row row-cols-1 row-cols-md-2">
-                            <div class="col mb-3">
-                                <div class="card">
-                                    <div class="row no-gutters">
-                                        <div class="col-md-4">
-                                            <img src="../img/menus.jpg" class="rounded-left w-100 h-100">
-                                         </div>
-                                        <div class="col-md-8">
-                                            <div class="card-body">
-                                                <div class="badge badge-primary p-2 float-right text-white"> XX.XX €</div>
-                                                <h5 class="card-title mt-1">MENU X</h5>
-                                                <p class="card-text text-justify">(description)</p>
-                                                <ul class="list-group mb-3">
-                                                    <li class="list-group-item list-group-item-primary rounded-0">
-                                                        1 Pizza
-                                                    </li>
-                                                    <li class="list-group-item list-group-item-secondary rounded-0">
-                                                        1 Boisson
-                                                    </li>
-                                                    <li class="list-group-item list-group-item-primary rounded-0">
-                                                        1 Dessert
-                                                    </li>
-                                                </ul>
-                                                <section class="row">
-                                                    <div class="col-lg-6">
-                                                        <button type="button" class="btn btn-success w-100">MODIFIER</button>
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <button type="button" class="btn btn-danger w-100">SUPPRIMER</button>
-                                                    </div>
-                                                </section>
+                            @foreach($menus as $menu)
+                                <div class="col mb-3">
+                                    <div class="card">
+                                        <div class="row no-gutters">
+                                            <div class="col-md-4">
+                                                <img src="../img/menus.jpg" class="rounded-left w-100 h-100">
+                                             </div>
+                                            <div class="col-md-8">
+                                                <div class="card-body">
+                                                    <div class="badge badge-primary p-2 float-right text-white"> {{$menu->promo}} €</div>
+                                                    <h5 class="card-title mt-1">{{$menu->nom}}</h5>
+                                                    <p class="card-text text-justify">{{$menu->description}}</p>
+                                                    <ul class="list-group mb-3">
+                                                        @foreach($contenu_menu as $key)
+                                                            @if($key->id_menu == $menu->id)
+                                                                @foreach($pizza as $item)
+                                                                    @if($item->id == $key->id_pizza)
+                                                                        <li class="list-group-item list-group-item-primary rounded-0">
+                                                                            {{$item->nom}}
+                                                                        </li>
+                                                                    @endif
+                                                                @endforeach
+                                                            @endif
+                                                        @endforeach
+                                                    </ul>
+                                                    <section class="row">
+                                                        <div class="col-lg-6">
+                                                            <button type="button" class="btn btn-success w-100">MODIFIER</button>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <button type="button" class="btn btn-danger w-100">SUPPRIMER</button>
+                                                        </div>
+                                                    </section>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col mb-3">
-                                <div class="card">
-                                    <div class="row no-gutters">
-                                        <div class="col-md-4">
-                                            <img src="../img/menus.jpg" class="rounded-left w-100 h-100">
-                                         </div>
-                                        <div class="col-md-8">
-                                            <div class="card-body">
-                                                <div class="badge badge-primary p-2 float-right text-white"> XX.XX €</div>
-                                                <h5 class="card-title mt-1">MENU X</h5>
-                                                <p class="card-text text-justify">(description)</p>
-                                                <ul class="list-group mb-3">
-                                                    <li class="list-group-item list-group-item-primary rounded-0">
-                                                        2 Pizza
-                                                    </li>
-                                                    <li class="list-group-item list-group-item-secondary rounded-0">
-                                                        2 Boisson
-                                                    </li>
-                                                </ul>
-                                                <section class="row">
-                                                    <div class="col-lg-6">
-                                                        <button type="button" class="btn btn-success w-100">MODIFIER</button>
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <button type="button" class="btn btn-danger w-100">SUPPRIMER</button>
-                                                    </div>
-                                                </section>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col mb-3">
-                                <div class="card">
-                                    <div class="row no-gutters">
-                                        <div class="col-md-4">
-                                            <img src="../img/menus.jpg" class="rounded-left w-100 h-100">
-                                         </div>
-                                        <div class="col-md-8">
-                                            <div class="card-body">
-                                                <div class="badge badge-primary p-2 float-right text-white"> XX.XX €</div>
-                                                <h5 class="card-title mt-1">MENU X</h5>
-                                                <p class="card-text text-justify">(description)</p>
-                                                <ul class="list-group mb-3">
-                                                    <li class="list-group-item list-group-item-primary rounded-0">
-                                                        4 Pizza
-                                                    </li>
-                                                    <li class="list-group-item list-group-item-secondary rounded-0">
-                                                        3 Boisson
-                                                    </li>
-                                                    <li class="list-group-item list-group-item-primary rounded-0">
-                                                        4 Dessert
-                                                    </li>
-                                                </ul>
-                                                <section class="row">
-                                                    <div class="col-lg-6">
-                                                        <button type="button" class="btn btn-success w-100">MODIFIER</button>
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <button type="button" class="btn btn-danger w-100">SUPPRIMER</button>
-                                                    </div>
-                                                </section>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                @endforeach
                         </section>
                     </div>
                 </div>

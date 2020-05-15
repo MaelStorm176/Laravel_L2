@@ -7,12 +7,6 @@
         <section class="row">
             <div class="col-lg-12">
                 <div class="card border-info mb-3">
-                    <div class="card-header bg-info text-white">Commandes à Accepter<span class="fas fa-check-square mt-1 float-right"></span></div>
-                    <div class="card-body">
-                        <p class="text-center">Il faudrait ici créer un systeme afin que l'adm puisse accepter la commandes avant de la passer dans commandes en cours.</p>
-                    </div>
-                </div>
-                <div class="card border-info mb-3">
                     <div class="card-header bg-info text-white">Commandes en Cours<span class="fas fa-dolly mt-1 float-right"></span></div>
                     <div class="card-body">
                         <table class="table table-hover table-bordered mb-3 text-center">
@@ -61,7 +55,7 @@
     </div>
 </div>
 <script>
-    
+
     function charger_commande(typeAction,idaffiche) {
         var dummy = Date.now();
         $.ajax({
@@ -100,12 +94,5 @@
 
     function afficher(id) {
         charger_commande(1,id);
-        /*
-        var div = $('div[id="div_'+id+'"]');
-        if (div.css("display") === "none") {
-            $('#append_here').html(div);
-            div.css("display","block");
-        }
-        */
     }
 </script>

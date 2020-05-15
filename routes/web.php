@@ -50,6 +50,7 @@ Route::get('pizza_all/{pizza_nom}','Pizza@detail');
 Route::get('pizza_all/{pizza_nom}/remplissage_tab','Pizza@nutrition');
 Route::post('pizza.promotion','Pizza@promotion')->name('promotion');
 Route::post('code.upload','CodeController@upload')->name('code.upload');
+Route::get('code.supprimer','CodeController@supprimer')->name('code.supprimer');
 Route::post('categorie.upload','Pizza@categorie_upload')->name('categorie.upload');
 
 /*MENU*/
@@ -128,27 +129,30 @@ Route::get('conf_email', 'ParametresController@verify')->name('conf_email');
 Route::get('verif_email', 'ParametresController@verif_email');
 
 /* ADMINISTRATION */
-Route::get('admin/home', 'Admin@index')->name('admin');
-Route::get('admin/horaires', 'Admin@horaires')->name('adm_horaires');
-Route::post('admin/horaires.modif', 'Admin@horaires_modif')->name('adm_horaires.modif');
-Route::get('admin/secondaire', 'Admin@secondaire')->name('adm_secondaire');
-Route::get('admin/avis', 'Admin@avis')->name('adm_avis');
-Route::get('admin/engagements', 'Admin@engagements')->name('adm_engagements');
-Route::get('admin/general', 'Admin@general')->name('adm_general');
-Route::get('admin/commandes', 'Admin@commandes')->name('adm_commandes');
-Route::get('admin/historique_commandes', 'Admin@historique_commandes')->name('adm_historique_commandes');
-Route::get('admin/informations', 'Admin@informations')->name('adm_informations');
-Route::post('admin/informations', 'Admin@informations')->name('adm_informations');
-Route::get('admin/droits', 'Admin@droits')->name('adm_droits');
-Route::get('admin/expulsions', 'Admin@expulsions')->name('adm_expulsions');
-Route::get('admin/codes', 'Admin@codes')->name('adm_codes');
-Route::get('admin/articles', 'Admin@articles')->name('adm_articles');
-Route::get('admin/menus', 'Admin@menus')->name('adm_menus');
-Route::get('admin/promotions', 'Admin@promotions')->name('adm_promotions');
+Route::middleware('can:accessAdminpanel')->group(function() {
+    Route::get('admin/home', 'Admin@index')->name('admin');
+    Route::get('admin/horaires', 'Admin@horaires')->name('adm_horaires');
+    Route::post('admin/horaires.modif', 'Admin@horaires_modif')->name('adm_horaires.modif');
+    Route::get('admin/secondaire', 'Admin@secondaire')->name('adm_secondaire');
+    Route::get('admin/avis', 'Admin@avis')->name('adm_avis');
+    Route::get('admin/engagements', 'Admin@engagements')->name('adm_engagements');
+    Route::get('admin/general', 'Admin@general')->name('adm_general');
+    Route::get('admin/commandes', 'Admin@commandes')->name('adm_commandes');
+    Route::get('admin/historique_commandes', 'Admin@historique_commandes')->name('adm_historique_commandes');
+    Route::get('admin/informations', 'Admin@informations')->name('adm_informations');
+    Route::post('admin/informations', 'Admin@informations')->name('adm_informations');
+    Route::get('admin/droits', 'Admin@droits')->name('adm_droits');
+    Route::get('admin/expulsions', 'Admin@expulsions')->name('adm_expulsions');
+    Route::get('admin/codes', 'Admin@codes')->name('adm_codes');
+    Route::get('admin/articles', 'Admin@articles')->name('adm_articles');
+    Route::get('admin/menus', 'Admin@menus')->name('adm_menus');
+    Route::get('admin/promotions', 'Admin@promotions')->name('adm_promotions');
+    Route::get('admin/promotions/refresh_article', 'Admin@refresh_article'); //AJAX
+    /*PARTENAIRES*/
+    Route::get('partenaire_ajout', 'Admin@partenaire_ajout')->name('partenaire_ajout');
+    Route::get('partenaire_supprimer', 'Admin@partenaire_supprimer')->name('partenaire_supprimer');
+});
 
-/*PARTENAIRES*/
-Route::get('partenaire_ajout', 'Admin@partenaire_ajout')->name('partenaire_ajout');
-Route::get('partenaire_supprimer', 'Admin@partenaire_supprimer')->name('partenaire_supprimer');
 /*********************/
 
 Route::get('engagements', function(){
