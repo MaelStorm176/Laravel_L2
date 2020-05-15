@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @auth
     <!DOCTYPE HTML>
     <html lang="fr" class="h-100">
@@ -40,3 +41,19 @@
         $('#paieModal').modal('show');
     </script>
 @endauth
+=======
+@extends('layouts.base2')
+@section('titre')
+    Paiement effectué
+@endsection
+@section('contenu')
+    <div class="modal-body">
+        <form action="{{route('/')}}" method="get">
+            <button type="submit" class="btn btn-primary w-100">
+                RETOUR AU SITE
+                <span class="fas fa-arrow-alt-circle-left mt-1 align-center"></span>
+            </button>
+        </form>
+    </div>
+@endsection
+>>>>>>> 49cc7095f0b21405a964539fc96b7165ec62779f
