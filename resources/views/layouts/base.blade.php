@@ -72,7 +72,7 @@
                                     <a class="nav-link" href="{{route('admin')}}">Admin</a>
                                 </li>
                             @endif
-                        @endauth
+                        @endauth 
                     </ul>
                     @guest
                         <div class="navbar-right">

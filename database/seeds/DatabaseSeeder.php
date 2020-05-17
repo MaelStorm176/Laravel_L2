@@ -22,7 +22,9 @@ class DatabaseSeeder extends Seeder
         $this->call(Commentaire_seeder::class);
         $this->call(Panier_seeder::class);
         $this->call(Commande_seeder::class);
-
+        $this->call(Feriee_seeder::class);
+        $this->call(Fermeture_seeder::class);
+        $this->call(Parametres_seeder::class);
 
     }
 }

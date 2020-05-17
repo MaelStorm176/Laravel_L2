@@ -16,9 +16,11 @@ class Admin extends Controller
     }
 
     public function horaires()
-    {
+    {   
+        $fermetures = DB::table('fermeture')->select('*')->get();
+        $feriees = DB::table('feriee')->select('*')->get();
         $horaires = DB::table('horaires')->select('*')->get();
-        return view('adm/adm_horaires')->with('horaires',$horaires);
+        return view('adm/adm_horaires',compact('horaires','fermetures', 'feriees'));
     }
 
     public function horaires_modif(Request $request)
@@ -39,14 +41,123 @@ class Admin extends Controller
         return back()->with('message',"Votre horaire a été modifié.");
     }
 
-    public function avis()
+    public function feriee_ajout(Request $request)
     {
-        return view('adm/adm_avis');
+        $validate_data = Validator::make($request->all(), [
+            'jour' => 'required|string',
+            'midi' => 'required|string',
+            'soir' => 'required|string'
+        ]);
+
+        if($validate_data->fails()){
+            return back()->with('error',"Il y a une erreur avec la création de votre jour fériée.");
+        }
+
+        DB::table('feriee')->updateOrInsert([
+            'jour' => $request['jour'],
+            'midi' => $request['midi'],
+            'soir' => $request['soir']
+        ]);
+
+        return back()->with('message', 'Votre jour fériée à bien été enregistré!');
+    }
+
+    public function feriee_supprimer(Request $request)
+    {   
+        DB::table('feriee')->where('id','=',$request['id'])->delete();
+    }
+
+    public function fermeture_ajout(Request $request)
+    {
+        $validate_data = Validator::make($request->all(), [
+            'dateDeb' => 'required|date',
+            'dateFin' => 'required|date',
+            'motif' => 'required|string'
+        ]);
+
+        if($validate_data->fails()){
+            return back()->with('error',"Il y a une erreur avec la création de votre fermeture.");
+        }
+
+        DB::table('fermeture')->updateOrInsert([
+            'date_debut' => $request['dateDeb'],
+            'date_fin' => $request['dateFin'],
+            'motif' => $request['motif']
+        ]);
+
+        return back()->with('message', 'Votre période de fermeture à bien été enregistré!');
+    }
+
+    public function fermeture_supprimer(Request $request)
+    {
+        DB::table('fermeture')->where('id','=',$request['id'])->delete();
+    }
+
+    public function avis()
+    {   
+        $commentaires = DB::table('commentaire')->select('*')->get();
+        return view('adm/adm_avis')->with('commentaires',$commentaires);
+    }
+
+    public function afficher_avis(Request $request) { //affichage du dernier commentaire
+        $choix = $request["choix"];
+        if($choix == "moins") {
+            $com = DB::table('commentaire')
+                ->orderBy('note', 'asc')
+                ->get();
+        }
+        else if ($choix == "mieux") {
+            $com = DB::table('commentaire')
+                ->orderBy('note', 'desc')
+                ->get();
+        }
+        else {
+            $com = DB::table("commentaire")
+                ->orderBy('created_at', 'desc')
+                ->get();
+        }
+        return view('adm/adm_avis')->with("commentaires", $com);
+    }
+
+    public function supprimer_avis(Request $request)
+    {
+        DB::table('commentaire')->where('id','=',$request['id'])->delete();
     }
 
     public function general()
     {
-        return view('adm/adm_general');
+        $parametres = DB::table('parametres')->where('id', 1)->get();
+        return view('adm/adm_general')->with('parametres', $parametres);
+    }
+
+    public function identite(Request $request)
+    {
+        DB::table('parametres')->where('id','=','1')->update([
+            'nom' => $request['nomPizzeria'],
+            'lien' => $request['lienSite']
+        ]);
+        return back()->with('message', 'L\'identité a bien été enregistré.');
+    }
+
+    public function telephone(Request $request)
+    {
+        DB::table('parametres')->where('id','=','1')->update([
+            'telephone' => $request['num']
+        ]);
+
+        return back()->with('message', 'Le numéro a bien été modfié.');
+    }
+
+    public function adresse(Request $request)
+    {
+        DB::table('parametres')->where('id','=','1')->update([
+            'adresse' => $request['adresse'],
+            'codePostal' => $request['cp'],
+            'ville' => $request['ville']
+
+        ]);
+
+        return back()->with('message', 'L\'adresse a bien été modifié.');
     }
 
     public function engagements()

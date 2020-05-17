@@ -13,13 +13,17 @@ class HomeController extends Controller
         $pizza = DB::table('pizza')->select('*')->where('statut','=','Disponible')->get();
         $carousel=DB::table('accueil_carousel')->select('*')->get();
         $partenaires = DB::table('partenaires')->select('*')->get();
-        return view('accueil',compact('pizza','carousel','partenaires'));
+        $avis = DB::table('commentaire')->orderBy('id')->take(3)->get();
+        $parametres = DB::table('parametres')->get();
+        return view('accueil',compact('pizza','carousel','partenaires', 'avis', 'parametres'));
     }
 
     public function horaires()
     {
         $horaires = DB::table('horaires')->select('*')->get();
-        return view('horaires')->with('horaires',$horaires);
+        $fermetures = DB::table('fermeture')->select('*')->get();
+        $feriees = DB ::table('feriee')->select('*')->get();
+        return view('horaires', compact('horaires', 'fermetures', 'feriees'));
     }
 
 }

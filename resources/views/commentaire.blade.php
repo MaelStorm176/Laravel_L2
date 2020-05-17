@@ -1,11 +1,83 @@
-@extends('layouts.app')
-    <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+@extends('layouts.base2')
+@section('titre')
+    Ajouter un commentaire
+@endsection 
+@section('contenu')
+    <form class="mb-0" action="{{route('ajout_commentaire')}}" method="POST">
+        @csrf
+        <div class="modal-body">
+            <section class="row">
+                <div class="col-lg-12 form-group">
+                    <label for="email">Adresse Mail</label>
+                    <input type="email" id="email" name="email" class="form-control" required>
+                </div>
+                <div class="col-lg-12 form-group">
+                    <label for="commentaire">Entrer votre commentaire</label>
+                    <textarea class="form-control" maxlength="100" id="commentaire" name="comm" required></textarea>
+                </div>
+                <span id="erreur" class="col-lg-12 invalid-feedback" role="alert" style="display: none;">
+                    <strong id="message-erreur"></strong>
+                </span>
+                <input type="hidden" id="value" name="value">
+                <div class="col-lg-6 offset-lg-3 badge badge-secondary p-3 rounded-circle w-100">
+                    <section class="row">
+                        <div id="star1" class="col-2 offset-1">
+                            <span class="fas fa-star text-info" onmouseover="star_hover(1)" onclick="star(1)"></span>
+                        </div>
+                        <div id="star2" class="col-2">
+                            <span class="fas fa-star text-info" onmouseover="star_hover(2)" onclick="star(2)"></span>
+                        </div>
+                        <div id="star3" class="col-2">
+                            <span class="fas fa-star text-info" onmouseover="star_hover(3)" onclick="star(3)"></span>
+                        </div>
+                        <div id="star4" class="col-2">
+                            <span class="fas fa-star text-info" onmouseover="star_hover(4)" onclick="star(4)"></span>
+                        </div>
+                        <div id="star5" class="col-2">
+                            <span class="fas fa-star text-info" onmouseover="star_hover(5)" onclick="star(5)"></span>
+                        </div>
+                    </section>
+                </div>
+            </section>
+        </div>
+        <div class="modal-footer">
+            <a href="{{route('avis')}}" class="btn btn-secondary">Retour</a>
+            <button type="submit" class="btn btn-primary">Ajouter</button>
+        </div>
+    </form>
+@endsection
+<script>
+    function star_hover(value)
+    {
+        for(i=1; i<=value; i++){
+            $('#star'+i).html('<span class="fas fa-star text-warning" onmouseout="star_hover_end('+i+')" onclick="star('+i+')"></span>');
+        }
+    }
+
+    function star_hover_end(value)
+    {
+        for(i=1; i<=value; i++){
+            $('#star'+i).html('<span class="fas fa-star text-info" onmouseover="star_hover('+i+')" onclick="star('+i+')"></span>');
+        }
+    }
+
+    function star(value)
+    {
+        for(i=1; i<=value; i++){
+            $('#star'+i).html('<span class="fas fa-star text-warning" onclick="star('+i+')"></span>');
+        }
+
+        for(i=value+1; i<=5; i++){
+            $('#star'+i).html('<span class="fas fa-star text-info" onclick="star('+i+')"></span>');
+        }
+        
+        $('#value').val(value);
+    }
+</script>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Commentaire</title>
 
     <!-- Styles -->
     <style>
@@ -97,15 +169,6 @@
                         <br>
 
                         <div>
-                            <!--
-                            <a onclick="ajout_commentaire(this)" id="star5" value="5" title="Donner 5 étoiles">5</a>
-                            <a onclick="ajout_commentaire(this)" id="star4" value="4" title="Donner 4 étoiles">4</a>
-                            <a onclick="ajout_commentaire(this)" id="star3" value="3" title="Donner 3 étoiles">3</a>
-                            <a onclick="ajout_commentaire(this)" id="star2" value="2" title="Donner 2 étoiles">2</a>
-                            <a onclick="ajout_commentaire(this)" id="star1" value="1" title="Donner 1 étoile">1</a>
-                            -->
-
-
                             <input  type="radio" name="value" value="1">1
                             <input  type="radio" name="value" value="2">2
                             <input  type="radio" name="value" value="3">3
@@ -148,11 +211,6 @@
         <div class="toast-body" id="input-toast">
         </div>
     </div>
-
-
-
-
-
     @if(session()->get('message'))
         <input type="hidden" id="message" value="{{session()->get('message')}}">
         <script>

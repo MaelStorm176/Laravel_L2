@@ -33,7 +33,7 @@ Route::get('make-migration',
         return back();
     })->name('make-migration');
 
-Route::get('ajout_commentaire', 'Commentaire@ajout')->name('ajout_commentaire')->middleware('verified');
+Route::post('ajout_commentaire', 'Commentaire@ajout')->name('ajout_commentaire')->middleware('verified');
 Route::get('clear_db', 'Commentaire@clear_db')->name('clear_db');
 Route::get('avis','Commentaire@afficherdefaut')->name('avis');
 Route::get('commentaire',"Commentaire@voir")->name('commentaire')->middleware('verified');
@@ -131,12 +131,25 @@ Route::get('verif_email', 'ParametresController@verif_email');
 /* ADMINISTRATION */
 Route::middleware('can:accessAdminpanel')->group(function() {
     Route::get('admin/home', 'Admin@index')->name('admin');
+    /* PLANNING */
     Route::get('admin/horaires', 'Admin@horaires')->name('adm_horaires');
     Route::post('admin/horaires.modif', 'Admin@horaires_modif')->name('adm_horaires.modif');
+    Route::get('admin/feriee_supprimer', 'Admin@feriee_supprimer')->name('adm_feriee_supprimer');
+    Route::get('admin/feriee_ajout', 'Admin@feriee_ajout')->name('adm_feriee_ajout');
+    Route::get('admin/fermeture_supprimer', 'Admin@fermeture_supprimer')->name('adm_fermeture_supprimer');
+    Route::get('admin/fermeture_ajout', 'Admin@fermeture_ajout')->name('adm_fermeture_ajout');
     Route::get('admin/secondaire', 'Admin@secondaire')->name('adm_secondaire');
+    /* AVIS */
     Route::get('admin/avis', 'Admin@avis')->name('adm_avis');
+    Route::get('admin/afficher_avis', 'Admin@afficher_avis')->name('adm_afficher_avis');
+    Route::get('admin/supprimer_avis', 'Admin@supprimer_avis')->name('adm_supprimer_avis');
+    /* ENGAGEMENTS */
     Route::get('admin/engagements', 'Admin@engagements')->name('adm_engagements');
+    /* GENERAL */
     Route::get('admin/general', 'Admin@general')->name('adm_general');
+    Route::post('admin/telephone', 'Admin@telephone')->name('adm_telephone');
+    Route::post('admin/identite', 'Admin@identite')->name('adm_identite');
+    Route::post('admin/adresse', 'Admin@adresse')->name('adm_adresse');
     Route::get('admin/commandes', 'Admin@commandes')->name('adm_commandes');
     Route::get('admin/historique_commandes', 'Admin@historique_commandes')->name('adm_historique_commandes');
     Route::get('admin/informations', 'Admin@informations')->name('adm_informations');
@@ -148,7 +161,7 @@ Route::middleware('can:accessAdminpanel')->group(function() {
     Route::get('admin/menus', 'Admin@menus')->name('adm_menus');
     Route::get('admin/promotions', 'Admin@promotions')->name('adm_promotions');
     Route::get('admin/promotions/refresh_article', 'Admin@refresh_article'); //AJAX
-    /*PARTENAIRES*/
+    /* PARTENAIRES */
     Route::get('partenaire_ajout', 'Admin@partenaire_ajout')->name('partenaire_ajout');
     Route::get('partenaire_supprimer', 'Admin@partenaire_supprimer')->name('partenaire_supprimer');
 });

@@ -30,7 +30,7 @@
                         @foreach($carousel as $key)
                             @if($var==0)
                                 <div class="carousel-item active" id="carousel_div_{{$key->id}}">
-                                    <img id="image_{{$key->id}}" src="../{{$key->image_carousel}}" class="d-block w-100" alt="First slide">
+                                    <img id="image_{{$key->id}}" src="../{{$key->image_carousel}}" class="w-100" style="height:30rem;" alt="slide">
                                     @if($key->titre_carousel==NULL && $key->texte_carousel==NULL)
                                     @else
                                         <div id="fond_couleur_{{$key->id}}" style="background-color: {{$key->fond_couleur}}" class="carousel-caption d-none d-md-block jumbotron p-3 text-center text-info shadow">
@@ -41,7 +41,7 @@
                                 </div>
                             @else
                                 <div class="carousel-item" id="carousel_div_{{$key->id}}">
-                                    <img id="image_{{$key->id}}" src="../{{$key->image_carousel}}" class="d-block w-100" alt="First slide">
+                                    <img id="image_{{$key->id}}" src="../{{$key->image_carousel}}" class="w-100" style="height:30rem;" alt="slide">
                                     @if($key->titre_carousel==NULL && $key->texte_carousel==NULL)
                                     @else
                                         <div id="fond_couleur_{{$key->id}}" style="background-color: {{$key->fond_couleur}}" class="carousel-caption d-none d-md-block jumbotron p-3 text-center text-info shadow">
