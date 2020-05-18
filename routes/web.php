@@ -17,19 +17,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('make-migration',
     function () {
         /* */
-        Schema::dropIfExists('craft_pizza');
-
         Artisan::call('migrate:rollback',[
-            '--path'=>'\database\migrations\2020_04_17_180915_pizza_craft.php',
-            '--step'=>'1'
+            '--path'=>'\database\migrations\2020_04_17_180915_pizza_craft.php'
         ]);
 
         Artisan::call('migrate',[
-            '--path'=>'\database\migrations\2020_04_17_180915_pizza_craft.php',
-            '--step'=>'1'
+            '--path'=>'\database\migrations\2020_04_17_180915_pizza_craft.php'
         ]);
-
-
         return back();
     })->name('make-migration');
 

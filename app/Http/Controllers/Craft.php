@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Ramsey\Uuid\Type\Integer;
 use Illuminate\Support\Facades\File;
-class Craft extends Controller
+class  Craft extends Controller
 {
 
     public function supprimer(Request $request){
@@ -70,24 +70,24 @@ class Craft extends Controller
 
     }
     public function modifier(Request $request){
-            $imageName = time().'.'.$request->image_i->extension();
-            $imageName1 = 'image_i/'.$imageName;
-            $table=DB::table("ingredient")->select('*')->get();
+        $imageName = time().'.'.$request->image_i->extension();
+        $imageName1 = 'image_i/'.$imageName;
+        $table=DB::table("ingredient")->select('*')->get();
 
-            foreach ($table as $key){
-                if ($key->id == $request['id_ingredient']){
-                    DB::table('ingredient')->where('id','=',$request['id_ingredient'])->update([
-                        'image' => $imageName1,
-                        'nom_i' => $request["nom_i"],
-                        'prix_i' => $request["prix_i"]
-                    ]);
-                    $request->image_i->move(public_path('image_i'), $imageName);
-                    return back();
-                }
-                else{
-                    return back()->with('error',"Veuillez ne pas entrer le même nom qu'un autre ingrédient ");
-                }
+        foreach ($table as $key){
+            if ($key->id == $request['id_ingredient']){
+                DB::table('ingredient')->where('id','=',$request['id_ingredient'])->update([
+                    'image' => $imageName1,
+                    'nom_i' => $request["nom_i"],
+                    'prix_i' => $request["prix_i"]
+                ]);
+                $request->image_i->move(public_path('image_i'), $imageName);
+                return back();
             }
+            else{
+                return back()->with('error',"Veuillez ne pas entrer le même nom qu'un autre ingrédient ");
+            }
+        }
         $request->image_i->move(public_path('image_i'), $imageName);
         return redirect()->route('make-migration')->with('error','Il faut remplir tous les champs');
     }
@@ -103,17 +103,20 @@ class Craft extends Controller
 
         $tmp=0;
         foreach ($table as $key){
-            $tmp+=$request['prix_recup_'.$key->id];
+
             if (!empty($request['ingredient_'.$key->id])){
+                $tmp+=$request['prix_recup_'.$key->id];
                 DB::table('craft_pizza')->updateOrInsert([
                     'id'=>$var1+1],[
-                    $key->nom_i=>$request['ingredient_'.$key->id],
-                    'user_id'=>Auth::user()->id,
+                    $key->nom_i=>TRUE,
                     'prix_total_i'=>$tmp
                 ]);
             }
+
         }
         return back();
+
+
     }
 
 }

@@ -16,7 +16,7 @@ class Ingredient extends Migration
         Schema::create('ingredient', function (Blueprint $table) {
             $table->id();
             $table->string('nom_i');
-            $table->integer('prix_i');
+            $table->unsignedDecimal('prix_i',8,2)->default(0);
             $table->string('image');
         });
     }

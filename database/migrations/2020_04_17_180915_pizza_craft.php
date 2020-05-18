@@ -18,10 +18,9 @@ class PizzaCraft extends Migration
         Schema::create('craft_pizza', function (Blueprint $table) {
             $var=DB::table('ingredient')->select('*')->get();
             $table->id();
-            $table->Integer('user_id');
-            $table->unsignedTinyInteger('prix_total_i');
+            $table->unsignedDecimal('prix_total_i',8,2);
             foreach ($var as $item) {
-                $table->string($item->nom_i)->default('');
+                $table->boolean($item->nom_i)->default(false);
             }
 
         });

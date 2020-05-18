@@ -13,7 +13,7 @@
                             </button>
                         @endif
 
-                        <!-- Modal -->
+                    <!-- Modal -->
                         <div class="modal fade" id="putain" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
@@ -44,7 +44,7 @@
                                                     <input type="text" name="prix_i" id="prix_i" class="form-control">
                                                 </div>
                                             </div>
-                                                <input type="hidden" id="edit" name="edit" value="">
+                                            <input type="hidden" id="edit" name="edit" value="">
                                             <div class="col-md-6">
                                                 <button type="submit"  class="btn btn-success">Valider</button>
                                             </div>
@@ -53,53 +53,55 @@
                                 </div>
                             </div>
                         </div>
-                        <table style="vertical-align: baseline; text-align: center" >
-                            <thead>
-                            <tr>
-                                <th scope="col">Ingrédient</th>
-                                <th scope="col">Ajouter</th>
-                                <th scope="col">Prix</th>
-                                @if(Auth::user()->role=='admin')
-                                    <th scope="col">Modifier</th>
-                                    <th scope="col">Supprimer</th>
-                                @endif
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <form action="{{route('craft_ajouter')}}" method="post">
+                        salut les amis !<form action="{{route('craft_ajouter')}}" method="post">
                             @csrf
-                            <!-- {{$var=1}}-->
-                        @foreach ($ingredients as $value)
-                            <tr id="{{$value->id}}">
-                                <td>{{ $value->nom_i }}<img style="margin-left: 2em" src="{{$value->image}}"width="150px"></td>
-                                <td><div class="form-check form-check-inline">
-                                        <input class="form-check-input" name="ingredient_{{$var}}" type="checkbox" id="inlineCheckbox1" value="{{$value->nom_i}}">
-                                    </div></td>
-                                <td>{{ $value->prix_i }}€</td>
-                                @if(Auth::user()->role=='admin')
+                            <table style="vertical-align: baseline; text-align: center" >
+                                <thead>
+                                <tr>
+                                    <th scope="col">Ingrédient</th>
+                                    <th scope="col">Ajouter</th>
+                                    <th scope="col">Prix</th>
+                                    @if(Auth::user()->role=='admin')
+                                        <th scope="col">Modifier</th>
+                                        <th scope="col">Supprimer</th>
+                                    @endif
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                <!-- {{$var=1}}-->
+                                @foreach ($ingredients as $value)
+                                    <tr id="{{$value->id}}">
+                                        <td>{{ $value->nom_i }}<img style="margin-left: 2em" src="{{$value->image}}"width="150px"></td>
+                                        <td><div class="form-check form-check-inline">
+                                                <input class="form-check-input" name="ingredient_{{$value->id}}" type="checkbox" id="inlineCheckbox1" value="{{$value->nom_i}}">
+                                                <input class="form-check-input" name="prix_recup_{{$value->id}}" type="hidden" id="inlineCheckbox1" value="{{$value->prix_i}}">
+                                            </div></td>
+                                        <td>{{ $value->prix_i }}€</td>
+                                        @if(Auth::user()->role=='admin')
 
 
-                                    <td><button type="button" onclick="modifier({{$value->id}})" class="btn btn-outline-primary" data-toggle="modal" data-target="#putain">
-                                        Modifier
-                                    </button></td>
-                                    <td><button type="button" onclick="supprimer({{$value->id}})" class="btn btn-outline-primary">
-                                            Supprimer
-                                        </button></td>
+                                            <td><button type="button" onclick="modifier({{$value->id}})" class="btn btn-outline-primary" data-toggle="modal" data-target="#putain">
+                                                    Modifier
+                                                </button></td>
+                                            <td><button type="button" onclick="supprimer({{$value->id}})" class="btn btn-outline-primary">
+                                                    Supprimer
+                                                </button></td>
 
-                                @endif
-                            </tr>
-                            <!--  {{$var++}}-->
-                        @endforeach
-                            <tr>
-                                <td><button type="submit" class="btn btn-primary">Valider</button></td>
-                            </tr>
-                            </form>
-                            </tbody>
-                        </table>
-                            <!-- -->
+                                        @endif
+                                    </tr>
+                                    <!--  {{$var++}}-->
+                                @endforeach
+                                <tr>
+                                    <td><button type="submit" class="btn btn-primary">Valider</button></td>
+                                </tr>
+
+                                </tbody>
+                            </table></form>
+                        <!-- -->
                     @endauth
                     @guest
-                    Vous devez être connecté
+                        Vous devez être connecté
                     @endguest
                 </div>
             </div>
