@@ -46,6 +46,7 @@ class Admin extends Controller
     {
         $adresse = DB::table('adresse')->where('status', '=', 'principale')->select("*")->get();
         $telephone = DB::table('telephone')->where('id', '=', 1)->select("*")->get();
+        DB::table('commentaire')->where('id', '=', 1)->select("*")->get();
         return view('adm/adm_general')->with(compact('adresse','telephone'));
     }
 

@@ -14,7 +14,7 @@ class Adresse_seeder extends Seeder
     {
         DB::table('adresse')->insert([
             'id' => 1,
-            'rue' => '12 rue de ta mère',
+            'rue' => '12 rue de la pizzeria',
             'code_postal' => '51100',
             'ville' => 'Reims',
             'status' => 'principale',

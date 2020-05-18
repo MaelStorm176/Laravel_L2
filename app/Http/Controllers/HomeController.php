@@ -14,7 +14,12 @@ class HomeController extends Controller
         $carousel=DB::table('accueil_carousel')->select('*')->get();
         $adresse = DB::table('adresse')->where('status', '=', 'principale')->select("*")->get();
         $telephone = DB::table('telephone')->where('id', '=', 1)->select("*")->get();
-        return view('accueil')->with('pizza',$pizza)->with('carousel',$carousel)->with('adresse', $adresse)->with('telephone', $telephone);
+        $commentaires = DB::table("commentaire")
+            ->orderBy('created_at', 'desc')
+            ->limit(3)
+            ->select('*')->get();
+        $nb_user = DB::table("users")->count("id");
+        return view('accueil')->with(compact('pizza', 'carousel', 'adresse', 'telephone', 'commentaires', 'nb_user'));
     }
 
     public function horaires()

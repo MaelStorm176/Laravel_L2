@@ -133,10 +133,6 @@
                                         <?php $var++; ?>
                                     @endforeach
 
-
-
-
-
                                 </div>
 
                                 <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -195,49 +191,17 @@
                         </div>
                         <!-- LES 3 DERNIERS COMMENTAIRES -->
                         <div class="col-lg-12">
-                            <div class="list-group mb-3 border-0">
-                                <a href="#" class="list-group-item list-group-item-action list-group-item-primary p-0 mb-3 rounded border border-secondary">
-                                    <div class="d-flex justify-content-between bg-success text-white text-center w-100 py-3 px-5 rounded-top">
-                                        <em><h4 class="mt-2">NOM Prénom</h4></em>
-                                        <div class="badge badge-secondary p-3 rounded-circle">
-                                            <span class="fas fa-star mr-1 text-warning"></span>
-                                            <span class="fas fa-star mr-1 text-warning"></span>
-                                            <span class="fas fa-star mr-1 text-warning"></span>
-                                            <span class="fas fa-star mr-1 text-warning"></span>
-                                            <span class="fas fa-star text-warning"></span>
-                                         </div>
-                                    </div>
-                                    <p class="mb-1 text-justify py-4 px-5">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                                    <div class="bg-secondary text-white text-center w-100 p-2">
-                                        <small>Posté le 20/04/2020 à 16h15</small>
-                                    </div>
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action list-group-item-primary p-0 mb-3 rounded border border-secondary">
-                                    <div class="d-flex justify-content-between bg-warning text-white text-center w-100 py-3 px-5 rounded-top">
-                                        <em><h4 class="mt-2">NOM Prénom</h4></em>
-                                        <div class="badge badge-secondary p-3 rounded-circle">
-                                            <span class="fas fa-star mr-1 text-warning"></span>
-                                            <span class="fas fa-star mr-1 text-warning"></span>
-                                            <span class="fas fa-star text-warning"></span>
+                            <div class="list-group mb-3">
+                                @foreach($commentaires as $key)
+                                    <a href="#" class="list-group-item list-group-item-action list-group-item-primary">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h4 class="mb-1">{{$key->username}}</h4>
+                                            <span class="badge badge-success p-2 rounded-circle shadow">{{$key->note}}</span>
                                         </div>
-                                    </div>
-                                    <p class="mb-1 text-justify p-4">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                                    <div class="bg-secondary text-white text-center w-100 p-2">
-                                        <small>Posté le 20/04/2020 à 16h15</small>
-                                    </div>
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action list-group-item-primary p-0 mb-3 rounded border border-secondary">
-                                    <div class="d-flex justify-content-between bg-danger text-white text-center w-100 py-3 px-5 rounded-top">
-                                        <em><h4 class="mt-2">NOM Prénom</h4></em>
-                                        <div class="badge badge-secondary p-3 rounded-circle">
-                                            <span class="fas fa-star text-warning"></span>
-                                        </div>
-                                    </div>
-                                    <p class="mb-1 text-justify p-4">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                                    <div class="bg-secondary text-white text-center w-100 p-2">
-                                        <small>Posté le 20/04/2020 à 16h15</small>
-                                    </div>
-                                </a>
+                                        <p class="mb-1 text-justify">{{$key->commentaire}}</p>
+                                        <small>{{$key->created_at}}</small>
+                                    </a>
+                                @endforeach
                             </div>
                         </div>
                     </section>
@@ -310,6 +274,12 @@
                                 <button class="btn btn-outline-primary" type="button" id="button-addon2">S'inscrire</button>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="card text-white border-danger mb-3">
+                    <div class="card-header bg-danger">Nombre d'utilisateurs<span class="fas fa-user-circle float-right mt-1"></span></div>
+                    <div class="card-body">
+                        <div class="col text-center text-info jumbotron p-1 mb-0">{{$nb_user}}</div>
                     </div>
                 </div>
             </section>
