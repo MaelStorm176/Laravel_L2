@@ -9,21 +9,24 @@
                 <div class="card border-info mb-3">
                     <div class="card-header bg-info text-white">Identité<span class="fas fa-fingerprint mt-1 float-right"></span></div>
                     <div class="card-body">
-                        <form method="GET" action={{route('adm_identite')}}>
-                            <section class="row">
-                                <div class="col-lg-6 mb-4">
-                                    <label for="nomPizzeria">Nom du restaurant</label>
-                                    <input type="text" id="nomPizzerria" class="form-control">
-                                </div>
-                                <div class="col-lg-6 mb-4">
-                                    <label for="lienSite">Lien du site</label>
-                                    <input type="text" id="lienSite" class="form-control">
-                                </div>
-                                <div class="col-lg-12">
-                                    <button type="submit" class="btn btn-primary w-100">ENREGISTRER</button>
-                                </div>
-                            </section>
-                        </form>
+                        @foreach($parametres as $key)
+                            <form method="post" action="{{route('adm_identite')}}">
+                                @csrf
+                                <section class="row">
+                                    <div class="col-lg-6 mb-4">
+                                        <label for="nomPizzeria">Nom du restaurant</label>
+                                        <input type="text" id="nomPizerria" name="nomPizzeria" class="form-control" value="{{$key->nom}}" required>
+                                    </div>
+                                    <div class="col-lg-6 mb-4">
+                                        <label for="lienSite">Lien du site</label>
+                                        <input type="text" id="lienSite" name="lienSite" class="form-control" value="{{$key->lien}}" required>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <button type="submit" class="btn btn-primary w-100">ENREGISTRER</button>
+                                    </div>
+                                </section>
+                            </form>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -31,10 +34,11 @@
                 <div class="card border-info mb-3">
                     <div class="card-header bg-info text-white">Téléphonie<span class="fas fa-phone mt-1 float-right"></span></div>
                     <div class="card-body">
-                        @foreach($telephone as $key)
-                            <form method="GET" action={{route('adm_changer_numero')}}>
-                                <label for="numero">Changer le numéro de téléphone</label>
-                                <input type="text" name="numero" class="form-control mb-4" value="{{$key->numero}}">
+                        @foreach($parametres as $key)
+                            <form method="post" action="{{route('adm_telephone')}}">
+                                @csrf
+                                <label for="num">Numéro de téléphone</label>
+                                <input type="phone" id="num" name="num" class="form-control mb-4" value="{{$key->telephone}}" required>
                                 <button type="submit" class="btn btn-primary w-100">ENREGISTRER</button>
                             </form>
                         @endforeach
@@ -67,20 +71,21 @@
                 <div class="card border-info mb-3">
                     <div class="card-header bg-info text-white">Changer l'adresse du restaurant<span class="fas fa-map-marked-alt mt-1 float-right"></span></div>
                     <div class="card-body">
-                        @foreach($adresse as $key)
-                            <form method='GET' action={{route('adm_changer_adresse')}}>
+                        @foreach($parametres as $key)
+                            <form method="post" action="{{route('adm_adresse')}}">
+                                @csrf
                                 <section class="row">
                                     <div class="col-lg-12">
-                                        <label for="rue">Rue</label>
-                                        <input type="text" name="rue" class="form-control mb-4" value="{{$key->rue}}">
+                                        <label for="adresse">Adresse</label>
+                                        <input type="text" id="adresse" name="adresse" class="form-control mb-4" value="{{$key->adresse}}" required>
                                     </div>
                                     <div class="col-lg-6">
-                                        <label for="code_postal">Code Postal</label>
-                                        <input type="text" name="code_postal" class="form-control mb-4" value="{{$key->code_postal}}">
+                                        <label for="cp">Code Postal</label>
+                                        <input type="text" id="cp" name="cp" class="form-control mb-4" value="{{$key->codePostal}}" required>
                                     </div>
                                     <div class="col-lg-6">
                                         <label for="ville">Ville</label>
-                                        <input type="text" name="ville" class="form-control mb-4" value="{{$key->ville}}">
+                                        <input type="text" id="ville" name="ville" class="form-control mb-4" value="{{$key->ville}}" required>
                                     </div>
                                     <div class="col-lg-12">
                                         <button type="submit" class="btn btn-primary w-100">ENREGISTRER</button>

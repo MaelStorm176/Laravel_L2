@@ -20,7 +20,7 @@ class Commentaire extends Controller
         if (!Empty($user->email_verified_at)) {
             $nb_commande = DB::table('commande')
                 ->where('user_id','=', $user->id)
-                ->where("statut_pay", "=", "Payé")
+                ->where("statut_pay", "=", "Validé")
                 ->count();
 
             $nb_commentaire = DB::table('commentaire')
@@ -68,12 +68,12 @@ class Commentaire extends Controller
         if($choix == "moins") {
             $com = DB::table('commentaire')
                 ->orderBy('note', 'asc')
-                ->paginate(10);
+                ->paginate(5);
         }
         else if ($choix == "mieux") {
             $com = DB::table('commentaire')
                 ->orderBy('note', 'desc')
-                ->paginate(10);
+                ->paginate(5);
         }
         else {
             $com = $this->com();
@@ -85,7 +85,7 @@ class Commentaire extends Controller
     public function com() {
         $com = DB::table("commentaire")
             ->orderBy('created_at', 'desc')
-            ->paginate(10);
+            ->paginate(5);
         return $com;
     }
 

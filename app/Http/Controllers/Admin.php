@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -15,8 +17,10 @@ class Admin extends Controller
 
     public function horaires()
     {
+        $fermetures = DB::table('fermeture')->select('*')->get();
+        $feriees = DB::table('feriee')->select('*')->get();
         $horaires = DB::table('horaires')->select('*')->get();
-        return view('adm/adm_horaires')->with('horaires',$horaires);
+        return view('adm/adm_horaires',compact('horaires','fermetures', 'feriees'));
     }
 
     public function horaires_modif(Request $request)
@@ -37,17 +41,123 @@ class Admin extends Controller
         return back()->with('message',"Votre horaire a été modifié.");
     }
 
+    public function feriee_ajout(Request $request)
+    {
+        $validate_data = Validator::make($request->all(), [
+            'jour' => 'required|string',
+            'midi' => 'required|string',
+            'soir' => 'required|string'
+        ]);
+
+        if($validate_data->fails()){
+            return back()->with('error',"Il y a une erreur avec la création de votre jour fériée.");
+        }
+
+        DB::table('feriee')->updateOrInsert([
+            'jour' => $request['jour'],
+            'midi' => $request['midi'],
+            'soir' => $request['soir']
+        ]);
+
+        return back()->with('message', 'Votre jour fériée à bien été enregistré!');
+    }
+
+    public function feriee_supprimer(Request $request)
+    {
+        DB::table('feriee')->where('id','=',$request['id'])->delete();
+    }
+
+    public function fermeture_ajout(Request $request)
+    {
+        $validate_data = Validator::make($request->all(), [
+            'dateDeb' => 'required|date',
+            'dateFin' => 'required|date',
+            'motif' => 'required|string'
+        ]);
+
+        if($validate_data->fails()){
+            return back()->with('error',"Il y a une erreur avec la création de votre fermeture.");
+        }
+
+        DB::table('fermeture')->updateOrInsert([
+            'date_debut' => $request['dateDeb'],
+            'date_fin' => $request['dateFin'],
+            'motif' => $request['motif']
+        ]);
+
+        return back()->with('message', 'Votre période de fermeture à bien été enregistré!');
+    }
+
+    public function fermeture_supprimer(Request $request)
+    {
+        DB::table('fermeture')->where('id','=',$request['id'])->delete();
+    }
+
     public function avis()
     {
-        return view('adm/adm_avis');
+        $commentaires = DB::table('commentaire')->select('*')->get();
+        return view('adm/adm_avis')->with('commentaires',$commentaires);
+    }
+
+    public function afficher_avis(Request $request) { //affichage du dernier commentaire
+        $choix = $request["choix"];
+        if($choix == "moins") {
+            $com = DB::table('commentaire')
+                ->orderBy('note', 'asc')
+                ->get();
+        }
+        else if ($choix == "mieux") {
+            $com = DB::table('commentaire')
+                ->orderBy('note', 'desc')
+                ->get();
+        }
+        else {
+            $com = DB::table("commentaire")
+                ->orderBy('created_at', 'desc')
+                ->get();
+        }
+        return view('adm/adm_avis')->with("commentaires", $com);
+    }
+
+    public function supprimer_avis(Request $request)
+    {
+        DB::table('commentaire')->where('id','=',$request['id'])->delete();
     }
 
     public function general()
     {
-        $adresse = DB::table('adresse')->where('status', '=', 'principale')->select("*")->get();
-        $telephone = DB::table('telephone')->where('id', '=', 1)->select("*")->get();
-        DB::table('commentaire')->where('id', '=', 1)->select("*")->get();
-        return view('adm/adm_general')->with(compact('adresse','telephone'));
+        $parametres = DB::table('parametres')->where('id', 1)->get();
+        return view('adm/adm_general')->with('parametres', $parametres);
+    }
+
+    public function identite(Request $request)
+    {
+        DB::table('parametres')->where('id','=','1')->update([
+            'nom' => $request['nomPizzeria'],
+            'lien' => $request['lienSite']
+        ]);
+        return back()->with('message', 'L\'identité a bien été enregistré.');
+    }
+
+    public function telephone(Request $request)
+    {
+        DB::table('parametres')->where('id','=','1')->update([
+            'telephone' => $request['num']
+        ]);
+
+        return back()->with('message', 'Le numéro a bien été modfié.');
+    }
+
+    public function adresse(Request $request)
+    {
+        DB::table('parametres')->where('id','=','1')->update([
+            'adresse' => $request['adresse'],
+            'codePostal' => $request['cp'],
+            'ville' => $request['ville']
+
+        ]);
+
+        return back()->with('message', 'L\'adresse a bien été modifié.');
     }
 
     public function engagements()
@@ -58,7 +168,23 @@ class Admin extends Controller
     public function secondaire()
     {
         $carousel=DB::table('accueil_carousel')->select('*')->get();
-        return view('adm/adm_secondaire')->with('carousel', $carousel);
+        $partenaires = DB::table('partenaires')->select('*')->get();
+        return view('adm/adm_secondaire',compact('carousel','partenaires'));
+    }
+
+    public function partenaire_ajout(Request $request)
+    {
+        DB::table('partenaires')->updateOrInsert([
+            'nom' => $request['nom'],
+            'lien' => $request['lien']
+        ]);
+
+        return redirect('admin/secondaire');
+    }
+
+    public function partenaire_supprimer(Request $request)
+    {
+        DB::table('partenaires')->where('id','=',$request['id'])->delete();
     }
 
     public function commandes()
@@ -72,9 +198,33 @@ class Admin extends Controller
         return view('adm/adm_historique_commande', compact('products'));
     }
 
-    public function informations()
+    public function informations(Request $request)
     {
-        return view('adm/adm_informations');
+        if (!empty($request['last_name']) && !empty($request['first_name']))
+        {
+            $users = DB::table('users')
+                ->where('last_name', '=', $request['last_name'])
+                ->where('first_name', '=', $request['first_name'])
+                ->paginate(15);
+        }
+        elseif (!empty($request['last_name']))
+        {
+            $users = DB::table('users')
+                ->where('last_name', '=', $request['last_name'])
+                ->paginate(15);
+        }
+
+        elseif (!empty($request['first_name']))
+        {
+            $users = DB::table('users')
+                ->where('first_name', '=', $request['first_name'])
+                ->paginate(15);
+        }
+        else
+        {
+            $users = DB::table('users')->paginate(15);
+        }
+        return view('adm/adm_informations')->with('users',$users);
     }
 
     public function droits()
@@ -89,7 +239,8 @@ class Admin extends Controller
 
     public function codes()
     {
-        return view('adm/adm_codes');
+        $coupons = DB::table('coupon')->orderBy('id','desc')->get();
+        return view('adm/adm_codes',compact('coupons'));
     }
 
     public function articles()
@@ -101,36 +252,29 @@ class Admin extends Controller
 
     public function menus()
     {
-        return view('adm/adm_menus');
+        $menus = DB::table('menu')->select('*')->get();
+        $contenu_menu_r = DB::table('contenu_menu')->pluck('id_pizza');
+        $contenu_menu = DB::table('contenu_menu')->select('id_menu','id_pizza')->get();
+        $pizza = DB::table('pizza')->whereIn('id',$contenu_menu_r)->select('nom','categorie','id')->get();
+        return view('adm/adm_menus',compact('pizza','menus','contenu_menu'));
     }
 
     public function promotions()
     {
-        return view('adm/adm_promotions');
+        $pizza = DB::table('pizza')->select('*')->get();
+        $categories = DB::table('categorie')->select('*')->get();
+        return view('adm/adm_promotions',compact('pizza','categories'));
     }
 
-    public function changer_adresse(Request $request)
+    public function refresh_article(Request $request)
     {
-        DB::table('adresse')->where('status','=', 'principale')->update([
-            'rue' => $request['rue'],
-            'code_postal' => $request['code_postal'],
-            'ville' => $request['ville']
-        ]);
-        return back()->with('message', 'l\'adresse a bien été changée');
+        $articles = DB::table('pizza')->where('categorie','=',$request['nom'])->select('id','nom')->get();
+        echo '<option name="pizza">-- Selectionner --</option>';
+        foreach ($articles as $article)
+        {
+            echo '<option value="'.$article->id.'">'.$article->nom.'</option>';
+        }
     }
 
-    public function changer_numero(Request $request)
-    {
-        DB::table('telephone')->where('id','=', 1)->update([
-            'numero' => $request['numero']
-        ]);
-        return back()->with('message', 'le numéro a bien été changée');
-    }
 
-    public function identite(Request $request)
-    {
-        $nom_resto = $request['nomPizzeria'];
-        config(['APP_NAME' => $nom_resto]);
-        return back();
-    }
 }

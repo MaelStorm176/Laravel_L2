@@ -1,13 +1,23 @@
 @extends('layouts.base')
 @section('content')
-
     <div class="container">
         <section class="row">
             <div class="col-lg-12">
-                <div class="card bg-success text-white text-center p-3 font-weight-bold font-italic mb-3">
-                    <h5 class="mb-0">LES AVIS</h5>
-                    <form method="GET" action={{route('afficher')}}>
-                        <select name="choix" onchange="this.form.submit();">
+                <div class="card mb-3 border-success">
+                    <div class="card-header bg-success text-white">
+                        <section class="row">
+                            <div class="col">
+                                <h5 class="mt-1">LES AVIS</h5>
+                            </div>
+                            @auth
+                                <div class="col">
+                                    <a href="{{route('commentaire')}}" class="btn btn-primary float-right">Ajouter commentaire</a>
+                                </div>
+                            @endauth
+                        </section>
+                    </div>
+                    <form class="w-100 bg-danger" method="GET" action="{{route('afficher')}}">
+                        <select class="form-control rounded-0 bg-danger text-white border-danger" name="choix" onchange="this.form.submit();">
                             <option>Trier les commentaires</option>
                             <option value="recent">Les plus recent</option>
                             <option value="mieux">Les mieux notés</option>

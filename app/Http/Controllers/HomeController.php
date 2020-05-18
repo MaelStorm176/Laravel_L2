@@ -12,20 +12,22 @@ class HomeController extends Controller
     {
         $pizza = DB::table('pizza')->select('*')->where('statut','=','Disponible')->get();
         $carousel=DB::table('accueil_carousel')->select('*')->get();
-        $adresse = DB::table('adresse')->where('status', '=', 'principale')->select("*")->get();
-        $telephone = DB::table('telephone')->where('id', '=', 1)->select("*")->get();
         $commentaires = DB::table("commentaire")
             ->orderBy('created_at', 'desc')
             ->limit(3)
             ->select('*')->get();
         $nb_user = DB::table("users")->count("id");
-        return view('accueil')->with(compact('pizza', 'carousel', 'adresse', 'telephone', 'commentaires', 'nb_user'));
+        $partenaires = DB::table('partenaires')->select('*')->get();
+        $parametres = DB::table('parametres')->get();
+        return view('accueil')->with(compact('pizza', 'carousel', 'adresse', 'telephone', 'commentaires', 'nb_user', 'parametres', 'partenaires'));
     }
 
     public function horaires()
     {
         $horaires = DB::table('horaires')->select('*')->get();
-        return view('horaires')->with('horaires',$horaires);
+        $fermetures = DB::table('fermeture')->select('*')->get();
+        $feriees = DB ::table('feriee')->select('*')->get();
+        return view('horaires', compact('horaires', 'fermetures', 'feriees'));
     }
 
 }
