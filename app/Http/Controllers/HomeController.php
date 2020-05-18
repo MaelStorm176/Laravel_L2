@@ -17,9 +17,11 @@ class HomeController extends Controller
             ->limit(3)
             ->select('*')->get();
         $nb_user = DB::table("users")->count("id");
+        $nb_commande = DB::table("commande")->count("id");
+        $nb_avis = DB::table("commentaire")->count("id");
         $partenaires = DB::table('partenaires')->select('*')->get();
         $parametres = DB::table('parametres')->get();
-        return view('accueil')->with(compact('pizza', 'carousel', 'adresse', 'telephone', 'commentaires', 'nb_user', 'parametres', 'partenaires'));
+        return view('accueil')->with(compact('pizza', 'carousel', 'adresse', 'telephone', 'commentaires', 'nb_user', 'parametres', 'partenaires', 'nb_commande', 'nb_avis'));
     }
 
     public function horaires()
