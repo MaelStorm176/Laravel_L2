@@ -12,7 +12,9 @@ class HomeController extends Controller
     {
         $pizza = DB::table('pizza')->select('*')->where('statut','=','Disponible')->get();
         $carousel=DB::table('accueil_carousel')->select('*')->get();
-        return view('accueil')->with('pizza',$pizza)->with('carousel',$carousel);
+        $adresse = DB::table('adresse')->where('status', '=', 'principale')->select("*")->get();
+        $telephone = DB::table('telephone')->where('id', '=', 1)->select("*")->get();
+        return view('accueil')->with('pizza',$pizza)->with('carousel',$carousel)->with('adresse', $adresse)->with('telephone', $telephone);
     }
 
     public function horaires()
@@ -20,5 +22,5 @@ class HomeController extends Controller
         $horaires = DB::table('horaires')->select('*')->get();
         return view('horaires')->with('horaires',$horaires);
     }
-    
+
 }

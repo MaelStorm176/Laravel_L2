@@ -68,23 +68,24 @@ class Commentaire extends Controller
         if($choix == "moins") {
             $com = DB::table('commentaire')
                 ->orderBy('note', 'asc')
-                ->get();
+                ->paginate(10);
         }
         else if ($choix == "mieux") {
             $com = DB::table('commentaire')
                 ->orderBy('note', 'desc')
-                ->get();
+                ->paginate(10);
         }
         else {
             $com = $this->com();
         }
+        $com->withPath('afficher?choix='.$choix);
         return view('avis')->with("commentaires", $com);
     }
 
     public function com() {
         $com = DB::table("commentaire")
             ->orderBy('created_at', 'desc')
-            ->get();
+            ->paginate(10);
         return $com;
     }
 

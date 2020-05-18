@@ -9,18 +9,18 @@
                 <div class="card border-info mb-3">
                     <div class="card-header bg-info text-white">Identité<span class="fas fa-fingerprint mt-1 float-right"></span></div>
                     <div class="card-body">
-                        <form>
+                        <form method="GET" action={{route('adm_identite')}}>
                             <section class="row">
                                 <div class="col-lg-6 mb-4">
                                     <label for="nomPizzeria">Nom du restaurant</label>
-                                    <input type="text" id="nomPizerria" class="form-control">
+                                    <input type="text" id="nomPizzerria" class="form-control">
                                 </div>
                                 <div class="col-lg-6 mb-4">
                                     <label for="lienSite">Lien du site</label>
                                     <input type="text" id="lienSite" class="form-control">
                                 </div>
                                 <div class="col-lg-12">
-                                    <button type="button" class="btn btn-primary w-100">ENREGISTRER</button>
+                                    <button type="submit" class="btn btn-primary w-100">ENREGISTRER</button>
                                 </div>
                             </section>
                         </form>
@@ -31,11 +31,13 @@
                 <div class="card border-info mb-3">
                     <div class="card-header bg-info text-white">Téléphonie<span class="fas fa-phone mt-1 float-right"></span></div>
                     <div class="card-body">
-                        <form>
-                            <label for="num">Numéro de téléphone</label>
-                            <input type="phone" id="num" class="form-control mb-4">
-                            <button type="submit" class="btn btn-primary w-100">ENREGISTRER</button>
-                        </form>
+                        @foreach($telephone as $key)
+                            <form method="GET" action={{route('adm_changer_numero')}}>
+                                <label for="numero">Changer le numéro de téléphone</label>
+                                <input type="text" name="numero" class="form-control mb-4" value="{{$key->numero}}">
+                                <button type="submit" class="btn btn-primary w-100">ENREGISTRER</button>
+                            </form>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -63,27 +65,29 @@
             </div>
             <div class="col-lg-6">
                 <div class="card border-info mb-3">
-                    <div class="card-header bg-info text-white">Adresse du restaurant<span class="fas fa-map-marked-alt mt-1 float-right"></span></div>
+                    <div class="card-header bg-info text-white">Changer l'adresse du restaurant<span class="fas fa-map-marked-alt mt-1 float-right"></span></div>
                     <div class="card-body">
-                        <form>
-                            <section class="row">
-                                <div class="col-lg-12">
-                                    <label for="ad">Adresse</label>
-                                    <input type="text" id="ad" class="form-control mb-4">
-                                </div>
-                                <div class="col-lg-6">
-                                    <label for="ad">Code Postal</label>
-                                    <input type="text" id="ad" class="form-control mb-4">
-                                </div>
-                                <div class="col-lg-6">
-                                    <label for="ad">Ville</label>
-                                    <input type="text" id="ad" class="form-control mb-4">
-                                </div>
-                                <div class="col-lg-12">
-                                    <button type="submit" class="btn btn-primary w-100">ENREGISTRER</button>
-                                </div>
-                            </section>
-                        </form>
+                        @foreach($adresse as $key)
+                            <form method='GET' action={{route('adm_changer_adresse')}}>
+                                <section class="row">
+                                    <div class="col-lg-12">
+                                        <label for="rue">Rue</label>
+                                        <input type="text" name="rue" class="form-control mb-4" value="{{$key->rue}}">
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label for="code_postal">Code Postal</label>
+                                        <input type="text" name="code_postal" class="form-control mb-4" value="{{$key->code_postal}}">
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label for="ville">Ville</label>
+                                        <input type="text" name="ville" class="form-control mb-4" value="{{$key->ville}}">
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <button type="submit" class="btn btn-primary w-100">ENREGISTRER</button>
+                                    </div>
+                                </section>
+                            </form>
+                        @endforeach
                     </div>
                 </div>
             </div>

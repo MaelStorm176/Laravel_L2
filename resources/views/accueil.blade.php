@@ -248,13 +248,17 @@
                     <div class="card-header bg-success">Nous Contacter<span class="fas fa-phone float-right mt-1"></span></div>
                     <div class="card-body">
                         <section class="row">
-                            <div class="col text-center text-info jumbotron p-1 mb-0">03.78.98.34.15</div>
+                            @foreach($telephone as $key)
+                                <div class="col text-center text-info jumbotron p-1 mb-0">{{$key->numero}}</div>
+                            @endforeach
                         </section>
                     </div>
                 </div>
                 <div class="card text-white border-danger mb-3">
                     <div class="card-header bg-danger">Notre Localisation<span class="fas fa-map-marked-alt float-right mt-1"></span>
-                        <p><small>n°112 rue de la gare,<br>51100 REIMS</small></p>
+                        @foreach($adresse as $key)
+                            <p><small>{{$key->rue}}<br>{{$key->code_postal}} {{$key->ville}}</small></p>
+                        @endforeach
                     </div>
                     <div class="card-body">
                         <section class="row">

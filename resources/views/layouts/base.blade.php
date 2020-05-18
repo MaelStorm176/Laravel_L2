@@ -23,11 +23,11 @@
                     <img src="@yield('logo')img/ban.png" class="col-lg-4 offset-lg-4" style="max-width: 80%;">
                     <!-- <div class="col-lg-4 offset-lg-4">
                         <img src="@yield('logo')img/ban.png" style="max-width: 80%;">
-                        
+
                         <div class="jumbotron mb-0 text-center">
                             <h2 class="mb-0">LOGO PIZZERIA</h2>
                         </div>
-                        
+
                     </div> -->
                     <div class="col-lg-3 offset-lg-1">
                         @yield('head')

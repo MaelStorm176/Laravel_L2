@@ -138,14 +138,12 @@ Route::get('admin/codes', 'Admin@codes')->name('adm_codes');
 Route::get('admin/articles', 'Admin@articles')->name('adm_articles');
 Route::get('admin/menus', 'Admin@menus')->name('adm_menus');
 Route::get('admin/promotions', 'Admin@promotions')->name('adm_promotions');
+Route::get('admin/identite', 'Admin@identite')->name('adm_identite');
+Route::get('admin/changer_adresse', 'Admin@changer_adresse')->name('adm_changer_adresse');
+Route::get('admin/changer_numero', 'Admin@changer_numero')->name('adm_changer_numero');
 
 /*********************/
 
 Route::get('engagements', function(){
     return view('engagements');
 })->name('engagements');
-
-<<<<<<< HEAD
-=======
-Route::get('avis', 'Commentaire@index')->name('avis');
->>>>>>> 0cd3c9eb3ebbc43c9e0a8e0983128efa453ff437

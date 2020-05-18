@@ -44,7 +44,9 @@ class Admin extends Controller
 
     public function general()
     {
-        return view('adm/adm_general');
+        $adresse = DB::table('adresse')->where('status', '=', 'principale')->select("*")->get();
+        $telephone = DB::table('telephone')->where('id', '=', 1)->select("*")->get();
+        return view('adm/adm_general')->with(compact('adresse','telephone'));
     }
 
     public function engagements()
@@ -53,34 +55,34 @@ class Admin extends Controller
     }
 
     public function secondaire()
-    {   
+    {
         $carousel=DB::table('accueil_carousel')->select('*')->get();
         return view('adm/adm_secondaire')->with('carousel', $carousel);
     }
 
     public function commandes()
-    {   
+    {
         return view('adm/adm_commandes');
     }
 
     public function historique_commandes()
-    {   
+    {
         $products = DB::table('commande')->select('*')->where('statut_prepa','!=','En cours')->orderBy('updated_at','DESC')->paginate(5);
         return view('adm/adm_historique_commande', compact('products'));
     }
 
     public function informations()
-    {   
+    {
         return view('adm/adm_informations');
     }
-    
+
     public function droits()
-    {   
+    {
         return view('adm/adm_droits');
     }
-    
+
     public function expulsions()
-    {   
+    {
         return view('adm/adm_expulsions');
     }
 
@@ -90,7 +92,7 @@ class Admin extends Controller
     }
 
     public function articles()
-    {   
+    {
         $categorie = DB::table('categorie')->select('*')->get();
         $pizza = DB::table('pizza')->orderBy('id','desc')->get();
         return view('adm/adm_articles',compact('pizza','categorie'));
@@ -104,5 +106,30 @@ class Admin extends Controller
     public function promotions()
     {
         return view('adm/adm_promotions');
+    }
+
+    public function changer_adresse(Request $request)
+    {
+        DB::table('adresse')->where('status','=', 'principale')->update([
+            'rue' => $request['rue'],
+            'code_postal' => $request['code_postal'],
+            'ville' => $request['ville']
+        ]);
+        return back()->with('message', 'l\'adresse a bien été changée');
+    }
+
+    public function changer_numero(Request $request)
+    {
+        DB::table('telephone')->where('id','=', 1)->update([
+            'numero' => $request['numero']
+        ]);
+        return back()->with('message', 'le numéro a bien été changée');
+    }
+
+    public function identite(Request $request)
+    {
+        $nom_resto = $request['nomPizzeria'];
+        config(['APP_NAME' => $nom_resto]);
+        return back();
     }
 }

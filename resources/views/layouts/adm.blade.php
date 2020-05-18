@@ -127,5 +127,25 @@
                 </div>
             </section>
         </div>
+        <script type="text/javascript" src="{{asset('js/dist/Notifier.min.js')}}"></script>
+        @if(session()->has('message'))
+            <script>$(function (){ success('{{session()->get('message')}}')});</script>
+        @endif
+        @if(Session::get('errors'))
+            @foreach($errors->all() as $error)
+                <script>$(function (){ erreur('{{$error}}')});</script>
+            @endforeach
+        @endif
+        <script>
+            function success(message) {
+                var notifier = new Notifier();
+                notifier.notify("success", message);
+            }
+
+            function erreur(message) {
+                var notifier = new Notifier();
+                notifier.notify("error", message);
+            }
+        </script>
     </body>
 </html>
