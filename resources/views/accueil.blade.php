@@ -89,74 +89,23 @@
                         </div>
                         <!-- LES 3 DERNIERS COMMENTAIRES -->
                         <div class="col-lg-12">
+
                             <div class="list-group mb-3 border-0">
-                                <div class="card text-white border-success mb-3">
+                                <div class="text-white border-success mb-3">
                                     <div class="card-header bg-success">
                                         Les 3 derniers avis
                                         <span class="fas fa-comment float-right mt-1"></span>
                                     </div>
-                                    <div class="card-body pb-2">
-                                        @foreach($avis as $key)
-                                            @if($key->note <= 2)
-                                                <div class="list-group-item list-group-item-action list-group-item-primary p-0 mb-3 rounded border border-secondary">
-                                                    <div class="d-flex justify-content-between bg-danger text-white text-center w-100 py-3 px-5 rounded-top">
-                                                        <em><h4 class="mt-2">{{$key->username}}</h4></em>
-                                                        <div class="badge badge-secondary p-3 mr-1 rounded-circle">
-                                                            @if($key->note == 1)
-                                                                <span class="fas fa-star text-warning"></span>
-                                                            @else
-                                                                <span class="fas fa-star mr-1 text-warning"></span>
-                                                                <span class="fas fa-star text-warning"></span>
-                                                            @endif
-                                                        </div>
-                                                    </div>
-                                                    <p class="mb-1 text-justify py-4 px-5">{{$key->commentaire}}</p>
-                                                    <div class="bg-secondary text-white text-center w-100 p-2">
-                                                        <small>{{$key->created_at}}</small>
-                                                    </div>
+                                    <div class="list-group mb-3">
+                                        @foreach($commentaires as $key)
+                                            <a href="#" class="list-group-item list-group-item-action list-group-item-primary">
+                                                <div class="d-flex w-100 justify-content-between">
+                                                    <h4 class="mb-1">{{$key->username}}</h4>
+                                                    <span class="badge badge-success p-2 rounded-circle shadow">{{$key->note}}</span>
                                                 </div>
-                                            @else
-                                                @if($key->note == 3)
-                                                    <div class="list-group-item list-group-item-action list-group-item-primary p-0 mb-3 rounded border border-secondary">
-                                                        <div class="d-flex justify-content-between bg-warning text-white text-center w-100 py-3 px-5 rounded-top">
-                                                            <em><h4 class="mt-2">{{$key->username}}</h4></em>
-                                                            <div class="badge badge-secondary p-3 mr-1 rounded-circle">
-                                                                <span class="fas fa-star mr-1 text-warning"></span>
-                                                                <span class="fas fa-star mr-1 text-warning"></span>
-                                                                <span class="fas fa-star text-warning"></span>
-                                                            </div>
-                                                        </div>
-                                                        <p class="mb-1 text-justify py-4 px-5">{{$key->commentaire}}</p>
-                                                        <div class="bg-secondary text-white text-center w-100 p-2">
-                                                            <small>{{$key->created_at}}</small>
-                                                        </div>
-                                                    </div>
-                                                @else
-                                                    <div class="list-group-item list-group-item-action list-group-item-primary p-0 mb-3 rounded border border-secondary">
-                                                        <div class="d-flex justify-content-between bg-success text-white text-center w-100 py-3 px-5 rounded-top">
-                                                            <em><h4 class="mt-2">{{$key->username}}</h4></em>
-                                                            <div class="badge badge-secondary p-3 mr-1 rounded-circle">
-                                                                @if($key->note == 4)
-                                                                    <span class="fas fa-star mr-1 text-warning"></span>
-                                                                    <span class="fas fa-star mr-1 text-warning"></span>
-                                                                    <span class="fas fa-star mr-1 text-warning"></span>
-                                                                    <span class="fas fa-star text-warning"></span>
-                                                                @else
-                                                                    <span class="fas fa-star mr-1 text-warning"></span>
-                                                                    <span class="fas fa-star mr-1 text-warning"></span>
-                                                                    <span class="fas fa-star mr-1 text-warning"></span>
-                                                                    <span class="fas fa-star mr-1 text-warning"></span>
-                                                                    <span class="fas fa-star text-warning"></span>
-                                                                @endif
-                                                            </div>
-                                                        </div>
-                                                        <p class="mb-1 text-justify py-4 px-5">{{$key->commentaire}}</p>
-                                                        <div class="bg-secondary text-white text-center w-100 p-2">
-                                                            <small>{{$key->created_at}}</small>
-                                                        </div>
-                                                    </div>
-                                                @endif
-                                            @endif
+                                                <p class="mb-1 text-justify">{{$key->commentaire}}</p>
+                                                <small>{{$key->created_at}}</small>
+                                            </a>
                                         @endforeach
                                     </div>
                                 </div>
@@ -170,14 +119,15 @@
                     <div class="card-header bg-success">Nous Contacter<span class="fas fa-phone float-right mt-1"></span></div>
                     <div class="card-body">
                         <section class="row">
-                            @foreach($parametres as $key){
+                            @foreach($parametres as $key)
                                 <div class="col text-center text-info jumbotron p-1 mb-0">{{$key->telephone}}</div>
                             @endforeach
                         </section>
                     </div>
                 </div>
                 <div class="card text-white border-danger mb-3">
-                    <div class="card-header bg-danger">Notre Localisation<span class="fas fa-map-marked-alt float-right mt-1"></span></div>
+                    <div class="card-header bg-danger">Notre Localisation<span class="fas fa-map-marked-alt float-right mt-1"></span>
+                    </div>
                     <div class="card-body">
                         <section class="row">
                             <div class="col-12 p-0">
@@ -185,9 +135,9 @@
                             </div>
                         </section>
                     </div>
-                    <div class="card-footer bg-secondary">
+                    <div class="card-footer bg-secondary bg-danger">
                         @foreach($parametres as $key)
-                            <p class="mb-0 text-white"><small>{{$key->adresse}},<br>{{$key->codePostal}} {{$key->ville}}</small></p>
+                            <p class="mb-0 text-white "><small>{{$key->adresse}},<br>{{$key->codePostal}} {{$key->ville}}</small></p>
                         @endforeach
                     </div>
                 </div>
@@ -227,6 +177,24 @@
                                 <button class="btn btn-outline-primary" type="button" id="button-addon2">S'inscrire</button>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="card text-white border-danger mb-3">
+                    <div class="card-header bg-danger">Nombre d'utilisateurs total<span class="fas fa-user-circle float-right mt-1"></span></div>
+                    <div class="card-body">
+                        <div class="col text-center text-info jumbotron p-1 mb-0">{{$nb_user}}</div>
+                    </div>
+                </div>
+                <div class="card text-white border-success mb-3">
+                    <div class="card-header bg-success">Nombre de commandes total<span class="fas fa-user-circle float-right mt-1"></span></div>
+                    <div class="card-body">
+                        <div class="col text-center text-info jumbotron p-1 mb-0">{{$nb_commande}}</div>
+                    </div>
+                </div>
+                <div class="card text-white border-danger mb-3">
+                    <div class="card-header bg-danger">Nombre d'avis total<span class="fas fa-user-circle float-right mt-1"></span></div>
+                    <div class="card-body">
+                        <div class="col text-center text-info jumbotron p-1 mb-0">{{$nb_avis}}</div>
                     </div>
                 </div>
             </section>

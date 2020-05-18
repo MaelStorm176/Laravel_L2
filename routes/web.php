@@ -123,6 +123,7 @@ Route::get('conf_email', 'ParametresController@verify')->name('conf_email');
 Route::get('verif_email', 'ParametresController@verif_email');
 
 /* ADMINISTRATION */
+
 Route::middleware('can:accessAdminpanel')->group(function() {
     Route::get('admin/home', 'Admin@index')->name('admin');
     /* PLANNING */

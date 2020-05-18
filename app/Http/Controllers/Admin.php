@@ -16,7 +16,7 @@ class Admin extends Controller
     }
 
     public function horaires()
-    {   
+    {
         $fermetures = DB::table('fermeture')->select('*')->get();
         $feriees = DB::table('feriee')->select('*')->get();
         $horaires = DB::table('horaires')->select('*')->get();
@@ -63,7 +63,7 @@ class Admin extends Controller
     }
 
     public function feriee_supprimer(Request $request)
-    {   
+    {
         DB::table('feriee')->where('id','=',$request['id'])->delete();
     }
 
@@ -94,7 +94,7 @@ class Admin extends Controller
     }
 
     public function avis()
-    {   
+    {
         $commentaires = DB::table('commentaire')->select('*')->get();
         return view('adm/adm_avis')->with('commentaires',$commentaires);
     }
@@ -275,4 +275,6 @@ class Admin extends Controller
             echo '<option value="'.$article->id.'">'.$article->nom.'</option>';
         }
     }
+
+
 }

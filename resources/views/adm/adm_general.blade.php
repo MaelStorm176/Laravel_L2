@@ -69,7 +69,7 @@
             </div>
             <div class="col-lg-6">
                 <div class="card border-info mb-3">
-                    <div class="card-header bg-info text-white">Adresse du restaurant<span class="fas fa-map-marked-alt mt-1 float-right"></span></div>
+                    <div class="card-header bg-info text-white">Changer l'adresse du restaurant<span class="fas fa-map-marked-alt mt-1 float-right"></span></div>
                     <div class="card-body">
                         @foreach($parametres as $key)
                             <form method="post" action="{{route('adm_adresse')}}">

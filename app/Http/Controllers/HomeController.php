@@ -12,10 +12,16 @@ class HomeController extends Controller
     {
         $pizza = DB::table('pizza')->select('*')->where('statut','=','Disponible')->get();
         $carousel=DB::table('accueil_carousel')->select('*')->get();
+        $commentaires = DB::table("commentaire")
+            ->orderBy('created_at', 'desc')
+            ->limit(3)
+            ->select('*')->get();
+        $nb_user = DB::table("users")->count("id");
+        $nb_commande = DB::table("commande")->count("id");
+        $nb_avis = DB::table("commentaire")->count("id");
         $partenaires = DB::table('partenaires')->select('*')->get();
-        $avis = DB::table('commentaire')->orderBy('id')->take(3)->get();
         $parametres = DB::table('parametres')->get();
-        return view('accueil',compact('pizza','carousel','partenaires', 'avis', 'parametres'));
+        return view('accueil')->with(compact('pizza', 'carousel', 'adresse', 'telephone', 'commentaires', 'nb_user', 'parametres', 'partenaires', 'nb_commande', 'nb_avis'));
     }
 
     public function horaires()
