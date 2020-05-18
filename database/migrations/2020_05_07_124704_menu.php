@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Telephone extends Migration
+class Menu extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,12 @@ class Telephone extends Migration
      */
     public function up()
     {
-        Schema::create('telephone', function (Blueprint $table) {
+        Schema::create('menu', function (Blueprint $table) {
             $table->id();
-            $table->string('numero');
+            $table->string('nom')->unique();
+            $table->text('description')->nullable();
+            $table->unsignedDecimal('prix',8,2)->default(0);
+            $table->unsignedDecimal('promo',8,2)->default(0);
         });
     }
 
@@ -26,6 +29,6 @@ class Telephone extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('menu');
     }
 }

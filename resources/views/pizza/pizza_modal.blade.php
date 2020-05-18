@@ -1,6 +1,5 @@
 @auth
     @if(Auth::user()->role=='admin')
-        <?php $categorie = DB::table('categorie')->select('*')->get(); ?>
     <!-- Button trigger modal -->
     <button type="button" id="bouton_ajout" onclick="ajouter()" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModalCenter">
         Ajouter un article
@@ -12,7 +11,7 @@
         Ajouter une catégorie
     </button>
 
-    <button type="button" id="bouton_code" class="btn btn-outline-primary" data-toggle="modal" data-target="#MenuModal">
+    <button type="button" id="bouton_code" onclick="ajouter_menu()"class="btn btn-outline-primary" data-toggle="modal" data-target="#MenuModal">
         Ajouter un menu
     </button>
     <!-- Modal -->
@@ -205,11 +204,11 @@
                                 <label>Prix (Euros €)</label>
                                 <input type="number" step="0.01" name="prix_m" placeholder="Prix" id="prix_m" class="form-control" required>
                                 <br/>
-
+                                <input type="hidden" name="id_menu" id="id_menu">
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                                <button type="submit" id="upload" class="btn btn-primary">Créer</button>
+                                <button type="submit" id="upload_menu" class="btn btn-primary">Créer</button>
                             </div>
                         </form>
                     </div>

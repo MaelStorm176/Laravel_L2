@@ -23,7 +23,11 @@
                             <td>{{ $value->prix_total }}</td>
                             <td>{{ $value->statut_pay }}</td>
                             <td>{{ $value->created_at }}</td>
-                            <td>{{ $value->updated_at }}</td>
+                            @if($value->updated_at == NULL)
+                                <td>Non déterminée</td>
+                            @else
+                                <td>{{ $value->updated_at }}</td>
+                            @endif
                             <td>{{ $value->statut_prepa }}</td>
                         </tr>
                     @endif

@@ -35,4 +35,12 @@ class CodeController extends Controller
 
         return back()->with('message','Votre code a été enregistré !');
     }
+
+    public function supprimer(Request $request)
+    {
+        if(isset($request['id']))
+        {
+            DB::table("coupon")->where('id','=',$request['id'])->delete();
+        }
+    }
 }

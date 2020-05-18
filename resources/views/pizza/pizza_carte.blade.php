@@ -25,6 +25,8 @@
                         </section>
                     </div>
                 </div>
+
+                <!-- ARTICLES (Pizzas, boissons, etc...) -->
                 <div class="accordion" id="accordionEx">
                 @foreach($categorie as $cat)
                     <div class="collapse" id="{{$cat->nom}}Collapse" data-parent="#accordionEx">
@@ -104,21 +106,23 @@
                         </div>
                     </div>
                 @endforeach
+
+                    <!-- MENUS -->
                 <div class="collapse" id="menu_Collapse" data-parent="#accordionEx">
                     <div class="card bg-success text-white text-center p-3 font-weight-bold font-italic mb-3">
                         <h5 class="mb-0 text-uppercase">NOS MENUS</h5>
                     </div>
                     <div class="row row-cols-1 row-cols-md-2">
                         @foreach($menu as $item)
-                            <div class="col mb-3" id="{{$item->id}}">
+                            <div class="col mb-3" id="menu_{{$item->id}}">
                                 <div class="card">
                                     <div class="row no-gutters">
                                         <div class="col-md-4">
                                             @auth
                                                 @if(Auth::user()->role=='admin')
                                                     <div style="z-index: 6; position: absolute;">
-                                                        <button type="button" class="btn btn-primary" onclick="modifier({{$item->id}})" data-toggle="modal" data-target="#exampleModalCenter"><i class="fas fa-edit"></i></button> <br/> <br/>
-                                                        <button type="button" class="btn btn-primary" onclick="supprimer({{$item->id}})"><i class="fas fa-trash"></i></button>
+                                                        <button type="button" class="btn btn-primary" onclick="modifier_menu({{$item->id}})" data-toggle="modal" data-target="#MenuModal"><i class="fas fa-edit"></i></button> <br/> <br/>
+                                                        <button type="button" class="btn btn-primary" onclick="supprimer_menu({{$item->id}})"><i class="fas fa-trash"></i></button>
                                                     </div>
                                                 @endif
                                             @endauth
@@ -134,7 +138,7 @@
                                                 <h5 class="card-title mt-1">{{$item->nom}}</h5>
                                                 <p class="card-text text-justify">{{$item->description}}</p>
                                                 <div class="row justify-content-center">
-                                                    <a type="button"  href="pizza_all/{{$item->nom}}" class="col-6 btn btn-primary navbar-btn align-center">Voir le détail</a>
+                                                    <a type="button"  href="pizza_all/menu/{{$item->nom}}" class="col-6 btn btn-primary navbar-btn align-center">Voir le détail</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -239,6 +243,75 @@
             },
         });
     }
+
+
+    function ajouter_menu()
+    {
+        $('input[type="checkbox"][name="categorie"]').change().prop('checked', false);
+        $('input[type="checkbox"][name="article[]"]').prop('checked', false);
+        $('#MenuModalLongTitle').html('Créer un menu');
+        $('#formulaire_menu').prop('action','{{route('menu.upload')}}');
+        $('#nom_m').val('');
+        $('#description_m').val('');
+        $('#prix_m').val('');
+        $('#upload_menu').html('Créer');
+        $('#id_menu').val('');
+    }
+
+    function modifier_menu(id)
+    {
+        $('input[type="checkbox"][name="categorie"]').prop('checked', false);
+        $('input[type="checkbox"][name="article[]"]').prop('checked', false);
+        $('#MenuModalLongTitle').html('Modifier le menu');
+        $('#formulaire_menu').prop('action','{{route('menu.modifier')}}');
+        $('#upload_menu').html('Modifier');
+        $('#id_menu').val(id);
+        var dummy = Date.now();
+        $.ajax({
+            url :'afficher_form_menu',
+            type : 'GET',
+            dataType : 'html',
+            data : {dummy:dummy, id:id},
+            success : function(code_html, statut){
+                var dataretour = code_html.split('_|');
+                $('#nom_m').val(dataretour[0]);
+                $('#description_m').val(dataretour[1]);
+                $('#prix_m').val(dataretour[2]);
+
+                for (var i=4;i<=dataretour.length;i++){
+                    $('input[type="checkbox"][name="categorie"][value='+dataretour[i]+']').change().prop('checked', true);
+                    i++;
+                }
+                setTimeout(function() {
+                    for(i=3;i<=(dataretour.length-1);i++){
+                        $('input[type="checkbox"][name="article[]"][value='+dataretour[i]+']').prop('checked', true);
+                        i++;
+                    }
+                }, 1000);
+
+            },
+            error : function(resultat, statut, erreur){
+                alert('Erreur avec la requete Ajax');
+            },
+        });
+    }
+
+    function supprimer_menu(id){
+        var dummy = Date.now();
+        $.ajax({
+            url :'menu.supprimer',
+            type : 'GET',
+            dataType : 'html',
+            data : {dummy:dummy, id:id},
+            success : function(code_html, statut){
+                $('div[id="menu_'+id+'"]').remove();
+            },
+            error : function(resultat, statut, erreur){
+                alert('Erreur avec la requete Ajax');
+            },
+        });
+    }
+
 
     $('input[type="checkbox"][name="categorie"]').change(function() {
         var dummy = Date.now();

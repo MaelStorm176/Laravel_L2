@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Adresse extends Migration
+class Partenaires extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class Adresse extends Migration
      */
     public function up()
     {
-        Schema::create('adresse', function (Blueprint $table) {
+        Schema::create('partenaires', function (Blueprint $table) {
             $table->id();
-            $table->string('rue');
-            $table->string('code_postal');
-            $table->string('ville');
-            $table->string('status');
+            $table->string('nom')->default('');
+            $table->string('lien')->default('');
         });
     }
 
@@ -29,6 +27,6 @@ class Adresse extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('partenaires');
     }
 }

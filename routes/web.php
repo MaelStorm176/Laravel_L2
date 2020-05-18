@@ -33,7 +33,7 @@ Route::get('make-migration',
         return back();
     })->name('make-migration');
 
-Route::get('ajout_commentaire', 'Commentaire@ajout')->name('ajout_commentaire')->middleware('verified');
+Route::post('ajout_commentaire', 'Commentaire@ajout')->name('ajout_commentaire')->middleware('verified');
 Route::get('clear_db', 'Commentaire@clear_db')->name('clear_db');
 Route::get('avis','Commentaire@afficherdefaut')->name('avis');
 Route::get('commentaire',"Commentaire@voir")->name('commentaire')->middleware('verified');
@@ -50,16 +50,23 @@ Route::get('pizza_all/{pizza_nom}','Pizza@detail');
 Route::get('pizza_all/{pizza_nom}/remplissage_tab','Pizza@nutrition');
 Route::post('pizza.promotion','Pizza@promotion')->name('promotion');
 Route::post('code.upload','CodeController@upload')->name('code.upload');
+Route::get('code.supprimer','CodeController@supprimer')->name('code.supprimer');
 Route::post('categorie.upload','Pizza@categorie_upload')->name('categorie.upload');
 
 /*MENU*/
 Route::post('menu.upload','Menu@upload')->name('menu.upload');
+Route::post('menu.modifier','Menu@modifier')->name('menu.modifier');
+Route::post('menu.promotion','Menu@promotion')->name('menu.promotion');
+Route::get('menu.supprimer','Menu@supprimer')->name('menu.supprimer');
+Route::get('afficher_form_menu','Menu@afficher_form')->name('afficher_form_menu');
 Route::get('afficher_cat','Menu@afficher_cat')->name('afficher_cat');
+Route::get('pizza_all/menu/{menu_nom}','Menu@detail')->name('afficher_menu');
 
 /*PANIER*/
 Route::get('panier','Panier@afficher')->name('panier');
 Route::get('panier.creer','Panier@creer')->name('panier.creer');
 Route::get('panier.ajouter','Panier@ajouter')->name('panier.ajouter');
+Route::get('panier.ajouter_menu','Panier@ajouter_menu')->name('panier.ajouter_menu');
 Route::get('panier.modifier','Panier@modifier')->name('panier.modifier');
 Route::get('panier.contenu_supprimer','Panier@contenu_supprimer')->name('panier.contenu_supprimer');
 
@@ -122,25 +129,43 @@ Route::get('conf_email', 'ParametresController@verify')->name('conf_email');
 Route::get('verif_email', 'ParametresController@verif_email');
 
 /* ADMINISTRATION */
-Route::get('admin/home', 'Admin@index')->name('admin');
-Route::get('admin/horaires', 'Admin@horaires')->name('adm_horaires');
-Route::post('admin/horaires.modif', 'Admin@horaires_modif')->name('adm_horaires.modif');
-Route::get('admin/secondaire', 'Admin@secondaire')->name('adm_secondaire');
-Route::get('admin/avis', 'Admin@avis')->name('adm_avis');
-Route::get('admin/engagements', 'Admin@engagements')->name('adm_engagements');
-Route::get('admin/general', 'Admin@general')->name('adm_general');
-Route::get('admin/commandes', 'Admin@commandes')->name('adm_commandes');
-Route::get('admin/historique_commandes', 'Admin@historique_commandes')->name('adm_historique_commandes');
-Route::get('admin/informations', 'Admin@informations')->name('adm_informations');
-Route::get('admin/droits', 'Admin@droits')->name('adm_droits');
-Route::get('admin/expulsions', 'Admin@expulsions')->name('adm_expulsions');
-Route::get('admin/codes', 'Admin@codes')->name('adm_codes');
-Route::get('admin/articles', 'Admin@articles')->name('adm_articles');
-Route::get('admin/menus', 'Admin@menus')->name('adm_menus');
-Route::get('admin/promotions', 'Admin@promotions')->name('adm_promotions');
-Route::get('admin/identite', 'Admin@identite')->name('adm_identite');
-Route::get('admin/changer_adresse', 'Admin@changer_adresse')->name('adm_changer_adresse');
-Route::get('admin/changer_numero', 'Admin@changer_numero')->name('adm_changer_numero');
+
+Route::middleware('can:accessAdminpanel')->group(function() {
+    Route::get('admin/home', 'Admin@index')->name('admin');
+    /* PLANNING */
+    Route::get('admin/horaires', 'Admin@horaires')->name('adm_horaires');
+    Route::post('admin/horaires.modif', 'Admin@horaires_modif')->name('adm_horaires.modif');
+    Route::get('admin/feriee_supprimer', 'Admin@feriee_supprimer')->name('adm_feriee_supprimer');
+    Route::get('admin/feriee_ajout', 'Admin@feriee_ajout')->name('adm_feriee_ajout');
+    Route::get('admin/fermeture_supprimer', 'Admin@fermeture_supprimer')->name('adm_fermeture_supprimer');
+    Route::get('admin/fermeture_ajout', 'Admin@fermeture_ajout')->name('adm_fermeture_ajout');
+    Route::get('admin/secondaire', 'Admin@secondaire')->name('adm_secondaire');
+    /* AVIS */
+    Route::get('admin/avis', 'Admin@avis')->name('adm_avis');
+    Route::get('admin/afficher_avis', 'Admin@afficher_avis')->name('adm_afficher_avis');
+    Route::get('admin/supprimer_avis', 'Admin@supprimer_avis')->name('adm_supprimer_avis');
+    /* ENGAGEMENTS */
+    Route::get('admin/engagements', 'Admin@engagements')->name('adm_engagements');
+    /* GENERAL */
+    Route::get('admin/general', 'Admin@general')->name('adm_general');
+    Route::post('admin/telephone', 'Admin@telephone')->name('adm_telephone');
+    Route::post('admin/identite', 'Admin@identite')->name('adm_identite');
+    Route::post('admin/adresse', 'Admin@adresse')->name('adm_adresse');
+    Route::get('admin/commandes', 'Admin@commandes')->name('adm_commandes');
+    Route::get('admin/historique_commandes', 'Admin@historique_commandes')->name('adm_historique_commandes');
+    Route::get('admin/informations', 'Admin@informations')->name('adm_informations');
+    Route::post('admin/informations', 'Admin@informations')->name('adm_informations');
+    Route::get('admin/droits', 'Admin@droits')->name('adm_droits');
+    Route::get('admin/expulsions', 'Admin@expulsions')->name('adm_expulsions');
+    Route::get('admin/codes', 'Admin@codes')->name('adm_codes');
+    Route::get('admin/articles', 'Admin@articles')->name('adm_articles');
+    Route::get('admin/menus', 'Admin@menus')->name('adm_menus');
+    Route::get('admin/promotions', 'Admin@promotions')->name('adm_promotions');
+    Route::get('admin/promotions/refresh_article', 'Admin@refresh_article'); //AJAX
+    /* PARTENAIRES */
+    Route::get('partenaire_ajout', 'Admin@partenaire_ajout')->name('partenaire_ajout');
+    Route::get('partenaire_supprimer', 'Admin@partenaire_supprimer')->name('partenaire_supprimer');
+});
 
 /*********************/
 

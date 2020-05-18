@@ -24,7 +24,7 @@
                                 <div class="col-lg-12">
                                     <button type="submit" class="btn btn-primary text-white w-100">GENERER</button>
                                 </div>
-                            </section>            
+                            </section>
                         </form>
                     </div>
                 </div>
@@ -43,30 +43,14 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="align-middle">65dsfsdffd65</td>
-                                    <td class="align-middle">20%</td>
-                                    <td class="align-middle">11/05/2020</td>
-                                    <td class="align-middle"><span class="fas fa-trash-alt btn"></span></td>
+                            @foreach($coupons as $coupon)
+                                <tr id="{{$coupon->id}}">
+                                    <td class="align-middle">{{$coupon->code}}</td>
+                                    <td class="align-middle">{{$coupon->remise}}%</td>
+                                    <td class="align-middle">{{$coupon->date_limite}}</td>
+                                    <td class="align-middle" onclick="supprimer({{$coupon->id}})"><span class="fas fa-trash-alt btn"></span></td>
                                 </tr>
-                                <tr>
-                                    <td class="align-middle">65dsfsdffd65</td>
-                                    <td class="align-middle">20%</td>
-                                    <td class="align-middle">11/05/2020</td>
-                                    <td class="align-middle"><span class="fas fa-trash-alt btn"></span></td>
-                                </tr>
-                                <tr>
-                                    <td class="align-middle">65dsfsdffd65</td>
-                                    <td class="align-middle">20%</td>
-                                    <td class="align-middle">11/05/2020</td>
-                                    <td class="align-middle"><span class="fas fa-trash-alt btn"></span></td>
-                                </tr>
-                                <tr>
-                                    <td class="align-middle">65dsfsdffd65</td>
-                                    <td class="align-middle">20%</td>
-                                    <td class="align-middle">11/05/2020</td>
-                                    <td class="align-middle"><span class="fas fa-trash-alt btn"></span></td>
-                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -75,3 +59,21 @@
         </section>
     </div>
 @endsection
+
+<script>
+    function supprimer(id){
+        var dummy = Date.now();
+        $.ajax({
+            url :'{{route('code.supprimer')}}',
+            type : 'GET',
+            dataType : 'html',
+            data : {dummy:dummy, id:id},
+            success : function(code_html, statut){
+                $('tr[id="'+id+'"]').remove();
+            },
+            error : function(resultat, statut, erreur){
+                alert('Erreur avec la requete Ajax');
+            },
+        });
+    }
+</script>

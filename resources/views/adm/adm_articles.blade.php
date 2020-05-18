@@ -23,12 +23,12 @@
                                 <div class="col-lg-3 text-center mb-3">
                                     <section class="row">
                                         <div class="col-10 pr-0">
-                                            <button class="btn btn-primary text-white w-100" type="button" data-toggle="collapse" data-target="#{{$cat->nom}}Collapse" aria-expanded="true" aria-controls="{{$cat->nom}}Collapse">
-                                                Nos {{$cat->nom}} 
+                                            <button class="btn btn-primary text-white w-100" name="{{$cat->nom}}" type="button" data-toggle="collapse" data-target="#{{$cat->nom}}Collapse" aria-expanded="true" aria-controls="{{$cat->nom}}Collapse">
+                                                Nos {{$cat->nom}}
                                             </button>
                                         </div>
                                         <div class="col-lg-2 px-0">
-                                            <button class="btn btn-primary w-100 h-100" type="button">
+                                            <button class="btn btn-primary w-100 h-100" type="button" name="{{$cat->nom}}">
                                                 <span class="fas fa-times text-danger"></span>
                                             </button>
                                         </div>
@@ -69,7 +69,7 @@
                                                                 <section class="row">
                                                                     <div class="col-lg-6 mb-3">
                                                                         <button type="button" class="btn btn-success w-100" onclick="modifier({{$key->id}})" data-toggle="modal" data-target="#exampleModalCenter">
-                                                                            MODIFIER  
+                                                                            MODIFIER
                                                                         </button>
                                                                     </div>
                                                                     <div class="col-lg-6 mb-3">

@@ -209,4 +209,9 @@ class Pizza extends Menu
         DB::table('categorie')->updateOrInsert(['nom' => $request['nom']]);
         return back()->with('message','Votre catégorie a été ajouté');
     }
+
+    public function categorie_supprimer(Request $request)
+    {
+        DB::table('categorie')->where('id','=',$request[])->delete();
+    }
 }

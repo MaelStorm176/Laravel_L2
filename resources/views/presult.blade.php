@@ -1,3 +1,4 @@
+<?php use App\User; ?>
 <div id="myDIV">
     <table class="table table-hover table-bordered mb-3 text-center">
         <thead class="bg-primary text-white">
@@ -17,12 +18,16 @@
                 @foreach ($products as $value)
                     <tr>
                         <td>{{ $value->id }}</td>
-                        <td>{{ $value->num_commande }}</td>
-                        <td>{{ Auth::user()->email }}</td>
+                        <td><button class="btn btn-outline-primary" onclick="afficher({{$value->id}})" data-toggle="modal" data-target="#commandesModal">{{ $value->num_commande }}</td>
+                        <td>{{ User::find($value->user_id)->email }}</td>
                         <td>{{ $value->prix_total }}</td>
                         <td>{{ $value->statut_pay }}</td>
                         <td>{{ $value->created_at }}</td>
-                        <td>{{ $value->updated_at }}</td>
+                        @if($value->updated_at == NULL)
+                            <td>Non déterminée</td>
+                        @else
+                            <td>{{ $value->updated_at }}</td>
+                        @endif
                         <td>{{ $value->statut_prepa }}</td>
                     </tr>
                 @endforeach

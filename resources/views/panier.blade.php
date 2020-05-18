@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 @auth
-                    @if(!Empty($products))
+                    @if(!Empty($products) || !Empty($menu))
                         <input type="hidden" value="{{$products}}" id="products">
                         <table class="table table-hover table-bordered mb-3 text-center">
                             <thead class="bg-primary text-white">
@@ -30,14 +30,27 @@
                             </thead>
                             <tbody>
                                 @foreach($products as $key)
-                                    <tr id="{{$key->id}}">
+                                    <tr id="article_{{$key->id}}">
                                         <td class="align-middle">{{ $key->nom }}</td>
                                         <td class="align-middle">
-                                            <input type="number" class="text-center" value="{{$key->quantite}}" onchange="refresh($(this).val(),{{$key->id}})">
+                                            <input type="number" class="text-center" value="{{$key->quantite}}" onchange="refresh($(this).val(),{{$key->id}},1)">
                                         </td>
                                         <td class="align-middle">{{ $key->promo }} €</td>
                                         <td class="align-middle">
-                                            <span id="supp_{{$key->id}}" onclick="supprimer({{$key->id}});" class="fas fa-times" style="cursor: pointer;"></span>
+                                            <span id="supp_{{$key->id}}" onclick="supprimer({{$key->id}},1);" class="fas fa-times" style="cursor: pointer;"></span>
+                                        </td>
+                                    </tr>
+                                @endforeach
+
+                                @foreach($menu as $key2)
+                                    <tr id="menu_{{$key2->id}}">
+                                        <td class="align-middle">{{ $key2->nom }}</td>
+                                        <td class="align-middle">
+                                            <input type="number" class="text-center" value="{{$key2->quantite}}" onchange="refresh($(this).val(),{{$key2->id}},0)">
+                                        </td>
+                                        <td class="align-middle">{{ $key2->promo }} €</td>
+                                        <td class="align-middle">
+                                            <span id="supp_menu{{$key2->id}}" onclick="supprimer({{$key2->id}},0);" class="fas fa-times" style="cursor: pointer;"></span>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -69,11 +82,12 @@
     </div>
 @endsection
 <script type="text/javascript">
-    function refresh(value,id) {
+    function refresh(value,id,type) {
         if(value <= 0){
-            supprimer(id);
+            supprimer(id,type);
         }
         else {
+
             var dummy = Date.now();
             $.ajax({
                 url: 'panier.modifier',
@@ -85,6 +99,7 @@
                     var dataretour = code_html.split('_|');
                     $('#prix_total').html(dataretour[0]);
                     $('#quantite_total').html(dataretour[1]+' articles');
+                    $('#quantite_total_panier').html(dataretour[1]);
                 },
 
                 error: function (resultat, statut, erreur) {
@@ -95,7 +110,7 @@
     }
 
 
-    function supprimer(id){
+    function supprimer(id,type){
         var dummy = Date.now();
         $.ajax({
             url :'panier.contenu_supprimer',
@@ -104,9 +119,15 @@
             data : {dummy:dummy, id:id},
             success : function(code_html, statut){
                 var dataretour = code_html.split('_|');
-                $('tr[id="'+id+'"]').remove();
+                if(type === 1){
+                    $('tr[id="article_'+id+'"]').remove();
+                }
+                if(type === 0){
+                    $('tr[id="menu_'+id+'"]').remove();
+                }
                 $('#prix_total').html(dataretour[0]);
                 $('#quantite_total').html(dataretour[1]+' articles');
+                $('#quantite_total_panier').html('0');
             },
 
             error : function(resultat, statut, erreur){

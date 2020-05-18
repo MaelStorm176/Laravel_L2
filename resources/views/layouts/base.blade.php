@@ -67,10 +67,12 @@
                             <a class="nav-link" href="{{route('avis')}}">Avis</a>
                         </li>
                         @auth
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{route('admin')}}">Admin</a>
-                            </li>
-                        @endauth
+                            @if(Auth::user()->role=='admin')
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{route('admin')}}">Admin</a>
+                                </li>
+                            @endif
+                        @endauth 
                     </ul>
                     @guest
                         <div class="navbar-right">
@@ -92,12 +94,15 @@
                                 </div>
                             </div>
                             <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                 <button type="button" class="btn btn-outline-danger navbar-btn"><span class="fas fa-door-open mr-2"></span>{{ __('Logout') }}</button>
+                                 <button type="button" class="btn btn-outline-danger navbar-btn"><span class="fas fa-door-open mr-2"></span>{{ __('Déconexion') }}</button>
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 @csrf
                             </form>
                             </div>
+
+                            <i class="fas fa-shopping-cart" style="color:#fff;"></i>
+                            <span class="badge badge-primary badge-pill px-2 py-1" id="quantite_total_panier"><?php echo \App\Http\Controllers\Panier::quantite_total(); ?></span>
                         </div>
                     @endauth
                 </div>
