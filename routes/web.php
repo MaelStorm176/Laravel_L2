@@ -47,6 +47,9 @@ Route::post('code.upload','CodeController@upload')->name('code.upload');
 Route::get('code.supprimer','CodeController@supprimer')->name('code.supprimer');
 Route::post('categorie.upload','Pizza@categorie_upload')->name('categorie.upload');
 
+/* ENGAGEMENT*/
+Route::get('engagements', 'Engagement@index')->name('engagements');
+
 /*MENU*/
 Route::post('menu.upload','Menu@upload')->name('menu.upload');
 Route::post('menu.modifier','Menu@modifier')->name('menu.modifier');
@@ -140,6 +143,8 @@ Route::middleware('can:accessAdminpanel')->group(function() {
     Route::get('admin/supprimer_avis', 'Admin@supprimer_avis')->name('adm_supprimer_avis');
     /* ENGAGEMENTS */
     Route::get('admin/engagements', 'Admin@engagements')->name('adm_engagements');
+    Route::get('admin/ajout_engagement', 'Admin@ajout_engagement')->name('ajout_engagement');
+    Route::get('admin/supprimer_engagement', 'Admin@supprimer_engagement')->name('supprimer_engagement');
     /* GENERAL */
     Route::get('admin/general', 'Admin@general')->name('adm_general');
     Route::post('admin/telephone', 'Admin@telephone')->name('adm_telephone');
@@ -162,7 +167,3 @@ Route::middleware('can:accessAdminpanel')->group(function() {
 });
 
 /*********************/
-
-Route::get('engagements', function(){
-    return view('engagements');
-})->name('engagements');
