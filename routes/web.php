@@ -68,14 +68,9 @@ Route::get('panier.contenu_supprimer','Panier@contenu_supprimer')->name('panier.
 /*COMMANDE*/
 Route::get('valider', 'Commande@valider')->name('valider');
 Route::get('afficher_commande', 'Commande@afficher_comm')->name('afficher_commande');
-Route::get('historique', 'Commande@historique')->name('historique');
 Route::get('historique_commande','AjaxPaginationController@ajaxPagination')->name('historique_commande');
 
 /*PAYEMENT*/
-
-Route::get('/test', function () {
-    return view('payment_save');
-});
 
 Route::get('/payment_accepted', function () {
     return view('payment_accepted');
@@ -123,7 +118,6 @@ Route::get('conf_email', 'ParametresController@verify')->name('conf_email');
 Route::get('verif_email', 'ParametresController@verif_email');
 
 /* ADMINISTRATION */
-
 Route::middleware('can:accessAdminpanel')->group(function() {
     Route::get('admin/home', 'Admin@index')->name('admin');
     /* PLANNING */

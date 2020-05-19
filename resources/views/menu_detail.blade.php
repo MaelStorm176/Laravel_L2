@@ -1,8 +1,8 @@
 @extends('layouts.base')
 
-@section('ban')../@endsection
-@section('logo')../@endsection
-@section('favi')../@endsection
+@section('ban')../../@endsection
+@section('logo')../../@endsection
+@section('favi')../../@endsection
 
 @section('content')
     @foreach($menu as $key)
@@ -16,7 +16,7 @@
                     </div>
                     <div class="row no-gutters">
                         <div class="col-md-4">
-                            <img src="../img/menus.jpg" class="w-100" style="border-radius: 0 0 0 0.25rem;" alt="...">
+                            <img src="../../images/menu.jpg" class="w-100" style="border-radius: 0 0 0 0.25rem;" alt="...">
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">

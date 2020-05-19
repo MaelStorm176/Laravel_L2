@@ -91,7 +91,7 @@
                                                                 <div class="badge badge-primary p-2 float-right text-white"> {{$key->promo}} €</div>
                                                             @endif
                                                             <h5 class="card-title mt-1">{{$key->nom}}</h5>
-                                                            <p class="card-text text-justify">(Description/Ingrédients) {{$key->description_courte}}</p>
+                                                            <p class="card-text text-justify">{{$key->description_courte}}</p>
                                                             <div class="row justify-content-center">
                                                                 <a class="btn btn-outline-primary" style="cursor: not-allowed;">Indisponible</a>
                                                             </div>
@@ -115,7 +115,11 @@
                     <div class="row row-cols-1 row-cols-md-2">
                         @foreach($menu as $item)
                             <div class="col mb-3" id="menu_{{$item->id}}">
-                                <div class="card">
+                                @if($item->statut == 'Indisponible')
+                                    <div class="card" style="cursor: not-allowed; filter: opacity(50%);-webkit-filter: opacity(50%);">
+                                @else
+                                    <div class="card">
+                                @endif
                                     <div class="row no-gutters">
                                         <div class="col-md-4">
                                             @auth
@@ -126,7 +130,7 @@
                                                     </div>
                                                 @endif
                                             @endauth
-                                            <img src="{{$key->photo}}" class="rounded-left" style="width:150px; height:150px;">
+                                            <img src="../images/menu.jpg" class="rounded-left" style="width:150px; height:150px;">
                                         </div>
                                         <div class="col-md-8">
                                             <div class="card-body">
@@ -138,7 +142,11 @@
                                                 <h5 class="card-title mt-1">{{$item->nom}}</h5>
                                                 <p class="card-text text-justify">{{$item->description}}</p>
                                                 <div class="row justify-content-center">
-                                                    <a type="button"  href="pizza_all/menu/{{$item->nom}}" class="col-6 btn btn-primary navbar-btn align-center">Voir le détail</a>
+                                                    @if($item->statut == 'Indisponible')
+                                                        <a type="button" class="col-6 btn btn-primary navbar-btn align-center">Indisponible</a>
+                                                    @else
+                                                        <a type="button" href="pizza_all/menu/{{$item->nom}}" class="col-6 btn btn-primary navbar-btn align-center">Voir le détail</a>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -335,11 +343,6 @@
             $('#aff_'+categorie).empty();
         }
     });
-
-
-
-
-
     $('.collapse').collapse();
 </script>
 @endsection

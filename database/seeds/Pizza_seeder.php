@@ -28,5 +28,20 @@ class Pizza_seeder extends Seeder
                 'promo' => $prix
             ]);
         }
+
+        for ($i=1;$i<=5;$i++) {
+            $prix = random_int(1,20);
+            DB::table('pizza')->insert([
+                'nom' => 'Boisson'.$i,
+                'photo' => 'images/img_seed/bois_'.$i.'.png',
+                'categorie' => 'boissons',
+                'description_courte' => Str::random(10),
+                'description_longue' => Str::random(50),
+                'statut' => 'Disponible',
+                'nutrition' => $i,
+                'prix' => $prix,
+                'promo' => $prix
+            ]);
+        }
     }
 }

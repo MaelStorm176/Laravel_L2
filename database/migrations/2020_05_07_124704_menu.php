@@ -17,6 +17,7 @@ class Menu extends Migration
             $table->id();
             $table->string('nom')->unique();
             $table->text('description')->nullable();
+            $table->string('statut')->default('Disponible');
             $table->unsignedDecimal('prix',8,2)->default(0);
             $table->unsignedDecimal('promo',8,2)->default(0);
         });

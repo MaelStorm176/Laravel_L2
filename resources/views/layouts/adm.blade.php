@@ -128,13 +128,16 @@
             </section>
         </div>
         <script type="text/javascript" src="{{asset('js/dist/Notifier.min.js')}}"></script>
-        @if(session()->has('message'))
-            <script>$(function (){ success('{{session()->get('message')}}')});</script>
-        @endif
         @if(Session::get('errors'))
             @foreach($errors->all() as $error)
                 <script>$(function (){ erreur('{{$error}}')});</script>
             @endforeach
+        @endif
+        @if(session()->has('message'))
+            <script>$(function (){ success('{{session()->get('message')}}')});</script>
+        @endif
+        @if(session()->has('erreur'))
+            <script>$(function (){ erreur('{{session()->get('erreur')}}')});</script>
         @endif
         <script>
             function success(message) {

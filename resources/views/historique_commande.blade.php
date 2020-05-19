@@ -21,7 +21,8 @@
                     @endif
                     @if(Auth::user()->role=='admin')
                         <div class="card bg-danger text-white text-center p-3 font-weight-bold font-italic mb-3">
-                            <h5 class="mb-0">COMMANDE EN COURS</h5>
+                            <h5 class="mb-0">COMMANDES EN COURS <button class=" btn btn-outline-primary" style="float: right;width: 15%;" onclick="charger_commande(0,0)">CLICK</button> </h5>
+
                         </div>
                         <table class="table table-hover table-bordered mb-3 text-center">
                             <thead class="bg-primary text-white">
@@ -68,7 +69,6 @@
             </div>
         </div>
     </div>
-<button onclick="charger_commande(0,0)">CLICK</button>
 
 @endsection
 
@@ -78,14 +78,6 @@
 
         function afficher(id) {
             charger_commande(1,id);
-            /*
-            var div = $('div[id="div_'+id+'"]');
-            if (div.css("display") === "none") {
-                $('#append_here').html(div);
-                div.css("display","block");
-            }
-            */
-
         }
         function charger_commande(typeAction,idaffiche) {
 

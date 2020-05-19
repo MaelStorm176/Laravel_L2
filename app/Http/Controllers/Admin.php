@@ -253,10 +253,11 @@ class Admin extends Controller
     public function menus()
     {
         $menus = DB::table('menu')->select('*')->get();
+        $categorie = DB::table('categorie')->select('*')->get();
         $contenu_menu_r = DB::table('contenu_menu')->pluck('id_pizza');
         $contenu_menu = DB::table('contenu_menu')->select('id_menu','id_pizza')->get();
         $pizza = DB::table('pizza')->whereIn('id',$contenu_menu_r)->select('nom','categorie','id')->get();
-        return view('adm/adm_menus',compact('pizza','menus','contenu_menu'));
+        return view('adm/adm_menus',compact('pizza','menus','contenu_menu','categorie'));
     }
 
     public function promotions()

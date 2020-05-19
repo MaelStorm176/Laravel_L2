@@ -39,6 +39,9 @@
                         @if(session()->has('message'))
                             <script>$(function (){ success('{{session()->get('message')}}')});</script>
                         @endif
+                        @if(session()->has('erreur'))
+                            <script>$(function (){ erreur('{{session()->get('erreur')}}')});</script>
+                        @endif
                     </div>
                 </section>
             </div>
@@ -72,7 +75,7 @@
                                     <a class="nav-link" href="{{route('admin')}}">Admin</a>
                                 </li>
                             @endif
-                        @endauth 
+                        @endauth
                     </ul>
                     @guest
                         <div class="navbar-right">
@@ -94,7 +97,7 @@
                                 </div>
                             </div>
                             <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                 <button type="button" class="btn btn-outline-danger navbar-btn"><span class="fas fa-door-open mr-2"></span>{{ __('Déconexion') }}</button>
+                                 <button type="button" class="btn btn-outline-danger navbar-btn"><span class="fas fa-door-open mr-2"></span>{{ __('Deconnexion') }}</button>
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 @csrf
