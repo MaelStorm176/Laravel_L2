@@ -104,18 +104,19 @@ class Admin extends Controller
         if($choix == "moins") {
             $com = DB::table('commentaire')
                 ->orderBy('note', 'asc')
-                ->get();
+                ->paginate(5);
         }
         else if ($choix == "mieux") {
             $com = DB::table('commentaire')
                 ->orderBy('note', 'desc')
-                ->get();
+                ->paginate(5);
         }
         else {
             $com = DB::table("commentaire")
                 ->orderBy('created_at', 'desc')
-                ->get();
+                ->paginate(5);
         }
+        $com->withPath('afficher_avis?choix='.$choix);
         return view('adm/adm_avis')->with("commentaires", $com);
     }
 
@@ -162,7 +163,8 @@ class Admin extends Controller
 
     public function engagements()
     {
-        return view('adm/adm_engagements');
+        $engagements = DB::table('engagement')->select('*')->get();
+        return view('adm/adm_engagements')->with('engagements', $engagements);
     }
 
     public function secondaire()
@@ -277,5 +279,21 @@ class Admin extends Controller
         }
     }
 
+    public function ajout_engagement(Request $request)
+    {
+        DB::table('engagement')->insert([
+            'titre' => $request['titre'],
+            'description_courte' => $request['description_courte']
+        ]);
+
+        return back()->with('message', 'Engagement ajouté avec succès !');
+    }
+
+    public function supprimer_engagement(Request $request)
+    {
+        DB::table('engagement')->where('id', '=', $request['id'])->delete();
+
+        return back()->with('message', 'Engagement supprimé avec succès !');
+    }
 
 }
