@@ -116,7 +116,7 @@ class Admin extends Controller
                 ->orderBy('created_at', 'desc')
                 ->paginate(5);
         }
-        $com->withPath('afficher_avis?choix='.$choix);
+        $com->withPath('avis?choix='.$choix);
         return view('adm/adm_avis')->with("commentaires", $com);
     }
 

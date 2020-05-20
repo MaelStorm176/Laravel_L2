@@ -138,8 +138,7 @@ Route::middleware('can:accessAdminpanel')->group(function() {
     Route::get('admin/fermeture_ajout', 'Admin@fermeture_ajout')->name('adm_fermeture_ajout');
     Route::get('admin/secondaire', 'Admin@secondaire')->name('adm_secondaire');
     /* AVIS */
-    Route::get('admin/avis', 'Admin@avis')->name('adm_avis');
-    Route::get('admin/afficher_avis', 'Admin@afficher_avis')->name('adm_afficher_avis');
+    Route::get('admin/avis', 'Admin@afficher_avis')->name('adm_avis');
     Route::get('admin/supprimer_avis', 'Admin@supprimer_avis')->name('adm_supprimer_avis');
     /* ENGAGEMENTS */
     Route::get('admin/engagements', 'Admin@engagements')->name('adm_engagements');

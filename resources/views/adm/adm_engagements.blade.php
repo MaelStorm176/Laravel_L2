@@ -64,12 +64,8 @@
                     </section>
                     <section class="flex-column">
                         <div class="mb-3">
-                            <label for="lien">Description courte</label>
-                            <input type="text" name="description_courte" class="form-control">
-                        </div>
-                        <div class="mb-3">
-                            <label for="lien">Description longue</label>
-                            <input type="text" name="description_longue" class="form-control">
+                            <label for="description_courte">Description courte</label>
+                            <textarea type="text" name="description_courte" class="form-control"> </textarea>
                         </div>
                     </section>
                 </div>
