@@ -131,7 +131,12 @@ Route::middleware('can:accessAdminpanel')->group(function() {
     Route::get('admin/feriee_ajout', 'Admin@feriee_ajout')->name('adm_feriee_ajout');
     Route::get('admin/fermeture_supprimer', 'Admin@fermeture_supprimer')->name('adm_fermeture_supprimer');
     Route::get('admin/fermeture_ajout', 'Admin@fermeture_ajout')->name('adm_fermeture_ajout');
+    /* SECONDAIRE */
     Route::get('admin/secondaire', 'Admin@secondaire')->name('adm_secondaire');
+    Route::get('partenaire_ajout', 'Admin@partenaire_ajout')->name('partenaire_ajout');
+    Route::get('partenaire_supprimer', 'Admin@partenaire_supprimer')->name('partenaire_supprimer');
+    Route::get('admin/afficher_form_reseaux', 'Admin@afficher_form_reseaux')->name('afficher_form_reseaux');
+    Route::post('admin/modifier_reseau', 'Admin@modifier_reseau')->name('adm_modifier_reseau');
     /* AVIS */
     Route::get('admin/avis', 'Admin@avis')->name('adm_avis');
     Route::get('admin/afficher_avis', 'Admin@afficher_avis')->name('adm_afficher_avis');
@@ -145,8 +150,12 @@ Route::middleware('can:accessAdminpanel')->group(function() {
     Route::post('admin/telephone', 'Admin@telephone')->name('adm_telephone');
     Route::post('admin/identite', 'Admin@identite')->name('adm_identite');
     Route::post('admin/adresse', 'Admin@adresse')->name('adm_adresse');
+    Route::post('admin/images', 'Admin@images')->name('adm_images');
+    Route::post('admin/couleurs', 'Admin@couleurs')->name('adm_couleurs');
+    /* COMMANDES */
     Route::get('admin/commandes', 'Admin@commandes')->name('adm_commandes');
     Route::get('admin/historique_commandes', 'Admin@historique_commandes')->name('adm_historique_commandes');
+    /* UTILISATEURS */
     Route::get('admin/informations', 'Admin@informations')->name('adm_informations');
     Route::post('admin/informations', 'Admin@informations')->name('adm_informations');
     Route::get('admin/droits', 'Admin@droits')->name('adm_droits');
@@ -156,9 +165,6 @@ Route::middleware('can:accessAdminpanel')->group(function() {
     Route::get('admin/menus', 'Admin@menus')->name('adm_menus');
     Route::get('admin/promotions', 'Admin@promotions')->name('adm_promotions');
     Route::get('admin/promotions/refresh_article', 'Admin@refresh_article'); //AJAX
-    /* PARTENAIRES */
-    Route::get('partenaire_ajout', 'Admin@partenaire_ajout')->name('partenaire_ajout');
-    Route::get('partenaire_supprimer', 'Admin@partenaire_supprimer')->name('partenaire_supprimer');
 });
 
 /*********************/

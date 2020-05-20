@@ -4,7 +4,7 @@
     <div class="container">
         <section class="row">
             <div class="col-12">
-                <div class="card bg-success text-white text-center p-3 font-weight-bold font-italic mb-3">
+                <div class="card bg-one text-one text-center p-3 font-weight-bold font-italic mb-3">
                     <h5 class="mb-0">NOS ENGAGEMENTS</h5>
                 </div>
             </div>

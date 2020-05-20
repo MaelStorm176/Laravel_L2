@@ -3,21 +3,21 @@
     <div class="container">
         <section class="row">
             <div class="col-lg-12">
-                <div class="card mb-3 border-success">
-                    <div class="card-header bg-success text-white">
+                <div class="card mb-3 border-one">
+                    <div class="card-header bg-one text-one">
                         <section class="row">
                             <div class="col">
                                 <h5 class="mt-1">LES AVIS</h5>
                             </div>
                             @auth
                                 <div class="col">
-                                    <a href="{{route('commentaire')}}" class="btn btn-primary float-right">Ajouter commentaire</a>
+                                    <a href="{{route('commentaire')}}" class="btn btn-one float-right">Ajouter commentaire</a>
                                 </div>
                             @endauth
                         </section>
                     </div>
-                    <form class="w-100 bg-danger" method="GET" action="{{route('afficher')}}">
-                        <select class="form-control rounded-0 bg-danger text-white border-danger" name="choix" onchange="this.form.submit();">
+                    <form class="w-100 bg-two" method="GET" action="{{route('afficher')}}">
+                        <select class="form-control rounded-0 bg-two text-two border-two" name="choix" onchange="this.form.submit();">
                             <option>Trier les commentaires</option>
                             <option value="recent">Les plus recent</option>
                             <option value="mieux">Les mieux notés</option>

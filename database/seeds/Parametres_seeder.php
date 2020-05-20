@@ -12,12 +12,12 @@ class Parametres_seeder extends Seeder
     public function run()
     {
         DB::table('parametres')->insert([
-            ['nom' => 'PizzeriaNOM',
-             'lien' => 'http://pizzeriaNom.fr',
-             'telephone' => '03.94.15.75.34',
+            ['telephone' => '03.94.15.75.34',
              'adresse' => 'n°112 rue de la gare',
              'codePostal' => 51100,
-             'ville' => 'Reims']
+             'ville' => 'Reims',
+             'facebook' => 'https://www.facebook.com/',
+             'twitter' => 'https://twitter.com/']
         ]);
     }
 }
