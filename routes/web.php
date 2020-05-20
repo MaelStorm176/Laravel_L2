@@ -137,7 +137,6 @@ Route::middleware('can:accessAdminpanel')->group(function() {
     Route::post('admin/modifier_reseau', 'Admin@modifier_reseau')->name('adm_modifier_reseau');
     /* AVIS */
     Route::get('admin/avis', 'Admin@avis')->name('adm_avis');
-    Route::get('admin/afficher_avis', 'Admin@afficher_avis')->name('adm_afficher_avis');
     Route::get('admin/supprimer_avis', 'Admin@supprimer_avis')->name('adm_supprimer_avis');
     /* ENGAGEMENTS */
     Route::get('admin/engagements', 'Admin@engagements')->name('adm_engagements');
