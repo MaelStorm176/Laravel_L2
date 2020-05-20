@@ -27,7 +27,7 @@ class Panier extends Controller
             'quantite' => 'required|integer|between:1,100'
         ]);
         if($validate_data->fails()){
-            return back()->with('errors',"Il y a une erreur avec l'ajout de votre article.");
+            return back()->with('erreur',"Il y a une erreur avec l'ajout de votre article.");
         }
         /*********************************/
         $id_panier = DB::table('panier')
@@ -74,7 +74,7 @@ class Panier extends Controller
             'quantite' => 'required|integer|between:1,100'
         ]);
         if($validate_data->fails()){
-            return back()->with('errors',"Il y a une erreur avec l'ajout de votre article.");
+            return back()->with('erreur',"Il y a une erreur avec l'ajout de votre article.");
         }
 
         $id_panier = DB::table('panier')
@@ -186,7 +186,7 @@ class Panier extends Controller
             'value' => 'required|integer|between:1,100',
         ]);
         if($validate_data->fails()){
-            return back()->with('message',"Il y a une erreur avec la modification de votre panier.");
+            return back()->with('erreur',"Il y a une erreur avec la modification de votre panier.");
         }
         DB::table('contenu_panier')->where('id','=',$request['id'])->update(['quantite' => $request['value']]);
         $products = $this->get_products();

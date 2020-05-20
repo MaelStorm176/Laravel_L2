@@ -28,7 +28,7 @@
                                             </button>
                                         </div>
                                         <div class="col-lg-2 px-0">
-                                            <button class="btn btn-primary w-100 h-100" type="button" name="{{$cat->nom}}">
+                                            <button class="btn btn-primary w-100 h-100" type="button" id="cate_{{$cat->id}}" name="{{$cat->id}}">
                                                 <span class="fas fa-times text-danger"></span>
                                             </button>
                                         </div>
@@ -78,9 +78,10 @@
                                                                         </button>
                                                                     </div>
                                                                     <div class="col-lg-12">
-                                                                        <button type="button" class="btn btn-primary w-100" onclick="supprimer({{$key->id}})">
+                                                                        <button type="button" class="btn btn-primary w-100" onclick="promotion({{$key->id}})" data-toggle="modal" data-target="#exampleModalCenterCode">
                                                                             AJOUTER PROMOTION
                                                                         </button>
+                                                                    </div>
                                                                 </section>
                                                             </div>
                                                         </div>
@@ -92,15 +93,7 @@
                                                 <div class="card">
                                                     <div class="row no-gutters">
                                                         <div class="col-md-4">
-                                                            @auth
-                                                                @if(Auth::user()->role=='admin')
-                                                                    <div style="z-index: 6; position: absolute;">
-                                                                        <button type="button" class="btn btn-primary" onclick="modifier({{$key->id}})" data-toggle="modal" data-target="#exampleModalCenter"><i class="fas fa-edit"></i></button> <br/> <br/>
-                                                                        <button type="button" class="btn btn-primary" onclick="supprimer({{$key->id}})"><i class="fas fa-trash"></i></button>
-                                                                    </div>
-                                                                @endif
-                                                            @endauth
-                                                            <img src="../{{$key->photo}}" class="rounded-left" style="width: 150px; height: 150px;">
+                                                            <img src="../{{$key->photo}}" class="rounded-left w-100 h-100">
                                                         </div>
                                                         <div class="col-md-8">
                                                             <div class="card-body">
@@ -110,10 +103,24 @@
                                                                     <div class="badge badge-primary p-2 float-right text-white"> {{$key->promo}} €</div>
                                                                 @endif
                                                                 <h5 class="card-title mt-1">{{$key->nom}}</h5>
-                                                                <p class="card-text text-justify">(Description/Ingrédients) {{$key->description_courte}}</p>
-                                                                <div class="row justify-content-center">
-                                                                    <a class="btn btn-outline-primary" style="cursor: not-allowed;">Indisponible</a>
-                                                                </div>
+                                                                <p class="card-text text-justify">{{$key->description_courte}}</p>
+                                                                <section class="row">
+                                                                    <div class="col-lg-6 mb-3">
+                                                                        <button type="button" class="btn btn-success w-100" onclick="modifier({{$key->id}})" data-toggle="modal" data-target="#exampleModalCenter">
+                                                                            MODIFIER
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="col-lg-6 mb-3">
+                                                                        <button type="button" class="btn btn-danger w-100" onclick="supprimer({{$key->id}})">
+                                                                            SUPPRIMER
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="col-lg-12">
+                                                                        <button type="button" class="btn btn-primary w-100" onclick="promotion({{$key->id}})" data-toggle="modal" data-target="#exampleModalCenterCode">
+                                                                            AJOUTER PROMOTION
+                                                                        </button>
+                                                                    </div>
+                                                                </section>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -129,116 +136,118 @@
             </div>
         </section>
     </div>
-@endsection
+
 <!-- MODAL AJOUT ARTICLES -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content" style="overflow:scroll;">
-            <div class="modal-header bg-success text-white">
-                <h5 class="modal-title" id="exampleModalLongTitle">Ajouter une pizza</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form action="{{ route('pizza.upload') }}" id="formu" class="mb-0" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="modal-body">
-                    <div>
-                        <label>Image de votre article</label>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" style="overflow:scroll; height:750px;">
+                <div class="modal-header bg-success">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Ajouter une pizza</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" >
+                    <form action="{{ route('pizza.upload') }}" id="formu" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div>
+                            <label>Image de votre article</label>
+                            <small><i>(Selectionnez une image aux dimensions carrées, ex : 200 x 200)</i></small>
+                            <br/>
+                            <input type="file" name="image" id="image" class="form-control" required style="width:300px; display: inline-block;" onchange="update_Photo();">
+                            <input type="hidden" name="image_base" id="image_base">
+                            <img id="image_affiche" src="{{asset('images/img_seed/1.jpg')}}" style="width:150;"/>
+                            <br/> <br/>
+                            <label>Nom de votre article</label>
+                            <input type="text" name="nom_p" placeholder="Nom" id="nom_p" class="form-control" required>
+                            <br/>
+                            <label>Catégorie de votre article (Pizza, pâtes, dessert...)</label>
+                            <select name="categorie" class="custom-select" id="categorie" required>
+                                <option value="">>-- Choisissez une catégorie --<</option>
+                                @foreach($categorie as $cate)
+                                    <option value="{{$cate->nom}}">{{$cate->nom}}</option>
+                                @endforeach
+                            </select>
+                            <br/><br/>
+                            <label>Description brève de l'article</label>
+                            <small><i>(Optionnel)</i></small>
+                            <textarea name="description_courte" id="description_courte" class="form-control" rows="3"></textarea>
+                            <br/>
+                            <label>Description détaillée de l'article</label>
+                            <small><i>(Optionnel)</i></small>
+                            <textarea name="description_longue" id="description_longue" class="form-control" rows="5"></textarea>
+                            <br/>
+                            <label>Prix (Euros €)</label>
+                            <input type="number" step="0.01" name="prix_p" placeholder="Prix" id="prix_p" class="form-control" required>
+                            <br/>
+                            <input type="hidden" name="id_pizza" id="id_pizza">
+                            <label>Disponibilité de votre article</label>
+                            <select name="statut_p" class="custom-select" id="statut_p">
+                                <option value="">>-- Disponibilité --<</option>
+                                <option value="Disponible">Disponible</option>
+                                <option value="Indisponible">Indisponible</option>
+                            </select>
+                        </div>
                         <br/>
-                        <input type="file" name="image" id="image" class="form-control" required style="width:300px; display: inline-block;" onchange="update_Photo();">
-                        <input type="hidden" name="image_base" id="image_base">
-                        <img id="image_affiche" src="images/img_seed/1.jpg" style="width:150;"/>
-                        <br/> <br/>
-                        <label>Nom de votre article</label>
-                        <input type="text" name="nom_p" placeholder="Nom" id="nom_p" class="form-control" required>
-                        <br/>
-                        <label>Catégorie de votre article (Pizza, pâtes, dessert...)</label>
-                        <select name="categorie" class="custom-select" id="categorie" required>
-                            <option value="">>-- Choisissez une catégorie --<</option>
-                            @foreach($categorie as $cate)
-                                <option value="{{$cate->nom}}">{{$cate->nom}}</option>
-                            @endforeach
-                        </select>
-                        <br/><br/>
-                        <label>Description brève de l'article</label>
-                        <small><i>(Optionnel)</i></small>
-                        <textarea name="description_courte" id="description_courte" class="form-control" rows="3"></textarea>
-                        <br/>
-                        <label>Description détaillée de l'article</label>
-                        <small><i>(Optionnel)</i></small>
-                        <textarea name="description_longue" id="description_longue" class="form-control" rows="5"></textarea>
-                        <br/>
-                        <label>Prix (Euros €)</label>
-                        <input type="number" step="0.01" name="prix_p" placeholder="Prix" id="prix_p" class="form-control" required>
-                        <br/>
-                        <input type="hidden" name="id_pizza" id="id_pizza">
-                        <label>Disponibilité de votre article</label>
-                        <select name="statut_p" class="custom-select" id="statut_p">
-                            <option value="">-- Disponibilité --</option>
-                            <option value="Disponible">Disponible</option>
-                            <option value="Indisponible">Indisponible</option>
-                        </select>
-                    </div>
-                    <br/>
-                    <div>
-                        <table class="table table-bordered">
-                            <thead class="thead-dark">
+                        <div>
+                            <table class="table table-bordered">
+                                <thead class="thead-dark">
                                 <tr>
                                     <th scope="col">Sodium (mg)</th>
                                     <th scope="col">Fibres (g)</th>
                                     <th scope="col">Dont_satures (g)</th>
                                 </tr>
-                            </thead>
-                            <tbody>
+                                </thead>
+                                <tbody>
                                 <tr>
                                     <td><input type="number" step="0.1" class="form-control" id="sodium" name="sodium" min="0" required></td>
                                     <td><input type="number" step="0.1" class="form-control" id="fibres" name="fibres" min="0" required></td>
                                     <td><input type="number" step="0.1" class="form-control" id="dont_satures" name="dont_satures" min="0" required></td>
                                 </tr>
-                            </tbody>
-                            <thead class="thead-dark">
+                                </tbody>
+                                <thead class="thead-dark">
                                 <tr>
                                     <th scope="col">Lipides (g)</th>
                                     <th scope="col">Dont_sucres (g)</th>
                                     <th scope="col">Glucides (g)</th>
                                 </tr>
-                            </thead>
-                            <tbody>
+                                </thead>
+                                <tbody>
                                 <tr>
                                     <td><input type="number" step="0.1" class="form-control" id="lipides" name="lipides" min="0" required></td>
                                     <td><input type="number" step="0.1" class="form-control" id="dont_sucres" name="dont_sucres" min="0" required></td>
                                     <td><input type="number" step="0.1" class="form-control" id="glucides" name="glucides" min="0" required></td>
                                 </tr>
-                            </tbody>
-                            <thead class="thead-dark">
+                                </tbody>
+                                <thead class="thead-dark">
                                 <tr>
                                     <th scope="col">Proteines (g)</th>
                                     <th scope="col">Energies (kcal)</th>
                                 </tr>
-                            </thead>
-                            <tbody>
+                                </thead>
+                                <tbody>
                                 <tr>
                                     <td><input type="number" step="0.1" class="form-control" id="proteines" name="proteines" min="0" required></td>
                                     <td><input type="number" step="0.1" class="form-control" id="energies" name="energies" min="0" required></td>
                                 </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                            <button type="submit" id="upload" class="btn btn-primary">Ajouter</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" id="upload" class="btn btn-primary">Upload</button>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
-</div>
-<!-- MODAL AJOOUT CATEGORIE -->
+<!-- MODAL AJOUT CATEGORIE -->
 <div class="modal fade" id="exampleModalCenterCode" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header bg-primary">
                 <h5 class="modal-title" id="exampleModalLongTitleCode">Ajouter une catégorie</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -248,12 +257,13 @@
                 @csrf
                 <div class="modal-body">
                     <div>
-                        <label for="nom">Nom de la catégorie</label>
+                        <label id="label_cate" for="nom">Nom de la catégorie</label>
                         <input type="text" name="nom" id="nom" class="form-control" required>
+                        <input type="hidden" id="id" name="id" value="">
                         </br>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                         <button type="submit" id="upload" class="btn btn-primary">Ajouter</button>
                     </div>
                 </div>
@@ -261,6 +271,8 @@
         </div>
     </div>
 </div>
+@endsection
+
 <script>
     //Vide le formulaire afin d'ajouter une pizza
     function ajouter(){
@@ -285,7 +297,7 @@
         $('#id_pizza').val(id);
         var dummy = Date.now();
         $.ajax({
-            url :'../afficher_form',
+            url :'{{route('afficher_form')}}',
             type : 'GET',
             dataType : 'html',
             data : {dummy:dummy, id:id},
@@ -293,7 +305,7 @@
                 var dataretour = code_html.split('_|');
                 $('#image_affiche').show();
                 $('#image_base').val(dataretour[0]);
-                $('#image_affiche').attr("src",dataretour[0]);
+                $('#image_affiche').attr("src",'../'+dataretour[0]);
                 $('#nom_p').val(dataretour[1]);
                 $('#categorie').val(dataretour[2]);
                 $('#description_courte').val(dataretour[3]);
@@ -315,10 +327,26 @@
         });
     }
 
+    function promotion(id){
+        $('#exampleModalLongTitleCode').html('Ajouter une promotion');
+        $('#formucode').prop('action','{{route('promotion')}}');
+        $('#nom').prop('name','promotion');
+        $('#label_cate').html("Promotion sur l'article (en %)");
+        $('#id').val(id);
+    }
+
+    function ajouterCate() {
+        $('#exampleModalLongTitleCode').html('Ajouter une catégorie');
+        $('#formucode').prop('action','{{route('categorie.upload')}}');
+        $('#nom').prop('name','nom');
+        $('#label_cate').html("Ajouter une catégorie d'articles (Boissons, pizzas...)");
+        $('#id').val('');
+    }
+
     function supprimer(id){
         var dummy = Date.now();
         $.ajax({
-            url :'../pizza.supprimer',
+            url : '{{route('pizza.supprimer')}}',
             type : 'GET',
             dataType : 'html',
             data : {dummy:dummy, id:id},

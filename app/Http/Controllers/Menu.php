@@ -14,15 +14,16 @@ class Menu extends Controller
         $id_menu = DB::table('menu')->insertGetId([
             'nom'           => $request['nom_m'],
             'prix'          => $request['prix_m'],
-            'promo'     => $request['prix_m'],
-            'description'   => $request['description_m']
+            'promo'         => $request['prix_m'],
+            'description'   => $request['description_m'],
+            'statut'        => $request['statut_m']
         ]);
 
         //Pour chaque check-box coché, on ajoute l'id de l'article correspondant
         foreach ($request['article'] as $item) {
             DB::table('contenu_menu')->insert([
-                'id_menu' => $id_menu,
-                'id_pizza' => $item
+                'id_menu'   => $id_menu,
+                'id_pizza'  => $item
             ]);
         }
 
@@ -35,7 +36,8 @@ class Menu extends Controller
             'nom'           => $request['nom_m'],
             'prix'          => $request['prix_m'],
             'promo'         => $request['prix_m'],
-            'description'   => $request['description_m']
+            'description'   => $request['description_m'],
+            'statut'        => $request['statut_m']
         ]);
 
 
@@ -59,7 +61,7 @@ class Menu extends Controller
             $contenu_menu = DB::table('contenu_menu')->where('id_menu','=',$request['id'])->pluck('id_pizza');
             $pizza = DB::table('pizza')->whereIn('id',$contenu_menu)->select('id','categorie')->get();
             foreach ($menu as $key){
-                echo $key->nom."_|".$key->description."_|".$key->promo."_|";
+                echo $key->nom."_|".$key->description."_|".$key->promo."_|".$key->statut."_|";
             }
             foreach ($pizza as $key){
                 echo $key->id."_|".$key->categorie."_|";
@@ -98,18 +100,43 @@ class Menu extends Controller
     public function detail(Request $request)
     {
         $menu = DB::table("menu")->select('*')->where('nom','=',$request['menu_nom'])->get();
-        $menu_id  = $menu[0]->id;
-        $contenu_menu = DB::table('contenu_menu')->where('id_menu','=',$menu_id)->pluck('id_pizza');
-        $pizza = DB::table('pizza')->whereIn('id',$contenu_menu)->select('nom','categorie')->get();
-
-        return view('menu_detail',compact('menu','pizza'));
+        if($menu->isEmpty())
+        {
+            abort(404);
+        }
+        else{
+            $menu_id  = $menu[0]->id;
+            $contenu_menu = DB::table('contenu_menu')->where('id_menu','=',$menu_id)->pluck('id_pizza');
+            $pizza = DB::table('pizza')->whereIn('id',$contenu_menu)->select('nom','categorie')->get();
+            if($menu[0]->statut == 'Indisponible')
+            {
+                abort(404);
+            }
+            else{
+                return view('menu_detail',compact('menu','pizza'));
+            }
+        }
     }
 
-    public function supprimer(Request $request)
+    public function supprimer(Request $request) //supprime menu
     {
         if($request->ajax()) {
             $menu = DB::table('menu')->where('id','=',$request['id'])->delete();
             $contenu_menu = DB::table('contenu_menu')->where('id_menu','=',$request['id'])->delete();
+        }
+        else
+        {
+            abort(404);
+        }
+    }
+
+    public function contenu_supprimer(Request $request)
+    {
+        if($request->ajax()) {
+            $contenu_menu = DB::table('contenu_menu')
+                ->where('id_menu','=',$request['id_menu'])
+                ->where('id_pizza','=',$request['id_contenu'])
+                ->delete();
         }
         else
         {
@@ -124,13 +151,13 @@ class Menu extends Controller
             'promotion' => 'required|integer|between:0,100'
         ]);
         if($validate_data->fails()){
-            return back()->with('message',"Il y a une erreur avec la modification de votre menu.");
+            return back()->with('erreur',"Il y a une erreur avec la modification de votre menu.");
         }
         $prix = DB::table("menu")->where('id','=',$request['id'])->value('prix');
         $prix_promo = $prix*(1-$request['promotion']/100);
 
         DB::table("menu")->where('id','=',$request['id'])->update(['promo' => $prix_promo]);
-        return back();
+        return back()->with('erreur',"Une promotion de ".$request['promotion']."% a été appliqué à votre menu");
     }
 
 }

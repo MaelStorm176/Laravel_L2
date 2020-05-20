@@ -10,8 +10,8 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <div class="card border-success mb-3">
-                    <div class="card-header bg-success text-white">
+                <div class="card border-one mb-3">
+                    <div class="card-header bg-one text-one">
                         <h2 class="text-center align-bottom mb-0">{{$key->nom}}</h2>
                     </div>
                     <div class="row no-gutters">
@@ -59,7 +59,7 @@
                                                 <div class="input-group">
                                                     <input type="number" class="form-control" name="quantite" value="1" aria-label="Search">
                                                     <div class="input-group-append">
-                                                        <button class="btn btn-primary" type="submit">
+                                                        <button class="btn btn-one" type="submit">
                                                             Ajouter à votre panier
                                                             <span class="fas fa-shopping-cart ml-1"></span>
                                                         </button>
@@ -68,7 +68,7 @@
                                             </form>
                                         @endauth
                                         @guest
-                                                <button class="btn btn-primary" data-toggle="modal" data-target="#connexionModal">Pour commander, connectez vous !</button>
+                                                <button class="btn btn-one" data-toggle="modal" data-target="#connexionModal">Pour commander, connectez vous !</button>
                                         @endguest
                                     </div>
                                 </div>
@@ -78,7 +78,7 @@
                 </div>
             </div>
             <div class="col-lg-12" >
-                <div class="card bg-danger text-white text-center p-3 font-weight-bold font-italic mb-3">
+                <div class="card bg-two text-two text-center p-3 font-weight-bold font-italic mb-3">
                     <h5 class="mb-0">Valeurs Nutritionnelles</h5>
                     <i onclick="afficher_nutri({{$key->nutrition}},'{{$key->nom}}')" class="fas fa-angle-down float-right" style="cursor: pointer"></i>
                 </div>

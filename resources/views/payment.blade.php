@@ -15,8 +15,8 @@
                     <input value="{{$prix=$prix_total}}" name="prix" id="prix" type="hidden">
                     <input value="{{$products}}" name="products" type="hidden">
                     <input value="com_{{auth::user()->id}}_{{$prix_total}}" name="num_commande" type="hidden">
-                    <div class="card border-info mb-3">
-                        <div class="card-header bg-info text-white">Identité et Lieu de livraison<span class="fas fa-map-pin float-right mt-1"></span></div>
+                    <div class="card border-one mb-3">
+                        <div class="card-header bg-one text-one">Identité et Lieu de livraison<span class="fas fa-map-pin float-right mt-1"></span></div>
                         <div class="card-body">
                             <section class="row">
                                 <!-- NOM DESTINATAIRE -->
@@ -34,8 +34,8 @@
                             </section>
                         </div>
                     </div>
-                    <div class="card border-secondary mb-3">
-                        <div class="card-header bg-secondary text-white">Paiement<span class="fas fa-hand-holding-usd float-right mt-1"></span></div>
+                    <div class="card border-one mb-3">
+                        <div class="card-header bg-one text-one">Paiement<span class="fas fa-hand-holding-usd float-right mt-1"></span></div>
                         <div class="card-body">
                             <section class="row justify-content-center">
                                 <div class="col pr-0">
@@ -83,8 +83,8 @@
                 </form>
             </div>
             <div class="col-lg-3">
-                <div class="card border-success mb-3">
-                    <div class="card-header bg-success text-white">Votre Panier<span class="badge badge-secondary badge-pill float-right mt-1">{{$q_tot}} articles</span></div>
+                <div class="card border-two mb-3">
+                    <div class="card-header bg-two text-two">Votre Panier<span class="badge badge-secondary badge-pill float-right mt-1">{{$q_tot}} articles</span></div>
                     <div class="card-body">
                         <ul class="list-group mb-3 z-depth-1">
                             @foreach($products as $key)
@@ -122,8 +122,8 @@
                         </ul>
                     </div>
                 </div>
-                <div class="card text-white border-danger mb-3">
-                    <div class="card-header bg-danger">Code Promo<span class="fas fa-gift float-right mt-1"></span></div>
+                <div class="card text-white border-two mb-3">
+                    <div class="card-header bg-two text-two">Code Promo<span class="fas fa-gift float-right mt-1"></span></div>
                     <div class="card-body">
                         <div class="input-group">
                             <input type="text" name="code" id="code" class="form-control" placeholder="Code promo" aria-label="Recipient's username" aria-describedby="basic-addon2">

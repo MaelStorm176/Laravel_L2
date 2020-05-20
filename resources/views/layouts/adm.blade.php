@@ -118,7 +118,7 @@
                         </a>
                     </div>
                     <div class="fixed-bottom col-3 text-center text-white bg-secondary mb-3 p-3 border border-dark border-top-0 border-left-0">
-                        © 2020 Copyright: LIEN DU SITE
+                        © 2020 Copyright: {{config('app.url')}}
                     </div>
                 </nav>
                 <div class="col-lg-9 offset-lg-3 px-0">
@@ -128,13 +128,16 @@
             </section>
         </div>
         <script type="text/javascript" src="{{asset('js/dist/Notifier.min.js')}}"></script>
-        @if(session()->has('message'))
-            <script>$(function (){ success('{{session()->get('message')}}')});</script>
-        @endif
         @if(Session::get('errors'))
             @foreach($errors->all() as $error)
                 <script>$(function (){ erreur('{{$error}}')});</script>
             @endforeach
+        @endif
+        @if(session()->has('message'))
+            <script>$(function (){ success('{{session()->get('message')}}')});</script>
+        @endif
+        @if(session()->has('erreur'))
+            <script>$(function (){ erreur('{{session()->get('erreur')}}')});</script>
         @endif
         <script>
             function success(message) {

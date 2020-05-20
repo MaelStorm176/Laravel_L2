@@ -1,16 +1,6 @@
 @auth
     @if(Auth::user()->role=='admin')
     <!-- Button trigger modal -->
-    <button type="button" id="bouton_ajout" onclick="ajouter()" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModalCenter">
-        Ajouter un article
-    </button>
-    <button type="button" id="bouton_code" onclick="ajoutercode()" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModalCenterCode">
-        Ajouter un code
-    </button>
-    <button type="button" id="bouton_code" onclick="ajouterCate()" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModalCenterCode">
-        Ajouter une catégorie
-    </button>
-
     <button type="button" id="bouton_code" onclick="ajouter_menu()"class="btn btn-outline-primary" data-toggle="modal" data-target="#MenuModal">
         Ajouter un menu
     </button>
@@ -119,6 +109,7 @@
             </div>
         </div>
     </div>
+    <!-- CODE MODAL -->
     <div class="modal fade" id="exampleModalCenterCode" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -150,15 +141,6 @@
         </div>
     </div>
     <!-- FIN DU MODAL -->
-
-
-
-
-
-
-
-
-
         <div class="modal fade" id="MenuModal" tabindex="-1" role="dialog" aria-labelledby="MenuModalTitle" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content" style="overflow:scroll; height:750px;">
@@ -204,6 +186,12 @@
                                 <label>Prix (Euros €)</label>
                                 <input type="number" step="0.01" name="prix_m" placeholder="Prix" id="prix_m" class="form-control" required>
                                 <br/>
+                                <label>Disponibilité de votre menu</label>
+                                <select name="statut_m" class="custom-select" id="statut_m">
+                                    <option value="">>-- Disponibilité --<</option>
+                                    <option value="Disponible">Disponible</option>
+                                    <option value="Indisponible">Indisponible</option>
+                                </select>
                                 <input type="hidden" name="id_menu" id="id_menu">
                             </div>
                             <div class="modal-footer">

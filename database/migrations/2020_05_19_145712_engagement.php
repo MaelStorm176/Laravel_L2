@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Parametres extends Migration
+class Engagement extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,10 @@ class Parametres extends Migration
      */
     public function up()
     {
-        Schema::create('parametres', function (Blueprint $table){
+        Schema::create('engagement', function (Blueprint $table) {
             $table->id();
-            $table->string('telephone');
-            $table->string('adresse');
-            $table->integer('codePostal');
-            $table->string('ville');
-            $table->string('facebook');
-            $table->string('twitter');
+            $table->string('titre');
+            $table->mediumText('description_courte');
         });
     }
 
@@ -31,6 +27,6 @@ class Parametres extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('parametres');
+        Schema::dropIfExists('engagement');
     }
 }

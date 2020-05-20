@@ -9,24 +9,22 @@
                 <div class="card border-info mb-3">
                     <div class="card-header bg-info text-white">Identité<span class="fas fa-fingerprint mt-1 float-right"></span></div>
                     <div class="card-body">
-                        @foreach($parametres as $key)
-                            <form method="post" action="{{route('adm_identite')}}">
-                                @csrf
-                                <section class="row">
-                                    <div class="col-lg-6 mb-4">
-                                        <label for="nomPizzeria">Nom du restaurant</label>
-                                        <input type="text" id="nomPizerria" name="nomPizzeria" class="form-control" value="{{$key->nom}}" required>
-                                    </div>
-                                    <div class="col-lg-6 mb-4">
-                                        <label for="lienSite">Lien du site</label>
-                                        <input type="text" id="lienSite" name="lienSite" class="form-control" value="{{$key->lien}}" required>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <button type="submit" class="btn btn-primary w-100">ENREGISTRER</button>
-                                    </div>
-                                </section>
-                            </form>
-                        @endforeach
+                        <form method="post" action="{{route('adm_identite')}}">
+                            @csrf
+                            <section class="row">
+                                <div class="col-lg-6 mb-4">
+                                    <label for="nomPizzeria">Nom du restaurant</label>
+                                    <input type="text" id="nomPizerria" name="nomPizzeria" class="form-control" value="{{ config('app.name') }}" required>
+                                </div>
+                                <div class="col-lg-6 mb-4">
+                                    <label for="lienSite">Lien du site</label>
+                                    <input type="text" id="lienSite" name="lienSite" class="form-control" value="{{ config('app.url') }}" required>
+                                </div>
+                                <div class="col-lg-12">
+                                    <button type="submit" class="btn btn-primary w-100">ENREGISTRER</button>
+                                </div>
+                            </section>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -49,18 +47,19 @@
                 <div class="card border-info mb-3">
                     <div class="card-header bg-info text-white">Images<span class="fas fa-images mt-1 float-right"></span></div>
                     <div class="card-body">
-                        <form>
+                        <form method="post" action="{{route('adm_images')}}" enctype="multipart/form-data">
+                            @csrf
                             <section class="row">
                                 <div class="col-lg-12 mb-4">
                                     <label for="banniere">Bannière</label>
-                                    <input type="file" id="baniere" class="form-control">
+                                    <input type="file" id="baniere" name="baniere" class="form-control">
                                 </div>
                                 <div class="col-lg-12 mb-4">
                                     <label for="logo">Logo</label>
-                                    <input type="file" id="logo" class="form-control">
+                                    <input type="file" id="logo" name="logo" class="form-control">
                                 </div>
                                 <div class="col-lg-12">
-                                    <button type="button" class="btn btn-primary w-100">ENREGISTRER</button>
+                                    <button type="submit" class="btn btn-primary w-100">ENREGISTRER</button>
                                 </div>
                             </section>
                         </form>
@@ -69,7 +68,7 @@
             </div>
             <div class="col-lg-6">
                 <div class="card border-info mb-3">
-                    <div class="card-header bg-info text-white">Changer l'adresse du restaurant<span class="fas fa-map-marked-alt mt-1 float-right"></span></div>
+                    <div class="card-header bg-info text-white">Adresse du restaurant<span class="fas fa-map-marked-alt mt-1 float-right"></span></div>
                     <div class="card-body">
                         @foreach($parametres as $key)
                             <form method="post" action="{{route('adm_adresse')}}">
@@ -114,61 +113,96 @@
                                 <tr>
                                     <th class="align-middle" scope="row" rowspan="2">Primaire</td>
                                     <td class="align-middle">Couleur de fond</td>
-                                    <td class="align-middle">#3D9D2A</td>
-                                    <td class="align-middle"><div class="w-75 p-4 mx-auto rounded-circle" style="background:#3D9D2A;"></div></td>
-                                    <td class="align-middle"><span class="fas fa-edit"></span></td>
+                                    <td class="align-middle">{{config('couleurs.primFond')}}</td>
+                                    <td class="align-middle">
+                                        <div class="w-75 p-4 mx-auto rounded-circle" style="background:{{config('couleurs.primFond')}};"></div>
+                                    </td>
+                                    <td class="align-middle"><span class="fas fa-edit" onclick="couleurs('primFond')" data-toggle="modal" data-target="#modal_couleurs"></span></td>
                                 </tr>
                                 <tr>
                                     <td class="align-middle">Couleur de texte</td>
-                                    <td class="align-middle">#FFFFFF</td>
-                                    <td class="align-middle"><div class="w-75 p-4 mx-auto rounded-circle" style="background:#FFFFFF;"></div></td>
-                                    <td class="align-middle"><span class="fas fa-edit"></span></td>
+                                    <td class="align-middle">{{config('couleurs.primText')}}</td>
+                                    <td class="align-middle">
+                                        <div class="w-75 p-4 mx-auto rounded-circle" style="background:{{config('couleurs.primText')}};"></div>
+                                    </td>
+                                    <td class="align-middle"><span class="fas fa-edit" onclick="couleurs('primText')" data-toggle="modal" data-target="#modal_couleurs"></span></td>
                                 </tr>
                                 <tr>
                                     <th class="align-middle" scope="row" rowspan="2">Secondaire</td>
                                     <td class="align-middle">Couleur de fond</td>
-                                    <td class="align-middle">#DF2121</td>
-                                    <td class="align-middle"><div class="w-75 p-4 mx-auto rounded-circle" style="background:#DF2121;"></div></td>
-                                    <td class="align-middle"><span class="fas fa-edit"></span></td>
+                                    <td class="align-middle">{{config('couleurs.secondFond')}}</td>
+                                    <td class="align-middle">
+                                        <div class="w-75 p-4 mx-auto rounded-circle" style="background:{{config('couleurs.secondFond')}};"></div>
+                                    </td>
+                                    <td class="align-middle"><span class="fas fa-edit" onclick="couleurs('secondFond')" data-toggle="modal" data-target="#modal_couleurs"></span></td>
                                 </tr>
                                 <tr>
                                     <td class="align-middle">Couleur de texte</td>
-                                    <td class="align-middle">#FFFFFF</td>
-                                    <td class="align-middle"><div class="w-75 p-4 mx-auto rounded-circle" style="background:#FFFFFF;"></div></td>
-                                    <td class="align-middle"><span class="fas fa-edit"></span></td>
+                                    <td class="align-middle">{{config('couleurs.secondText')}}</td>
+                                    <td class="align-middle">
+                                        <div class="w-75 p-4 mx-auto rounded-circle" style="background:{{config('couleurs.secondText')}};"></div>
+                                    </td>
+                                    <td class="align-middle"><span class="fas fa-edit" onclick="couleurs('secondText')" data-toggle="modal" data-target="#modal_couleurs"></span></td>
                                 </tr>
                                 <tr>
                                     <th class="align-middle" scope="row" rowspan="2">Navigation</th>
                                     <td class="align-middle">Couleur de fond</td>
-                                    <td class="align-middle">#000000</td>
-                                    <td class="align-middle"><div class="w-75 p-4 mx-auto rounded-circle" style="background:#000000;"></div></td>
-                                    <td class="align-middle"><span class="fas fa-edit"></span></td>
+                                    <td class="align-middle">{{config('couleurs.navFond')}}</td>
+                                    <td class="align-middle">
+                                        <div class="w-75 p-4 mx-auto rounded-circle" style="background:{{config('couleurs.navFond')}};"></div>
+                                    </td>
+                                    <td class="align-middle"><span class="fas fa-edit" onclick="couleurs('navFond')" data-toggle="modal" data-target="#modal_couleurs"></span></td>
                                 </tr>
                                 <tr>
                                     <td class="align-middle">Couleur de texte</td>
-                                    <td class="align-middle">#FFFFFF</td>
-                                    <td class="align-middle"><div class="w-75 p-4 mx-auto rounded-circle" style="background:#FFFFFF;"></div></td>
-                                    <td class="align-middle"><span class="fas fa-edit"></span></td>
+                                    <td class="align-middle">{{config('couleurs.navText')}}</td>
+                                    <td class="align-middle">
+                                        <div class="w-75 p-4 mx-auto rounded-circle" style="background:{{config('couleurs.navText')}};"></div>
+                                    </td>
+                                    <td class="align-middle"><span class="fas fa-edit" onclick="couleurs('navText')" data-toggle="modal" data-target="#modal_couleurs"></span></td>
+                                </tr>
+                                <tr>
+                                    <th class="align-middle" scope="row" rowspan="2">Tableau</th>
+                                    <td class="align-middle">Couleur de fond</td>
+                                    <td class="align-middle">{{config('couleurs.navFond')}}</td>
+                                    <td class="align-middle">
+                                        <div class="w-75 p-4 mx-auto rounded-circle" style="background:{{config('couleurs.tabFond')}};"></div>
+                                    </td>
+                                    <td class="align-middle"><span class="fas fa-edit" onclick="couleurs('tabFond')" data-toggle="modal" data-target="#modal_couleurs"></span></td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle">Couleur de texte</td>
+                                    <td class="align-middle">{{config('couleurs.navText')}}</td>
+                                    <td class="align-middle">
+                                        <div class="w-75 p-4 mx-auto rounded-circle" style="background:{{config('couleurs.tabText')}};"></div>
+                                    </td>
+                                    <td class="align-middle"><span class="fas fa-edit" onclick="couleurs('tabText')" data-toggle="modal" data-target="#modal_couleurs"></span></td>
                                 </tr>
                                 <tr>
                                     <th class="align-middle" scope="row" rowspan="2">Boutton</th>
                                     <td class="align-middle">Couleur de fond</td>
-                                    <td class="align-middle">#4F62D9</td>
-                                    <td class="align-middle"><div class="w-75 p-4 mx-auto rounded-circle" style="background:#4F62D9;"></div></td>
-                                    <td class="align-middle"><span class="fas fa-edit"></span></td>
+                                    <td class="align-middle">{{config('couleurs.btnFond')}}</td>
+                                    <td class="align-middle">
+                                        <div class="w-75 p-4 mx-auto rounded-circle" style="background:{{config('couleurs.btnFond')}};"></div>
+                                    </td>
+                                    <td class="align-middle"><span class="fas fa-edit" onclick="couleurs('btnFond')" data-toggle="modal" data-target="#modal_couleurs"></span></td>
                                 </tr>
                                 <tr>
                                     <td class="align-middle">Couleur de texte</td>
-                                    <td class="align-middle">#FFFFFF</td>
-                                    <td class="align-middle"><div class="w-75 p-4 mx-auto rounded-circle" style="background:#FFFFFF;"></div></td>
-                                    <td class="align-middle"><span class="fas fa-edit"></span></td>
+                                    <td class="align-middle">{{config('couleurs.btnText')}}</td>
+                                    <td class="align-middle">
+                                        <div class="w-75 p-4 mx-auto rounded-circle" style="background:{{config('couleurs.btnText')}};"></div>
+                                    </td>
+                                    <td class="align-middle"><span class="fas fa-edit" onclick="couleurs('btnText')" data-toggle="modal" data-target="#modal_couleurs"></span></td>
                                 </tr>
                                 <tr>
                                     <th class="align-middle" scope="row">Arrière plan</th>
                                     <td class="align-middle">Couleur de fond</td>
-                                    <td class="align-middle">#000000</td>
-                                    <td class="align-middle"><div class="w-75 p-4 mx-auto rounded-circle" style="background:#000000;"></div></td>
-                                    <td class="align-middle"><span class="fas fa-edit"></span></td>
+                                    <td class="align-middle">{{config('couleurs.ArrPlan')}}</td>
+                                    <td class="align-middle">
+                                        <div class="w-75 p-4 mx-auto rounded-circle" style="background:{{config('couleurs.ArrPlan')}};"></div>
+                                    </td>
+                                    <td class="align-middle"><span class="fas fa-edit" onclick="couleurs('ArrPlan')" data-toggle="modal" data-target="#modal_couleurs"></span></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -178,3 +212,32 @@
         </section>
     </div>
 @endsection
+<!-- MODAL COULEURS -->
+<div class="modal fade" id="modal_couleurs" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Modifier une couleur</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span id="close_modal" aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{{route('adm_couleurs')}}" class="mb-0">
+                        @csrf
+                        <input type="hidden" id="colorInput" name="colorInput">
+                        <div class="form-group">
+                            <label for="colorInput">Nouvelle couleur</label>
+                            <input type="color" id="valeurInput" name="valeurInput" class="form-control" required>
+                        </div>
+                        <button type="submit" class="w-100 btn btn-primary">ENREGISTRER</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function couleurs(couleur){
+        $('#colorInput').val(couleur);
+    }
+</script>

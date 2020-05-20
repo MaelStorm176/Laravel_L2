@@ -19,7 +19,7 @@
                     <section class="row">
                         <div class="col-lg-12">
                             <!-- Carousel -->
-                            <div id="carouselExampleIndicators" class="mb-3 carousel slide" data-ride="carousel"><!-- Ajuster les images -->
+                            <div id="carouselExampleIndicators" class="mb-3 carousel slide" data-ride="carousel">
                                 <div class="carousel-inner">
                                     <ol class="carousel-indicators">
                                         <?php $var=0; ?>
@@ -72,8 +72,8 @@
                             <!-- FIN Carousel -->
                         </div>
                         <div class="col-lg-12">
-                            <div class="card border-danger mb-3">
-                                <div class="card-body bg-danger">
+                            <div class="card border-one mb-3">
+                                <div class="card-body bg-one">
                                     <marquee onmouseout="this.start();" onmouseover="this.stop();">
                                         @foreach($pizza as $key)
                                             <a href="pizza_all/{{$key->nom}}">
@@ -82,17 +82,16 @@
                                         @endforeach
                                     </marquee>
                                 </div>
-                                <div class="card-footer bg-secondary text-center">
-                                    <h5 class="text-white m-0">Nos pizzas du moment</h5>
+                                <div class="card-footer bg-two text-center">
+                                    <h5 class="text-two m-0">Nos pizzas du moment</h5>
                                 </div>
                             </div>
                         </div>
                         <!-- LES 3 DERNIERS COMMENTAIRES -->
                         <div class="col-lg-12">
-
                             <div class="list-group mb-3 border-0">
-                                <div class="text-white border-success mb-3">
-                                    <div class="card-header bg-success">
+                                <div class="text-white border-one mb-3">
+                                    <div class="card-header bg-one text-one">
                                         Les 3 derniers avis
                                         <span class="fas fa-comment float-right mt-1"></span>
                                     </div>
@@ -115,8 +114,8 @@
                 </div>
             </div>
             <section class="col-lg-3">
-                <div class="card text-white border-success mb-3">
-                    <div class="card-header bg-success">Nous Contacter<span class="fas fa-phone float-right mt-1"></span></div>
+                <div class="card border-one mb-3">
+                    <div class="card-header bg-one text-one">Nous Contacter<span class="fas fa-phone float-right mt-1"></span></div>
                     <div class="card-body">
                         <section class="row">
                             @foreach($parametres as $key)
@@ -125,9 +124,8 @@
                         </section>
                     </div>
                 </div>
-                <div class="card text-white border-danger mb-3">
-                    <div class="card-header bg-danger">Notre Localisation<span class="fas fa-map-marked-alt float-right mt-1"></span>
-                    </div>
+                <div class="card text-two border-two mb-3">
+                    <div class="card-header bg-two">Notre Localisation<span class="fas fa-map-marked-alt float-right mt-1"></span></div>
                     <div class="card-body">
                         <section class="row">
                             <div class="col-12 p-0">
@@ -135,27 +133,33 @@
                             </div>
                         </section>
                     </div>
-                    <div class="card-footer bg-secondary bg-danger">
+                    <div class="card-footer bg-two">
                         @foreach($parametres as $key)
-                            <p class="mb-0 text-white "><small>{{$key->adresse}},<br>{{$key->codePostal}} {{$key->ville}}</small></p>
+                            <p class="mb-0 text-two"><small>{{$key->adresse}},<br>{{$key->codePostal}} {{$key->ville}}</small></p>
                         @endforeach
                     </div>
                 </div>
-                <div class="card text-white border-success mb-3">
-                    <div class="card-header bg-success">Réseaux Sociaux<span class="fas fa-globe float-right mt-1"></span></div>
+                <div class="card border-one mb-3">
+                    <div class="card-header bg-one text-one">Réseaux Sociaux<span class="fas fa-globe float-right mt-1"></span></div>
                     <div class="card-body">
                         <section class="row justify-content-center">
-                            <div class="col p-0">
-                                <img src="img/twitter.jpg" alt="Notre Facebook!" class="float-right" data-toggle="tooltip" data-placement="left" title="Rejoins nous sur Twitter!"/>
-                            </div>
-                            <div class="col p-0">
-                                <img src="img/facebook.jpg" alt="Notre Twitter!" class="float-left" data-toggle="tooltip" data-placement="right" title="Rejoins nous sur Facebook!"/>
-                            </div>
+                            @foreach($parametres as $key)
+                                <div class="col p-0">
+                                    <a href="{{$key->twitter}}">
+                                        <img src="img/twitter.jpg" alt="Notre Facebook!" class="float-right" data-toggle="tooltip" data-placement="left" title="Rejoins nous sur Twitter!"/>
+                                    </a>
+                                </div>
+                                <div class="col p-0">
+                                    <a href="{{$key->facebook}}">
+                                        <img src="img/facebook.jpg" alt="Notre Twitter!" class="float-left" data-toggle="tooltip" data-placement="right" title="Rejoins nous sur Facebook!"/>
+                                    </a>
+                                </div>
+                            @endforeach
                         </section>
                     </div>
                 </div>
-                <div class="card text-white border-danger mb-3">
-                    <div class="card-header bg-danger">Nos partenaires<span class="fas fa-handshake float-right mt-1"></span></div>
+                <div class="card border-two mb-3">
+                    <div class="card-header bg-two text-two">Nos partenaires<span class="fas fa-handshake float-right mt-1"></span></div>
                     <div class="card-body">
                         <ul class="list-group">
                             @foreach($partenaires as $partenaire)
@@ -168,39 +172,20 @@
                         </ul>
                     </div>
                 </div>
-                <div class="card text-white border-success mb-3">
-                    <div class="card-header bg-success">Newsletter<span class="fas fa-envelope-square float-right mt-1"></span></div>
+                <div class="card border-one mb-3">
+                    <div class="card-header bg-one text-one">Newsletter<span class="fas fa-envelope-square float-right mt-1"></span></div>
                     <div class="card-body">
                         <div class="input-group">
                             <input type="email" class="form-control" placeholder="adresse mail" aria-label="adresse mail" aria-describedby="button-addon2">
                             <div class="input-group-append">
-                                <button class="btn btn-outline-primary" type="button" id="button-addon2">S'inscrire</button>
+                                <button class="btn btn-outline-one" type="button" id="button-addon2">S'inscrire</button>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="card text-white border-danger mb-3">
-                    <div class="card-header bg-danger">Nombre d'utilisateurs total<span class="fas fa-user-circle float-right mt-1"></span></div>
-                    <div class="card-body">
-                        <div class="col text-center text-info jumbotron p-1 mb-0">{{$nb_user}}</div>
-                    </div>
-                </div>
-                <div class="card text-white border-success mb-3">
-                    <div class="card-header bg-success">Nombre de commandes total<span class="fas fa-user-circle float-right mt-1"></span></div>
-                    <div class="card-body">
-                        <div class="col text-center text-info jumbotron p-1 mb-0">{{$nb_commande}}</div>
-                    </div>
-                </div>
-                <div class="card text-white border-danger mb-3">
-                    <div class="card-header bg-danger">Nombre d'avis total<span class="fas fa-user-circle float-right mt-1"></span></div>
-                    <div class="card-body">
-                        <div class="col text-center text-info jumbotron p-1 mb-0">{{$nb_avis}}</div>
                     </div>
                 </div>
             </section>
         </section>
     </div>
-
 @endsection
 
 <script>

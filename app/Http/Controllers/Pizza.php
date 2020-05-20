@@ -51,7 +51,7 @@ class Pizza extends Menu
         ]);
 
         if($validate_data->fails()){
-            return back()->with('message',"Il y a une erreur avec la création de votre pizza.");
+            return back()->with('erreur',"Il y a une erreur avec la création de votre article.");
         }
 
         /* INSERTION NUTRITION */
@@ -87,7 +87,7 @@ class Pizza extends Menu
         ]);
         $request->image->move(public_path('images'), $imageName);
 
-        return back()->with('message','Votre pizza a été mise en ligne !');
+        return back()->with('message','Votre '.$request['categorie'].' a été mise en ligne !');
     }
 
     //Selectionne toutes les pizzas afin de les afficher
@@ -118,7 +118,7 @@ class Pizza extends Menu
         ]);
 
         if($validate_data->fails()){
-            return back()->with('error',"Il y a une erreur avec la modification de votre pizza.");
+            return back()->with('erreur',"Il y a une erreur avec la modification de votre article.");
         }
         */
         $id_nutrition = DB::table('pizza')->where('id','=',$request['id_pizza'])->select('nutrition')->value('nutrition');
@@ -151,7 +151,7 @@ class Pizza extends Menu
         ]);
         $request->image->move(public_path('images'), $imageName);
 
-        return back()->with('message','Votre pizza a été modifié !');
+        return back()->with('message','Votre '.$request['categorie'].' a été modifié !');
     }
 
     //Supprimer une pizza
@@ -170,7 +170,17 @@ class Pizza extends Menu
     public function detail($pizza_nom)
     {
         $pizza = DB::table("pizza")->select('*')->where('nom','=',$pizza_nom)->get();
-        return view('pizza.pizza_detail',compact('pizza'));
+        if($pizza->isEmpty())
+        {
+            abort(404);
+        }
+        else {
+            if ($pizza[0]->statut == 'Indisponible') {
+                abort(404);
+            } else {
+                return view('pizza.pizza_detail', compact('pizza'));
+            }
+        }
     }
 
     public function nutrition(Request $request)
@@ -194,9 +204,10 @@ class Pizza extends Menu
             'promotion' => 'required|integer|between:0,100'
         ]);
         if($validate_data->fails()){
-            return back()->with('message',"Il y a une erreur avec la modification de votre pizza.");
+            return back()->with('erreur',"Il y a une erreur avec la modification de votre article.");
         }
         $prix = DB::table("pizza")->select('prix')->where('id','=',$request['id'])->get();
+        $prix_promo = 0;
         foreach ($prix as $key){
             $prix_promo = $key->prix*(1-$request['promotion']/100);
         }
@@ -206,8 +217,14 @@ class Pizza extends Menu
 
     public function categorie_upload(Request $request)
     {
+        $validate_data = Validator::make($request->all(), [
+            'nom' => 'required|string'
+        ]);
+        if($validate_data->fails()){
+            return back()->with('erreur',"Il y a une erreur avec l'ajout de votre catégorie.");
+        }
         DB::table('categorie')->updateOrInsert(['nom' => $request['nom']]);
-        return back()->with('message','Votre catégorie a été ajouté');
+        return back()->with('message','Votre catégorie '.$request['nom'].' a été ajouté');
     }
 
     public function categorie_supprimer(Request $request)
