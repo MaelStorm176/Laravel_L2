@@ -179,24 +179,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="card text-white border-danger mb-3">
-                    <div class="card-header bg-danger">Nombre d'utilisateurs total<span class="fas fa-user-circle float-right mt-1"></span></div>
-                    <div class="card-body">
-                        <div class="col text-center text-info jumbotron p-1 mb-0">{{$nb_user}}</div>
-                    </div>
-                </div>
-                <div class="card text-white border-success mb-3">
-                    <div class="card-header bg-success">Nombre de commandes total<span class="fas fa-user-circle float-right mt-1"></span></div>
-                    <div class="card-body">
-                        <div class="col text-center text-info jumbotron p-1 mb-0">{{$nb_commande}}</div>
-                    </div>
-                </div>
-                <div class="card text-white border-danger mb-3">
-                    <div class="card-header bg-danger">Nombre d'avis total<span class="fas fa-user-circle float-right mt-1"></span></div>
-                    <div class="card-body">
-                        <div class="col text-center text-info jumbotron p-1 mb-0">{{$nb_avis}}</div>
-                    </div>
-                </div>
             </section>
         </section>
     </div>

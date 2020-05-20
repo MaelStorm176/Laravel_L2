@@ -55,6 +55,7 @@ Route::post('menu.upload','Menu@upload')->name('menu.upload');
 Route::post('menu.modifier','Menu@modifier')->name('menu.modifier');
 Route::post('menu.promotion','Menu@promotion')->name('menu.promotion');
 Route::get('menu.supprimer','Menu@supprimer')->name('menu.supprimer');
+Route::get('contenu.supprimer','Menu@contenu_supprimer')->name('contenu.supprimer');
 Route::get('afficher_form_menu','Menu@afficher_form')->name('afficher_form_menu');
 Route::get('afficher_cat','Menu@afficher_cat')->name('afficher_cat');
 Route::get('pizza_all/menu/{menu_nom}','Menu@detail')->name('afficher_menu');

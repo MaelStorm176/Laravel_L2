@@ -25,9 +25,6 @@
                         </select>
                     </form>
                 </div>
-                @auth
-                    <a href="commentaire" class="btn btn-outline-primary">Ajouter commentaire</a>
-                @endauth
                 <div class="list-group mb-3">
                     @foreach($commentaires as $key)
                         <a href="#" class="list-group-item list-group-item-action list-group-item-primary">

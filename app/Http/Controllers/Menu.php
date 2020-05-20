@@ -118,11 +118,25 @@ class Menu extends Controller
         }
     }
 
-    public function supprimer(Request $request)
+    public function supprimer(Request $request) //supprime menu
     {
         if($request->ajax()) {
             $menu = DB::table('menu')->where('id','=',$request['id'])->delete();
             $contenu_menu = DB::table('contenu_menu')->where('id_menu','=',$request['id'])->delete();
+        }
+        else
+        {
+            abort(404);
+        }
+    }
+
+    public function contenu_supprimer(Request $request)
+    {
+        if($request->ajax()) {
+            $contenu_menu = DB::table('contenu_menu')
+                ->where('id_menu','=',$request['id_menu'])
+                ->where('id_pizza','=',$request['id_contenu'])
+                ->delete();
         }
         else
         {
@@ -137,13 +151,13 @@ class Menu extends Controller
             'promotion' => 'required|integer|between:0,100'
         ]);
         if($validate_data->fails()){
-            return back()->with('message',"Il y a une erreur avec la modification de votre menu.");
+            return back()->with('erreur',"Il y a une erreur avec la modification de votre menu.");
         }
         $prix = DB::table("menu")->where('id','=',$request['id'])->value('prix');
         $prix_promo = $prix*(1-$request['promotion']/100);
 
         DB::table("menu")->where('id','=',$request['id'])->update(['promo' => $prix_promo]);
-        return back();
+        return back()->with('erreur',"Une promotion de ".$request['promotion']."% a été appliqué à votre menu");
     }
 
 }

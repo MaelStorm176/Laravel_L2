@@ -17,7 +17,7 @@ class Commentaire extends Migration
             $table->id();
             $table->string('email');
             $table->string('commentaire');
-            $table->string('note');
+            $table->unsignedTinyInteger('note');
             $table->string('username');
 
             //$table->timestamp('date')->nullable();

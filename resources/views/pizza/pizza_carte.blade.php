@@ -1,6 +1,5 @@
 @extends('layouts.base')
 @section('content')
-    @include('pizza.pizza_modal')
     <div class="container">
         <section class="row">
             <div class="col-lg-12">

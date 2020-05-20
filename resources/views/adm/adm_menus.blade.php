@@ -27,7 +27,11 @@
                                              </div>
                                             <div class="col-md-8">
                                                 <div class="card-body">
-                                                    <div class="badge badge-primary p-2 float-right text-white"> {{$menu->promo}} €</div>
+                                                    @if($menu->promo < $menu->prix)
+                                                        <div class="badge badge-danger p-2 float-right text-white"><del>{{$menu->prix}}</del> {{$menu->promo}} €</div>
+                                                    @else
+                                                        <div class="badge badge-primary p-2 float-right text-white"> {{$menu->promo}} €</div>
+                                                    @endif
                                                     <h5 class="card-title mt-1">{{$menu->nom}}</h5>
                                                     <p class="card-text text-justify">{{$menu->description}}</p>
                                                     <ul class="list-group mb-3">
@@ -35,7 +39,7 @@
                                                             @if($key->id_menu == $menu->id)
                                                                 @foreach($pizza as $item)
                                                                     @if($item->id == $key->id_pizza)
-                                                                        <li class="list-group-item list-group-item-primary rounded-0">
+                                                                        <li id="contenu_{{$menu->id}}_{{$item->id}}" onclick="supprimer_contenu({{$menu->id}},{{$item->id}})" class="list-group-item list-group-item-primary rounded-0">
                                                                             {{$item->nom}}
                                                                         </li>
                                                                     @endif
@@ -44,18 +48,23 @@
                                                         @endforeach
                                                     </ul>
                                                     <section class="row">
-                                                        <div class="col-lg-6">
+                                                        <div class="col-lg-6 mb-3">
                                                             <button type="button" onclick="modifier_menu({{$menu->id}})" class="btn btn-success w-100" data-toggle="modal" data-target="#MenuModal">MODIFIER</button>
                                                         </div>
-                                                        <div class="col-lg-6">
+                                                        <div class="col-lg-6 mb-3">
                                                             <button type="button" onclick="supprimer_menu({{$menu->id}})" class="btn btn-danger w-100">SUPPRIMER</button>
+                                                        </div>
+                                                        <div class="col-lg-12">
+                                                            <button type="button" onclick="ajouter_promo({{$menu->id}})" class="btn btn-primary w-100" data-toggle="modal" data-target="#exampleModalCenterCode">
+                                                                AJOUTER PROMOTION
+                                                            </button>
                                                         </div>
                                                     </section>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                            </div>
                             @endforeach
                         </section>
                     </div>
@@ -129,6 +138,39 @@
             </div>
         </div>
         <!-- FIN DU MODAL -->
+
+
+<!-- MODAL AJOUT PROMOTION -->
+<div class="modal fade" id="exampleModalCenterCode" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title" id="exampleModalLongTitleCode">Ajouter une promotion</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{{ route('menu.promotion') }}" id="formucode" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-body">
+                    <div>
+                        <label id="label_cate" for="nom">Entrez une promotion (en %)</label>
+                        <input type="number" name="promotion" id="promotion" min="0" max="100" class="form-control" required>
+                        <input type="hidden" id="id" name="id" value="">
+                        </br>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                        <button type="submit" id="upload" class="btn btn-primary">Ajouter</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
 @section('script')
 <script>
     function ajouter_menu()
@@ -199,6 +241,24 @@
         });
     }
 
+    function supprimer_contenu(id_menu,id_contenu)
+    {
+        var dummy = Date.now();
+        $.ajax({
+            url :'{{route('contenu.supprimer')}}',
+            type : 'GET',
+            dataType : 'html',
+            data : {dummy:dummy, id_menu:id_menu, id_contenu:id_contenu},
+            success : function(code_html, statut){
+                $('li[id="contenu_'+id_menu+'_'+id_contenu+'"]').remove();
+                success('Votre contenu a été supprimé');
+            },
+            error : function(resultat, statut, erreur){
+                alert('Erreur avec la requete Ajax');
+            },
+        });
+    }
+
 
     $('input[type="checkbox"][name="categorie"]').change(function() {
         var dummy = Date.now();
@@ -222,5 +282,11 @@
             $('#aff_'+categorie).empty();
         }
     });
+
+
+    function ajouter_promo(id)
+    {
+        $('#id').val(id);
+    }
 </script>
 @endsection

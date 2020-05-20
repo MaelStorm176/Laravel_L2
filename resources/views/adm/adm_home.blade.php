@@ -72,7 +72,7 @@
                                 </tr>
                                 <tr>
                                     <th scope="row" class="align-middle">Total</th>
-                                    <td><input type="text" class="form-control text-center" placeholder="xx" readonly></td>
+                                    <td><input type="text" class="form-control text-center" placeholder="{{$nb_user}}" readonly></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -109,7 +109,7 @@
                                     </tr>
                                     <tr>
                                         <th scope="row" class="align-middle">Total</th>
-                                        <td><input type="text" class="form-control text-center" placeholder="xx" readonly></td>
+                                        <td><input type="text" class="form-control text-center" placeholder="{{$nb_commande}}" readonly></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -146,7 +146,7 @@
                                     </tr>
                                     <tr>
                                         <th scope="row" class="align-middle">Total</th>
-                                        <td><input type="text" class="form-control text-center" placeholder="xx" readonly></td>
+                                        <td><input type="text" class="form-control text-center" placeholder="{{$nb_avis}}" readonly></td>
                                     </tr>
                                 </tbody>
                             </table>

@@ -157,7 +157,7 @@
                             <br/>
                             <input type="file" name="image" id="image" class="form-control" required style="width:300px; display: inline-block;" onchange="update_Photo();">
                             <input type="hidden" name="image_base" id="image_base">
-                            <img id="image_affiche" src="images/img_seed/1.jpg" style="width:150;"/>
+                            <img id="image_affiche" src="{{asset('images/img_seed/1.jpg')}}" style="width:150;"/>
                             <br/> <br/>
                             <label>Nom de votre article</label>
                             <input type="text" name="nom_p" placeholder="Nom" id="nom_p" class="form-control" required>
@@ -247,7 +247,7 @@
 <div class="modal fade" id="exampleModalCenterCode" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header bg-primary">
                 <h5 class="modal-title" id="exampleModalLongTitleCode">Ajouter une catégorie</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -297,7 +297,7 @@
         $('#id_pizza').val(id);
         var dummy = Date.now();
         $.ajax({
-            url :'afficher_form',
+            url :'{{route('afficher_form')}}',
             type : 'GET',
             dataType : 'html',
             data : {dummy:dummy, id:id},
@@ -305,7 +305,7 @@
                 var dataretour = code_html.split('_|');
                 $('#image_affiche').show();
                 $('#image_base').val(dataretour[0]);
-                $('#image_affiche').attr("src",dataretour[0]);
+                $('#image_affiche').attr("src",'../'+dataretour[0]);
                 $('#nom_p').val(dataretour[1]);
                 $('#categorie').val(dataretour[2]);
                 $('#description_courte').val(dataretour[3]);
@@ -346,7 +346,7 @@
     function supprimer(id){
         var dummy = Date.now();
         $.ajax({
-            url :'../pizza.supprimer',
+            url : '{{route('pizza.supprimer')}}',
             type : 'GET',
             dataType : 'html',
             data : {dummy:dummy, id:id},

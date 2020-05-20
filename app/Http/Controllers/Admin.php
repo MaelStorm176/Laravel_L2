@@ -12,7 +12,10 @@ class Admin extends Controller
 {
     public function index()
     {
-        return view('adm/adm_home');
+        $nb_user = DB::table("users")->count("id");
+        $nb_commande = DB::table("commande")->count("id");
+        $nb_avis = DB::table("commentaire")->count("id");
+        return view('adm/adm_home',compact('nb_user','nb_avis','nb_commande'));
     }
 
     public function horaires()
