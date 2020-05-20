@@ -116,16 +116,18 @@
                                 </tr>
                             </thead>
                             <tbody class="bg-secondary text-white">
-                                <tr>
-                                    <td>FACEBOOK</td>
-                                    <td><a href="#">http://liendufb.com</a></td>
-                                    <td><span class="fas fa-edit"></span></td>
-                                </tr>
-                                <tr>
-                                    <td>TWITTER</td>
-                                    <td><a href="#">http://lientwitter.com</a></td>
-                                    <td><span class="fas fa-edit"></span></td>
-                                </tr>
+                                @foreach($parametres as $key)
+                                    <tr>
+                                        <td>FACEBOOK</td>
+                                        <td><a href="{{$key->facebook}}">{{$key->facebook}}</a></td>
+                                        <td><span class="fas fa-edit" onclick="modifier(1)" data-toggle="modal" data-target="#modal_reseaux"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>TWITTER</td>
+                                        <td><a href="{{$key->twitter}}">{{$key->twitter}}</a></td>
+                                        <td><span class="fas fa-edit" onclick="modifier(2)" data-toggle="modal" data-target="#modal_reseaux"></span></td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -249,6 +251,30 @@
         </div>
     </div>
 </div>
+<!-- MODAL MODIFIER RESEAUX -->
+<div class="modal fade" id="modal_reseaux" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Modifier réseau social</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span id="close_modal" aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{{route('adm_modifier_reseau')}}" class="mb-0">
+                        @csrf
+                        <input type="hidden" id="testInput" name="testInput">
+                        <div class="form-group">
+                            <label for="lienInput">Nouveau lien</label>
+                            <input type="text" id="lienInput" name="lienInput" class="form-control" required>
+                        </div>
+                        <button type="submit" class="w-100 btn btn-primary">ENREGISTRER</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 @section('script')
 <script>
     function partenaire_supprimer(id) {
@@ -302,6 +328,25 @@
                 $('#texte_couleur_'+id).val(dataretour[3]);
                 $('#couleur_fond_'+id).val(dataretour[4]);
 
+            },
+
+            error : function(resultat, statut, erreur){
+                alert('Erreur avec la requete Ajax');
+            },
+        });
+    }
+
+    function modifier(test){
+        var dummy = Date.now();
+        $.ajax({
+            url:'afficher_form_reseaux',
+            type:'GET',
+            dataType:'html',
+            data:{dummy:dummy, test:test},
+            
+            success:function(code_html, statut){
+                $('#testInput').val(test);
+                $('#lienInput').val(code_html);
             },
 
             error : function(resultat, statut, erreur){

@@ -133,10 +133,18 @@ class Admin extends Controller
 
     public function identite(Request $request)
     {
-        DB::table('parametres')->where('id','=','1')->update([
-            'nom' => $request['nomPizzeria'],
-            'lien' => $request['lienSite']
-        ]);
+        $path = base_path('config/app.php');
+
+        if (file_exists($path)) {
+            file_put_contents($path, str_replace(
+                "'name' => '" . config('app.name') . "'", "'name' => '" . $request['nomPizzeria'] . "'", file_get_contents($path)
+            ));
+
+            file_put_contents($path, str_replace(
+                "'url' => '" . config('app.url') . "'", "'url' => '" . $request['lienSite'] . "'", file_get_contents($path)
+            ));
+        } 
+
         return back()->with('message', 'L\'identité a bien été enregistré.');
     }
 
@@ -147,6 +155,31 @@ class Admin extends Controller
         ]);
 
         return back()->with('message', 'Le numéro a bien été modfié.');
+    }
+
+    public function images(Request $request)
+    {
+        $banName = time().'.'. $request->baniere->extension();
+        $banName1 = 'images/'.$banName;
+        $logoName = time()+1 .'.'. $request->logo->extension();
+        $logoName1 = 'images/'.$logoName;
+
+        $path = base_path('config/images.php');
+
+        if (file_exists($path)) {
+            file_put_contents($path, str_replace(
+                "'baniere' => '" . config('images.baniere') . "'", "'baniere' => '" . $banName1 . "'", file_get_contents($path)
+            ));
+
+            file_put_contents($path, str_replace(
+                "'logo' => '" . config('images.logo') . "'", "'logo' => '" . $logoName1 . "'", file_get_contents($path)
+            ));
+        } 
+
+        $request->baniere->move(public_path('images'), $banName);
+        $request->logo->move(public_path('images'), $logoName);
+
+        return back()->with('message', 'Les images ont bien été enregistré.');
     }
 
     public function adresse(Request $request)
@@ -161,6 +194,19 @@ class Admin extends Controller
         return back()->with('message', 'L\'adresse a bien été modifié.');
     }
 
+    public function couleurs(Request $request)
+    {
+        $path = base_path('config/couleurs.php');
+
+        if (file_exists($path)) {
+            file_put_contents($path, str_replace(
+                "'" . $request['colorInput'] . "' => '" . config('couleurs.' . $request['colorInput']) . "'", "'" . $request['colorInput'] . "' => '" . $request['valeurInput'] . "'", file_get_contents($path)
+            ));
+        }
+
+        return back()->with('message', 'La couleur a bien été modifié.');
+    }
+
     public function engagements()
     {
         $engagements = DB::table('engagement')->select('*')->get();
@@ -171,7 +217,8 @@ class Admin extends Controller
     {
         $carousel=DB::table('accueil_carousel')->select('*')->get();
         $partenaires = DB::table('partenaires')->select('*')->get();
-        return view('adm/adm_secondaire',compact('carousel','partenaires'));
+        $parametres = DB::table('parametres')->where('id', 1)->get();
+        return view('adm/adm_secondaire',compact('carousel','partenaires', 'parametres'));
     }
 
     public function partenaire_ajout(Request $request)
@@ -187,6 +234,41 @@ class Admin extends Controller
     public function partenaire_supprimer(Request $request)
     {
         DB::table('partenaires')->where('id','=',$request['id'])->delete();
+    }
+
+    public function afficher_form_reseaux(Request $request)
+    {
+        if($request->ajax()) {
+            $parametres = DB::table('parametres')->where('id', 1)->get();
+            if ($request['test']==1){
+                foreach ($parametres as $key){
+                    echo $key->facebook;
+                }
+            }
+            else{
+                foreach ($parametres as $key){
+                    echo $key->twitter;
+                }
+            }
+        }
+        else{
+            abort(404);
+        }
+    }
+
+    public function modifier_reseau(Request $request)
+    {
+        if($request['testInput'] == 1){
+            DB::table('parametres')->where('id','=','1')->update([
+                'facebook' => $request['lienInput']
+            ]);
+        } else {
+            DB::table('parametres')->where('id','=','1')->update([
+                'twitter' => $request['lienInput']
+            ]);
+        }
+
+        return back()->with('message', 'Le réseau a bien été modfié.');
     }
 
     public function commandes()

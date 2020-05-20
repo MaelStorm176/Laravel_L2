@@ -15,12 +15,12 @@ class Parametres extends Migration
     {
         Schema::create('parametres', function (Blueprint $table){
             $table->id();
-            $table->string('nom');
-            $table->string('lien');
             $table->string('telephone');
             $table->string('adresse');
             $table->integer('codePostal');
             $table->string('ville');
+            $table->string('facebook');
+            $table->string('twitter');
         });
     }
 

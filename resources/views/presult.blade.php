@@ -1,7 +1,7 @@
 <?php use App\User; ?>
 <div id="myDIV">
     <table class="table table-hover table-bordered mb-3 text-center">
-        <thead class="bg-primary text-white">
+        <thead class="bg-tab text-tab">
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Détail de la commande</th>

@@ -7,78 +7,81 @@
         <section class="row">
             <div class="col-lg-12">
                 @auth
-                    <div class="card bg-success text-white text-center p-3 font-weight-bold font-italic mb-3">
-                        <h5 class="mb-0">HISTORIQUE DE VOS COMMANDES</h5>
+                    <div class="card border-one text-center p-3 font-weight-bold font-italic mb-3">
+                        <div class="card-header bg-one text-one">
+                            <h5 class="mb-0">HISTORIQUE DE VOS COMMANDES</h5>
+                        </div>
+                        <div class="card-body">
+                            @if(Auth::user()->role=='admin')
+                                <div id="tag_container">
+                                    @include('presult')
+                                </div>
+                            @else
+                                <div id="tag_container">
+                                    @include('presult2')
+                                </div>
+                            @endif
+                        </div>
                     </div>
                     @if(Auth::user()->role=='admin')
-                        <div id="tag_container">
-                            @include('presult')
-                        </div>
-                    @else
-                        <div id="tag_container">
-                            @include('presult2')
+                        <div class="card border-two text-center p-3 font-weight-bold font-italic mb-3">
+                            <div class="card-header bg-two text-two">
+                                <h5 class="mb-0">
+                                    COMMANDES EN COURS
+                                    <button class=" btn btn-outline-one float-right" style="width: 15%;" onclick="charger_commande(0,0)">CLICK</button>
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-hover table-bordered mb-3 text-center">
+                                    <thead class="bg-tab text-tab">
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Détails commande</th>
+                                            <th scope="col">Client</th>
+                                            <th scope="col">Prix</th>
+                                            <th scope="col">Statut Paiement</th>
+                                            <th scope="col">Heure de la commande</th>
+                                            <th scope="col">Statut Préparation</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="afficher_commande"></tbody>
+                                </table>
+                            </div>
                         </div>
                     @endif
-                    @if(Auth::user()->role=='admin')
-                        <div class="card bg-danger text-white text-center p-3 font-weight-bold font-italic mb-3">
-                            <h5 class="mb-0">COMMANDES EN COURS <button class=" btn btn-outline-primary" style="float: right;width: 15%;" onclick="charger_commande(0,0)">CLICK</button> </h5>
-
-                        </div>
-                        <table class="table table-hover table-bordered mb-3 text-center">
-                            <thead class="bg-primary text-white">
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Détails commande</th>
-                                    <th scope="col">Client</th>
-                                    <th scope="col">Prix</th>
-                                    <th scope="col">Statut Paiement</th>
-                                    <th scope="col">Heure de la commande</th>
-                                    <th scope="col">Statut Préparation</th>
-                                </tr>
-                            </thead>
-                            <tbody id="afficher_commande">
-
-                            </tbody>
-                        </table>
-                    @endif
+                @endauth
             </div>
         </section>
     </div>
-    @endauth
-
-
-    <!-- Modal Connexion -->
-    <div class="modal fade" id="commandesModal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header bg-info text-white">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Détail de la commande</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <div id="append_here">
-                        </div>
+@endsection
+<!-- Modal Cetails Commande -->
+<div class="modal fade" id="commandesModal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Détail de la commande</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div id="append_here">
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Retour</button>
-                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Retour</button>
             </div>
         </div>
     </div>
-
-@endsection
-
-
-    <script type="text/javascript">
-
+</div>
+<script type="text/javascript">
 
         function afficher(id) {
             charger_commande(1,id);
         }
+
         function charger_commande(typeAction,idaffiche) {
 
             var dummy = Date.now();
@@ -98,6 +101,7 @@
                 },
             });
         }
+
         function valider(id){
             $.ajax({
                 url : 'valider',

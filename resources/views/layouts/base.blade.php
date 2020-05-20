@@ -14,21 +14,32 @@
         <meta charset="uft-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="shortcut icon" href="@yield('favi')img/favicon.png">
-        <title>NOM PIZZERIA</title>
+        <title>{{ config('app.name') }}</title>
     </head>
-    <body>
-        <header class="header mb-0 p-5" style="background:url('@yield('ban')img/banniere.jpg');">
+    <style type="text/css">
+        .bg-one{background:{{config('couleurs.primFond')}};}
+        .text-one{color:{{config('couleurs.primText')}};}
+        .border-one{border-color:{{config('couleurs.primFond')}};}
+        .bg-two{background:{{config('couleurs.secondFond')}};}
+        .text-two{color:{{config('couleurs.secondText')}};}
+        .border-two{border-color:{{config('couleurs.secondFond')}};}
+        .bg-nav{background:{{config('couleurs.navFond')}};}
+        .text-nav{color:{{config('couleurs.navText')}}; opacity:0.8;}
+        .text-nav:hover{opacity:1; color:{{config('couleurs.navText')}};}
+        .bg-tab{background:{{config('couleurs.tabFond')}};}
+        .text-tab{color:{{config('couleurs.tabText')}};}
+        .btn-one{background:{{config('couleurs.btnFond')}}; color:{{config('couleurs.btnText')}};}
+        .btn-outline-one{color:{{config('couleurs.btnFond')}}; border-color:{{config('couleurs.btnFond')}};}
+        .btn-outline-one:hover{background:{{config('couleurs.btnFond')}}; color:{{config('couleurs.btnText')}};}
+        .bg-arr{background:{{config('couleurs.ArrPlan')}};}
+    </style>
+    <body class="bg-arr">
+        <header class="header mb-0 p-5" style="background:url('@yield('ban'){{config('images.baniere')}}');">
             <div class="container">
                 <section class="row">
-                    <img src="@yield('logo')img/ban.png" class="col-lg-4 offset-lg-4" style="max-width: 80%;">
-                    <!-- <div class="col-lg-4 offset-lg-4">
-                        <img src="@yield('logo')img/ban.png" style="max-width: 80%;">
-
-                        <div class="jumbotron mb-0 text-center">
-                            <h2 class="mb-0">LOGO PIZZERIA</h2>
-                        </div>
-
-                    </div> -->
+                    <div class="col-lg-4 offset-lg-4">
+                        <img src="@yield('logo'){{config('images.logo')}}" class="w-100">
+                    </div>
                     <div class="col-lg-3 offset-lg-1">
                         @yield('head')
                         @if(Session::get('errors'))
@@ -46,33 +57,30 @@
                 </section>
             </div>
         </header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3 rounded-0">
+        <nav class="navbar navbar-expand-lg bg-nav mb-3 rounded-0">
             <div class="container container-nav">
-
-                <a class="navbar-brand" href="{{ route('/') }}">{{ config('app.name') }}</a>
+                <a class="navbar-brand text-nav" href="{{ route('/') }}">{{ config('app.name') }}</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{route('pizza_all')}}">Notre Carte</a>
+                            <a class="nav-link text-nav" href="{{route('pizza_all')}}">Notre Carte</a>
                         </li>
                         <li class="nav-item">
-
-                            <a class="nav-link" href="{{route('horaires')}}">Nos Horaires</a>
+                            <a class="nav-link text-nav" href="{{route('horaires')}}">Nos Horaires</a>
                         </li>
                         <li class="nav-item">
-
-                            <a class="nav-link" href="{{route('engagements')}}">Nos Engagements</a>
+                            <a class="nav-link text-nav" href="{{route('engagements')}}">Nos Engagements</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{route('avis')}}">Avis</a>
+                            <a class="nav-link text-nav" href="{{route('avis')}}">Avis</a>
                         </li>
                         @auth
                             @if(Auth::user()->role=='admin')
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{route('admin')}}">Admin</a>
+                                    <a class="nav-link text-nav" href="{{route('admin')}}">Admin</a>
                                 </li>
                             @endif
                         @endauth
@@ -112,10 +120,10 @@
             </div>
         </nav>
         @yield('content')
-        <div class="w-100 p-3 text-white">--</div>
-        <footer class="bg-dark page-footer fixed-bottom py-3 text-white text-center">
-            © 2020 Copyright:
-            <a href="#">LIEN DU SITE</a>
+        <div class="w-100 p-3 text-white">-</div>
+        <footer class="bg-nav page-footer fixed-bottom py-3 text-center">
+            <span style="color:{{config('couleurs.navText')}};">© 2020 Copyright:</span>
+            <a href="#" class="text-nav">LIEN DU SITE</a>
         </footer>
         @guest
             <!-- Modal Connexion -->

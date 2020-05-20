@@ -3,13 +3,13 @@
     <div class="container">
         <section class="row">
             <div class="col-lg-12">
-                <div class="card border-success mb-3">
-                    <div class="card-header bg-success text-white ">
+                <div class="card border-one mb-3">
+                    <div class="card-header bg-one text-one ">
                         Nos horaires<span class="fas fa-clock mt-1 float-right"></span>
                     </div>
                     <div class="card-body">
                         <table class="table table-hover table-bordered mb-0 text-center">
-                            <thead class="bg-primary text-white">
+                            <thead class="bg-tab text-tab">
                                 <tr>
                                     <th scope="col">Jours</th>
                                     <th scope="col">Midi</th>
@@ -19,7 +19,7 @@
                             <tbody>
                                 @foreach($horaires as $key)
                                     <tr>
-                                        <th class="bg-info text-white" scope="row">{{$key->jour}}</th>
+                                        <th scope="row">{{$key->jour}}</th>
                                         <td id="{{$key->jour}}_midi" @if($key->midi == 'Fermé') class="bg-danger text-white" @else class="bg-success text-white" @endif>{{$key->midi}}</td>
                                         <td id="{{$key->jour}}_soir" @if($key->soir == 'Fermé') class="bg-danger text-white" @else class="bg-success text-white" @endif>{{$key->soir}}</td>
                                     </tr>
@@ -30,14 +30,14 @@
                 </div>
             </div>
             <div class="col-lg-6">
-                <div class="card mb-3 border-danger">
-                    <div class="card-header bg-danger text-white">
+                <div class="card mb-3 border-two">
+                    <div class="card-header bg-two text-two">
                         Période de fermeture prévues
                         <span class="fas fa-door-closed mt-1 float-right"></span>
                     </div>
                     <div class="card-body">
                         <table class="table table-hover table-bordered text-center mb-0">
-                            <thead class="bg-primary text-white">
+                            <thead class="bg-tab text-tab">
                                 <tr>
                                     <th scope="col">Date début</th>
                                     <th scope="col">Date fin</th>
@@ -58,14 +58,14 @@
                 </div>
             </div>
             <div class="col-lg-6">
-                <div class="card mb-3 border-danger">
-                    <div class="card-header bg-danger text-white">
+                <div class="card mb-3 border-two">
+                    <div class="card-header bg-two text-two">
                         Jours fériés ouverts
                         <span class="fas fa-calendar-day mt-1 float-right"></span>
                     </div>
                     <div class="card-body">
                         <table class="table table-hover table-bordered text-center mb-0">
-                            <thead class="bg-primary text-white">
+                            <thead class="bg-tab text-tab">
                                 <tr>
                                     <th scope="col">Date</th>
                                     <th scope="col">Midi</th>
