@@ -8,7 +8,7 @@
             <div class="col-lg-12">
                 <div class="card border-info mb-3">
                     <div class="card-header bg-info text-white">Supprimer un avis<span class="fas fa-comment-slash mt-1 float-right"></span></div>
-                    <form class="w-100 bg-danger" method="GET" action="{{route('adm_afficher_avis')}}">
+                    <form class="w-100 bg-danger" method="GET" action="{{route('avis')}}">
                         <select class="form-control rounded-0 bg-danger text-white border-danger" name="choix" onchange="this.form.submit();">
                             <option>Trier les commentaires</option>
                             <option value="recent">Les plus recent</option>
@@ -30,7 +30,7 @@
                             @endforeach
                         </div>
                         <nav aria-label="Page navigation example">
-                            {{$commentaires->links()}}
+                            {{ $commentaires->links() }}
                         </nav>
                     </div>
                 </div>

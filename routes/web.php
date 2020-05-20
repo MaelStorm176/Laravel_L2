@@ -28,10 +28,8 @@ Route::get('make-migration',
     })->name('make-migration');
 
 Route::post('ajout_commentaire', 'Commentaire@ajout')->name('ajout_commentaire')->middleware('verified');
-Route::get('clear_db', 'Commentaire@clear_db')->name('clear_db');
-Route::get('avis','Commentaire@afficherdefaut')->name('avis');
+Route::get('avis','Commentaire@afficher')->name('avis');
 Route::get('commentaire',"Commentaire@voir")->name('commentaire')->middleware('verified');
-Route::get('afficher', 'Commentaire@afficher')->name('afficher');
 
 
 /*PIZZA */
@@ -79,11 +77,10 @@ Route::get('historique_commande','AjaxPaginationController@ajaxPagination')->nam
 Route::get('/payment_accepted', function () {
     return view('payment_accepted');
 });
-Route::get('/payment', 'StripePaymentController@index')->name('payment');
+Route::get('/payment', 'StripePaymentController@index')->name('payment')->middleware('auth');
 Route::get('testvalidite', 'StripePaymentController@testvalidite')->name('testvalidite');
 
 /*CRAFT*/
-Route::get('/craft', 'Craft@index')->name('craft');
 Route::get('/craft', 'Craft@afficher')->name('craft');
 Route::post('craft_ajouter', 'Craft@ajouter')->name('craft_ajouter');
 Route::post('craft_modifier', 'Craft@modifier')->name('craft_modifier');
@@ -92,16 +89,17 @@ Route::post('craft_ajouter_ingredient', 'Craft@ajouter_ingredient')->name('craft
 Route::get('craft_supprimer_ingredient', 'Craft@supprimer')->name('craft_supprimer_ingredient');
 
 Route::get('/clear-cache', function() {
-    Artisan::call('cache:clear');
-    return "Cache is cleared";
-});
+    if (\Illuminate\Support\Facades\Auth::user()->role == 'admin') {
+        Artisan::call('cache:clear');
+        return "Cache is cleared";
+    }
+    else
+    {
+        abort(404);
+    }
+})->middleware('auth');
 
 Auth::routes(['verify' => true]);
-
-Route::get('/table_vide',function (){
-   $requete = DB::table('users')->select('id')->get();
-   return $requete;
-});
 /**/
 /* ACCUEIL */
 Route::get('/','HomeController@index')->name('/');

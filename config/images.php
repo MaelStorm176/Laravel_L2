@@ -2,9 +2,9 @@
 
 return [
 
-    'baniere' => 'img/banniere.jpg',
+    'baniere' => 'images/1589985618.jpeg',
     
-    'logo' => 'img/ban.png',
+    'logo' => 'images/1589985619.png',
     
 ];
 

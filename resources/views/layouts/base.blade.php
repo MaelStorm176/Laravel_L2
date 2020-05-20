@@ -104,16 +104,19 @@
                                     <a class="dropdown-item" href="{{ route('parametres') }}"><span class="fas fa-cogs mr-2"></span>Mes Paramères</a>
                                 </div>
                             </div>
+                            <a class="btn btn-outline-secondary navbar-btn" href="{{route('panier')}}">
+                                <i class="fas fa-shopping-cart" style="color:#fff;"></i>
+                                <span class="badge badge-primary badge-pill px-2 py-1" id="quantite_total_panier"><?php echo \App\Http\Controllers\Panier::quantite_total(); ?></span>
+                            </a>
+
                             <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                  <button type="button" class="btn btn-outline-danger navbar-btn"><span class="fas fa-door-open mr-2"></span>{{ __('Deconnexion') }}</button>
                             </a>
+
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 @csrf
                             </form>
                             </div>
-
-                            <i class="fas fa-shopping-cart" style="color:#fff;"></i>
-                            <span class="badge badge-primary badge-pill px-2 py-1" id="quantite_total_panier"><?php echo \App\Http\Controllers\Panier::quantite_total(); ?></span>
                         </div>
                     @endauth
                 </div>

@@ -1,7 +1,7 @@
 @extends('layouts.base2')
 @section('titre')
     Ajouter un commentaire
-@endsection 
+@endsection
 @section('contenu')
     <form class="mb-0" action="{{route('ajout_commentaire')}}" method="POST">
         @csrf
@@ -15,9 +15,6 @@
                     <label for="commentaire">Entrer votre commentaire</label>
                     <textarea class="form-control" maxlength="100" id="commentaire" name="comm" required></textarea>
                 </div>
-                <span id="erreur" class="col-lg-12 invalid-feedback" role="alert" style="display: none;">
-                    <strong id="message-erreur"></strong>
-                </span>
                 <input type="hidden" id="value" name="value">
                 <div class="col-lg-6 offset-lg-3 badge badge-secondary p-3 rounded-circle w-100">
                     <section class="row">
@@ -70,7 +67,7 @@
         for(i=value+1; i<=5; i++){
             $('#star'+i).html('<span class="fas fa-star text-info" onclick="star('+i+')"></span>');
         }
-        
+
         $('#value').val(value);
     }
 </script>
@@ -181,7 +178,6 @@
                     <br>
                 </div>
             @endauth
-            <a href="{{route('clear_db')}}" class="btn btn-primary">Nettoyer la base</a>
 
             <br>
             <br>
@@ -196,31 +192,5 @@
 
         </div>
     </div>
-
-    <!-- TOASTS -->
-
-    <div class="toast fixed-bottom" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false">
-        <div class="toast-header">
-            <!-- <img src="..." class="rounded mr-2" alt="..."> !-->
-            <strong class="mr-auto">Information</strong>
-            <small class="text-muted"><1 min</small>
-            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="toast-body" id="input-toast">
-        </div>
-    </div>
-    @if(session()->get('message'))
-        <input type="hidden" id="message" value="{{session()->get('message')}}">
-        <script>
-            window.onload=function()   {
-                const message = $('#message').val();
-                $('#input-toast').text(message);
-                $('.toast').toast('show').slideDown();
-            }
-        </script>
-    @endif
 @endsection
-</html>
 

@@ -97,7 +97,7 @@
                                     </div>
                                     <div class="list-group mb-3">
                                         @foreach($commentaires as $key)
-                                            <a href="#" class="list-group-item list-group-item-action list-group-item-primary">
+                                            <a href="{{route('avis')}}" class="list-group-item list-group-item-action list-group-item-primary">
                                                 <div class="d-flex w-100 justify-content-between">
                                                     <h4 class="mb-1">{{$key->username}}</h4>
                                                     <span class="badge badge-success p-2 rounded-circle shadow">{{$key->note}}</span>

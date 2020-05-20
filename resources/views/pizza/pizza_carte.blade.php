@@ -1,5 +1,10 @@
 @extends('layouts.base')
 @section('content')
+    @auth
+        @if(Auth::user()->role=='admin')
+            @include('pizza.pizza_modal')
+        @endif
+    @endauth
     <div class="container">
         <section class="row">
             <div class="col-lg-12">

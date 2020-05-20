@@ -49,11 +49,11 @@ class Commentaire extends Controller
                 return view('avis')->with('commentaires', $commentaires);
             }
             else {
-                return back()->with('message', 'Vous ne pouvez pas mettre plus de commentaire.');
+                return back()->with('erreur', 'Vous ne pouvez pas mettre plus de commentaire.');
             }
         }
         else {
-            return back()->with('message', 'Votre email doit être vérifié !');
+            return back()->with('erreur', 'Votre email doit être vérifié !');
         }
     }
 
@@ -78,7 +78,7 @@ class Commentaire extends Controller
         else {
             $com = $this->com();
         }
-        $com->withPath('afficher?choix='.$choix);
+        $com->withPath('avis?choix='.$choix);
         return view('avis')->with("commentaires", $com);
     }
 
@@ -87,12 +87,6 @@ class Commentaire extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(5);
         return $com;
-    }
-
-    public function afficherdefaut() {
-        $com = $this->com();
-
-        return view('avis')->with("commentaires", $com);
     }
 
 }

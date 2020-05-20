@@ -16,7 +16,7 @@
                             @endauth
                         </section>
                     </div>
-                    <form class="w-100 bg-two" method="GET" action="{{route('afficher')}}">
+                    <form class="w-100 bg-two" method="GET" action="{{route('avis')}}">
                         <select class="form-control rounded-0 bg-two text-two border-two" name="choix" onchange="this.form.submit();">
                             <option>Trier les commentaires</option>
                             <option value="recent">Les plus recent</option>

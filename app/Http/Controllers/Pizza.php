@@ -29,6 +29,9 @@ class Pizza extends Menu
                 echo $key2->Sodium."_|".$key2->Fibres."_|".$key2->Dont_satures."_|".$key2->Lipides."_|".$key2->Dont_sucres."_|".$key2->Glucides."_|".$key2->Proteines."_|".$key2->Energies;
             }
         }
+        else{
+            abort(404);
+        }
     }
 
     //Upload d'une pizza
@@ -157,13 +160,20 @@ class Pizza extends Menu
     //Supprimer une pizza
     public function supprimer(Request $request)
     {
-        $requete = DB::table("pizza")->select('*')->where('id','=',$request['id']);
-        $pizza =  $requete->get();
-        foreach ($pizza as $key){
-            File::delete($key->photo); //Supprime la photo du dossier publique
+        if ($request->ajax())
+        {
+            $requete = DB::table("pizza")->select('*')->where('id','=',$request['id']);
+            $pizza =  $requete->get();
+            foreach ($pizza as $key){
+                File::delete($key->photo); //Supprime la photo du dossier publique
+            }
+            DB::table("nutrition")->select('*')->where('id','=',$key->nutrition)->delete();
+            $requete->delete();
         }
-        DB::table("nutrition")->select('*')->where('id','=',$key->nutrition)->delete();
-        $requete->delete();
+        else
+        {
+            abort(404);
+        }
     }
 
     //Afficher le détail de la pizza selectionnée

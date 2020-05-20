@@ -96,13 +96,8 @@ class Admin extends Controller
         DB::table('fermeture')->where('id','=',$request['id'])->delete();
     }
 
-    public function avis()
+    public function avis(Request $request)
     {
-        $commentaires = DB::table('commentaire')->select('*')->get();
-        return view('adm/adm_avis')->with('commentaires',$commentaires);
-    }
-
-    public function afficher_avis(Request $request) { //affichage du dernier commentaire
         $choix = $request["choix"];
         if($choix == "moins") {
             $com = DB::table('commentaire')
@@ -119,7 +114,7 @@ class Admin extends Controller
                 ->orderBy('created_at', 'desc')
                 ->paginate(5);
         }
-        $com->withPath('afficher_avis?choix='.$choix);
+        $com->withPath('avis?choix='.$choix);
         return view('adm/adm_avis')->with("commentaires", $com);
     }
 
@@ -146,7 +141,7 @@ class Admin extends Controller
             file_put_contents($path, str_replace(
                 "'url' => '" . config('app.url') . "'", "'url' => '" . $request['lienSite'] . "'", file_get_contents($path)
             ));
-        } 
+        }
 
         return back()->with('message', 'L\'identité a bien été enregistré.');
     }
@@ -177,7 +172,7 @@ class Admin extends Controller
             file_put_contents($path, str_replace(
                 "'logo' => '" . config('images.logo') . "'", "'logo' => '" . $logoName1 . "'", file_get_contents($path)
             ));
-        } 
+        }
 
         $request->baniere->move(public_path('images'), $banName);
         $request->logo->move(public_path('images'), $logoName);

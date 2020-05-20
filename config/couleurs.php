@@ -10,19 +10,19 @@ return [
 
     'secondText' => '#ffffff',
 
-    'navFond' => '#80ff00',
+    'navFond' => '#403f3f',
     
     'navText' => '#ffffff',
 
-    'btnFond' => '#f10404',
+    'btnFond' => '#87e218',
 
-    'btnText' => '#ffffff',
+    'btnText' => '#000000',
     
     'tabFond' => '#808080',
 
     'tabText' => '#ffffff',
 
-    'ArrPlan' => '#c0c0c0',
+    'ArrPlan' => '#ffffff',
     
 ];
 

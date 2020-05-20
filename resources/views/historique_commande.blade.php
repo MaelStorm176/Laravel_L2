@@ -28,7 +28,7 @@
                             <div class="card-header bg-two text-two">
                                 <h5 class="mb-0">
                                     COMMANDES EN COURS
-                                    <button class=" btn btn-outline-one float-right" style="width: 15%;" onclick="charger_commande(0,0)">CLICK</button>
+                                    <button class=" btn btn-outline-one float-right" style="width: 15%;" onclick="charger_commande(0,0)">Rafraîchir</button>
                                 </h5>
                             </div>
                             <div class="card-body">

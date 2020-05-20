@@ -26,8 +26,28 @@
                 </div>
             </div>
         </div>
+        @if(session()->has('message'))
+            <script>$(function (){ success('{{session()->get('message')}}')});</script>
+        @endif
+        @if(session()->has('erreur'))
+            <script>$(function (){ erreur('{{session()->get('erreur')}}')});</script>
+        @endif
     </body>
 </html>
+<script type="text/javascript" src="{{asset('js/dist/Notifier.min.js')}}"></script>
 <script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    });
+
+    function success(message) {
+        var notifier = new Notifier();
+        notifier.notify("success", message);
+    }
+
+    function erreur(message) {
+        var notifier = new Notifier();
+        notifier.notify("error", message);
+    }
     $('#paieModal').modal('show');
 </script>

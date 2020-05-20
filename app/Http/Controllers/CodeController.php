@@ -38,9 +38,14 @@ class CodeController extends Controller
 
     public function supprimer(Request $request)
     {
-        if(isset($request['id']))
+        if($request->ajax()) {
+            if (isset($request['id'])) {
+                DB::table("coupon")->where('id', '=', $request['id'])->delete();
+            }
+        }
+        else
         {
-            DB::table("coupon")->where('id','=',$request['id'])->delete();
+            abort(404);
         }
     }
 }
