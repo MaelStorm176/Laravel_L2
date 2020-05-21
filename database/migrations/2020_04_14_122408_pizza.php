@@ -21,7 +21,7 @@ class Pizza extends Migration
             $table->mediumText('description_courte')->nullable();
             $table->text('description_longue')->nullable();
             $table->string('statut')->default('Disponible');
-            $table->foreignId('nutrition')->unsigned()->index();
+            $table->foreignId('nutrition')->unsigned()->index()->default(0);
             $table->unsignedDecimal('prix',8,2)->default(0);
             $table->unsignedDecimal('promo',8,2)->default(0);
         });

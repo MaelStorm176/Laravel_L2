@@ -12,7 +12,7 @@ class ParametresController extends Controller
     public function update(Request $request)
     {
         if (isset($request['bouton'])) {
-            DB::table("users")->update([
+            DB::table("users")->where('id','=',Auth::user()->id)->update([
                 'username' => $request["username"],
                 'first_name' => $request["first_name"],
                 'last_name' => $request["last_name"]

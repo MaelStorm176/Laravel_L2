@@ -15,14 +15,14 @@ class Nutrition extends Migration
     {
         Schema::create('nutrition', function (Blueprint $table) {
             $table->id();
-            $table->unsignedDecimal('Sodium',6,1)->comment('mg');
-            $table->unsignedDecimal('Fibres',6,1)->comment('g');
-            $table->unsignedDecimal('Dont_satures',6,1)->comment('g');
-            $table->unsignedDecimal('Lipides',6,1)->comment('g');
-            $table->unsignedDecimal('Dont_sucres',6,1)->comment('g');
-            $table->unsignedDecimal('Glucides',6,1)->comment('g');
-            $table->unsignedDecimal('Proteines',6,1)->comment('g');
-            $table->unsignedDecimal('Energies',6,1)->comment('kcal');
+            $table->unsignedDecimal('Sodium',6,1)->default(0.0)->nullable()->comment('mg');
+            $table->unsignedDecimal('Fibres',6,1)->default(0.0)->nullable()->comment('g');
+            $table->unsignedDecimal('Dont_satures',6,1)->default(0.0)->nullable()->comment('g');
+            $table->unsignedDecimal('Lipides',6,1)->default(0.0)->nullable()->comment('g');
+            $table->unsignedDecimal('Dont_sucres',6,1)->default(0.0)->nullable()->comment('g');
+            $table->unsignedDecimal('Glucides',6,1)->default(0.0)->nullable()->comment('g');
+            $table->unsignedDecimal('Proteines',6,1)->default(0.0)->nullable()->comment('g');
+            $table->unsignedDecimal('Energies',6,1)->default(0.0)->nullable()->comment('kcal');
         });
     }
 

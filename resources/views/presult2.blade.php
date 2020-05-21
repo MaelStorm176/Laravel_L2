@@ -18,7 +18,7 @@
                     @if($value->user_id == Auth::user()->id) <!-- Si on est le bon user -->
                         <tr>
                             <td>{{ $value->id }}</td>
-                            <td>{{ $value->num_commande }}</td>
+                            <td><button class="btn btn-outline-primary" onclick="afficher({{$value->id}})" data-toggle="modal" data-target="#commandesModal">{{ $value->num_commande }}</td>
                             <td>{{ Auth::user()->email }}</td>
                             <td>{{ $value->prix_total }}</td>
                             <td>{{ $value->statut_pay }}</td>

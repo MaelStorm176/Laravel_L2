@@ -52,11 +52,28 @@
                             <section class="row">
                                 <div class="col-lg-12 mb-4">
                                     <label for="banniere">Bannière</label>
-                                    <input type="file" id="baniere" name="baniere" class="form-control">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Changer la bannière</span>
+                                        </div>
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="baniere" name="baniere" lang="fr">
+                                            <label class="custom-file-label" for="inputGroupFile01">Choisissez votre fichier</label>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-lg-12 mb-4">
                                     <label for="logo">Logo</label>
-                                    <input type="file" id="logo" name="logo" class="form-control">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Changer le logo</span>
+                                        </div>
+                                        <div class="custom-file">
+                                            <input type="file" id="logo" name="logo" class="custom-file-input">
+                                            <label class="custom-file-label" for="inputGroupFile01">Choisissez votre fichier</label>
+                                        </div>
+                                    </div>
+
                                 </div>
                                 <div class="col-lg-12">
                                     <button type="submit" class="btn btn-primary w-100">ENREGISTRER</button>

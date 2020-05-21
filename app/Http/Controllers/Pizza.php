@@ -37,20 +37,19 @@ class Pizza extends Menu
     //Upload d'une pizza
     public function upload(Request $request)
     {
-        /*
         $validate_data = Validator::make($request->all(), [
             'image'             =>  'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'nom_p'             =>  'required',
             'statut_p'          =>  'required',
-            'prix_p'            =>  'required|integer|between:0,100',
-            'sodium'            =>  'required|integer|between:0,10000',
-            'fibres'            =>  'required|integer|between:0,10000',
-            'dont_satures'      =>  'required|integer|between:0,10000',
-            'lipides'           =>  'required|integer|between:0,10000',
-            'dont_sucres'       =>  'required|integer|between:0,10000',
-            'glucides'          =>  'required|integer|between:0,10000',
-            'proteines'         =>  'required|integer|between:0,10000',
-            'energies'          =>  'required|integer|between:0,10000'
+            'prix_p'            =>  'nullable|integer|between:0,100',
+            'sodium'            =>  'nullable|integer|between:0,10000',
+            'fibres'            =>  'nullable|integer|between:0,10000',
+            'dont_satures'      =>  'nullable|integer|between:0,10000',
+            'lipides'           =>  'nullable|integer|between:0,10000',
+            'dont_sucres'       =>  'nullable|integer|between:0,10000',
+            'glucides'          =>  'nullable|integer|between:0,10000',
+            'proteines'         =>  'nullable|integer|between:0,10000',
+            'energies'          =>  'nullable|integer|between:0,10000'
         ]);
 
         if($validate_data->fails()){
@@ -104,26 +103,25 @@ class Pizza extends Menu
     //Modifie une pizza
     public function modifier(Request $request)
     {
-        /*
         $validate_data = Validator::make($request->all(), [
             'image'             =>  'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'nom_p'             =>  'required',
             'statut_p'          =>  'required',
-            'prix_p'            =>  'required|integer|between:0,100',
-            'sodium'            =>  'required|integer|between:0,10000',
-            'fibres'            =>  'required|integer|between:0,10000',
-            'dont_satures'      =>  'required|integer|between:0,10000',
-            'lipides'           =>  'required|integer|between:0,10000',
-            'dont_sucres'       =>  'required|integer|between:0,10000',
-            'glucides'          =>  'required|integer|between:0,10000',
-            'proteines'         =>  'required|integer|between:0,10000',
-            'energies'          =>  'required|integer|between:0,10000'
+            'prix_p'            =>  'nullable|integer|between:0,100',
+            'sodium'            =>  'nullable|integer|between:0,10000',
+            'fibres'            =>  'nullable|integer|between:0,10000',
+            'dont_satures'      =>  'nullable|integer|between:0,10000',
+            'lipides'           =>  'nullable|integer|between:0,10000',
+            'dont_sucres'       =>  'nullable|integer|between:0,10000',
+            'glucides'          =>  'nullable|integer|between:0,10000',
+            'proteines'         =>  'nullable|integer|between:0,10000',
+            'energies'          =>  'nullable|integer|between:0,10000'
         ]);
 
         if($validate_data->fails()){
             return back()->with('erreur',"Il y a une erreur avec la modification de votre article.");
         }
-        */
+
         $id_nutrition = DB::table('pizza')->where('id','=',$request['id_pizza'])->select('nutrition')->value('nutrition');
         DB::table('nutrition')
             ->where('id','=',$id_nutrition)
@@ -239,6 +237,28 @@ class Pizza extends Menu
 
     public function categorie_supprimer(Request $request)
     {
-        DB::table('categorie')->where('id','=',$request[])->delete();
+        if (isset($request['choix']))
+        {
+            if ($request['choix'] == 'non')
+            {
+                DB::table('categorie')->where('id','=',$request['id_cate'])->delete();
+            }
+            if ($request['choix'] == 'oui')
+            {
+                $pizza = DB::table('pizza')
+                    ->join('categorie','pizza.categorie','=','categorie.nom')
+                    ->where('categorie.id','=',$request['id_cate'])
+                    ->select('id');
+                DB::table('contenu_menu')->whereIn('categorie.id_menu',$pizza)->delete();
+                $pizza->delete();
+                DB::table('categorie')->where('id','=',$request['id_cate'])->delete();
+            }
+            return back();
+        }
+        else
+        {
+         abort(404);
+        }
+
     }
 }

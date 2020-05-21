@@ -44,6 +44,7 @@ Route::post('pizza.promotion','Pizza@promotion')->name('promotion');
 Route::post('code.upload','CodeController@upload')->name('code.upload');
 Route::get('code.supprimer','CodeController@supprimer')->name('code.supprimer');
 Route::post('categorie.upload','Pizza@categorie_upload')->name('categorie.upload');
+Route::post('categorie.supprimer','Pizza@categorie_supprimer')->name('categorie.supprimer');
 
 /* ENGAGEMENT*/
 Route::get('engagements', 'Engagement@index')->name('engagements');
@@ -115,7 +116,7 @@ Route::get('/modif_carousel_supprimer', 'Accueil_Carousel@supprimer')->name('acc
 Route::get('update', 'ParametresController@update')->name('update');
 Route::get('parametres', function(){
     return view('parametres');
-})->name('parametres');
+})->middleware('auth')->name('parametres');
 Route::get('conf_email', 'ParametresController@verify')->name('conf_email');
 Route::get('verif_email', 'ParametresController@verif_email');
 

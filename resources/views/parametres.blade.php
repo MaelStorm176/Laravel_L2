@@ -20,19 +20,11 @@
             </div>
             <div class="col-lg-6">
                 <div class="card border-two mb-3">
-                    <div class="card-header bg-two text-two">Change ton mot de passe<span class="fas fa-lock float-right mt-1"></span></div>
+                    <div class="card-header bg-two text-two">Changez votre mot de passe<span class="fas fa-lock float-right mt-1"></span></div>
                     <div class="card-body">
-                        <form>
-                            <div class="form-group">
-                                <label for="inputPassword">Nouveau mot de passe</label>
-                                <input type="password" class="form-control" id="inputPassword">
-                            </div>
-                            <div class="form-group">
-                                <label for="inputPassword2">Retape ton nouveau mot de passe</label>
-                                <input type="password" class="form-control" id="inputPassword2">
-                            </div>
-                            <button type="submit" class="btn btn-one w-100">Valider</button>
-                        </form>
+                        <p><em>Vous pouvez à tout moment réinitialiser le mot de passe de votre compte, pour cela nous avons besoin de votre adresse e-mail associée à votre compte. Nous vous enverrons ensuite un mail de confirmation afin que vous puissiez changer votre mot de passe.</em></p>
+
+                        <a href="/password/reset" class="btn btn-one w-100">Valider</a>
                     </div>
                 </div>
             </div>
@@ -46,7 +38,7 @@
                                 <div class="form-group">
                                     <label for="username">{{ __('Pseudonyme') }}</label>
                                     <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{auth::user()->username}}" required autocomplete="username" autofocus>
-                                    
+
                                     @error('username')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

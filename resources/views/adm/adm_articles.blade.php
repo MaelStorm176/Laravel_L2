@@ -28,7 +28,7 @@
                                             </button>
                                         </div>
                                         <div class="col-lg-2 px-0">
-                                            <button class="btn btn-primary w-100 h-100" type="button" id="cate_{{$cat->id}}" name="{{$cat->id}}">
+                                            <button class="btn btn-primary w-100 h-100" onclick="cate_suppr({{$cat->id}})" type="button" id="cate_{{$cat->id}}" name="cate_suppr" data-toggle="modal" data-target=".bd-example-modal-sm">
                                                 <span class="fas fa-times text-danger"></span>
                                             </button>
                                         </div>
@@ -55,7 +55,9 @@
                                                 <div class="card">
                                                     <div class="row no-gutters">
                                                         <div class="col-md-4">
+                                                            <a href="../pizza_all/{{$key->nom}}" target="_blank">
                                                             <img src="../{{$key->photo}}" class="rounded-left w-100 h-100">
+                                                            </a>
                                                         </div>
                                                         <div class="col-md-8">
                                                             <div class="card-body">
@@ -201,9 +203,9 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td><input type="number" step="0.1" class="form-control" id="sodium" name="sodium" min="0" required></td>
-                                    <td><input type="number" step="0.1" class="form-control" id="fibres" name="fibres" min="0" required></td>
-                                    <td><input type="number" step="0.1" class="form-control" id="dont_satures" name="dont_satures" min="0" required></td>
+                                    <td><input type="number" step="0.1" class="form-control" id="sodium" name="sodium" min="0" ></td>
+                                    <td><input type="number" step="0.1" class="form-control" id="fibres" name="fibres" min="0" ></td>
+                                    <td><input type="number" step="0.1" class="form-control" id="dont_satures" name="dont_satures" min="0" ></td>
                                 </tr>
                                 </tbody>
                                 <thead class="thead-dark">
@@ -215,9 +217,9 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td><input type="number" step="0.1" class="form-control" id="lipides" name="lipides" min="0" required></td>
-                                    <td><input type="number" step="0.1" class="form-control" id="dont_sucres" name="dont_sucres" min="0" required></td>
-                                    <td><input type="number" step="0.1" class="form-control" id="glucides" name="glucides" min="0" required></td>
+                                    <td><input type="number" step="0.1" class="form-control" id="lipides" name="lipides" min="0" ></td>
+                                    <td><input type="number" step="0.1" class="form-control" id="dont_sucres" name="dont_sucres" min="0" ></td>
+                                    <td><input type="number" step="0.1" class="form-control" id="glucides" name="glucides" min="0" ></td>
                                 </tr>
                                 </tbody>
                                 <thead class="thead-dark">
@@ -228,8 +230,8 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td><input type="number" step="0.1" class="form-control" id="proteines" name="proteines" min="0" required></td>
-                                    <td><input type="number" step="0.1" class="form-control" id="energies" name="energies" min="0" required></td>
+                                    <td><input type="number" step="0.1" class="form-control" id="proteines" name="proteines" min="0" ></td>
+                                    <td><input type="number" step="0.1" class="form-control" id="energies" name="energies" min="0" ></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -271,6 +273,44 @@
         </div>
     </div>
 </div>
+<!-- FIN MODAL -->
+<!-- MODAL SUPPRESSION -->
+<div class="modal fade bd-example-modal-sm" id="modal_suppression" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title" id="exampleModalLongTitleCode">Suppression d'une catégorie</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{{ route('categorie.supprimer') }}" id="formu_supp" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-body">
+                    <div>
+                        <label id="label_cate" for="nom">Voulez-vous supprimer les articles de cette catégorie ?</label>
+                        <!-- Default checked -->
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" class="custom-control-input" id="defaultChecked_oui" name="choix" value="oui" checked>
+                            <label class="custom-control-label" for="defaultChecked_oui">Oui</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" class="custom-control-input" id="defaultChecked_non" name="choix" value="non">
+                            <label class="custom-control-label" for="defaultChecked_non">Non</label>
+                        </div>
+                        <input type="hidden" id="id_cate" name="id_cate" value="">
+                        </br>
+                    </div>
+                    <div class="modal-footer" style="height: 40px">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                        <button type="submit" id="upload" class="btn btn-primary">Confirmer</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- FIN MODAL -->
 @endsection
 
 <script>
@@ -341,6 +381,10 @@
         $('#nom').prop('name','nom');
         $('#label_cate').html("Ajouter une catégorie d'articles (Boissons, pizzas...)");
         $('#id').val('');
+    }
+
+    function cate_suppr(id) {
+        $('#id_cate').val(id);
     }
 
     function supprimer(id){

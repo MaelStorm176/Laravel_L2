@@ -19,12 +19,21 @@ class Menu extends Controller
             'statut'        => $request['statut_m']
         ]);
 
-        //Pour chaque check-box coché, on ajoute l'id de l'article correspondant
-        foreach ($request['article'] as $item) {
+        if(empty($request['article']))
+        {
             DB::table('contenu_menu')->insert([
                 'id_menu'   => $id_menu,
-                'id_pizza'  => $item
+                'id_pizza'  => 0
             ]);
+        }
+        else{
+            //Pour chaque check-box coché, on ajoute l'id de l'article correspondant
+            foreach ($request['article'] as $item) {
+                DB::table('contenu_menu')->insert([
+                    'id_menu'   => $id_menu,
+                    'id_pizza'  => $item
+                ]);
+            }
         }
 
         return back()->with('message','Votre menu a été créé');
@@ -76,7 +85,10 @@ class Menu extends Controller
 
     public function afficher_cat(Request $request)
     {
-        $pizza = DB::table('pizza')->select('id','nom')->where('categorie','=',$request['categorie'])->get();
+        $pizza = DB::table('pizza')->select('id','nom')
+            ->where('categorie','=',$request['categorie'])
+            ->where('statut','=','Disponible')
+            ->get();
         foreach ($pizza as $key) {
             echo
             '
