@@ -89,25 +89,30 @@
                         </div>
                         <!-- LES 3 DERNIERS COMMENTAIRES -->
                         <div class="col-lg-12">
-                            <div class="list-group mb-3 border-0">
-                                <div class="text-white border-one mb-3">
-                                    <div class="card-header bg-one text-one">
-                                        Les 3 derniers avis
-                                        <span class="fas fa-comment float-right mt-1"></span>
-                                    </div>
-                                    <div class="list-group mb-3">
-                                        @foreach($commentaires as $key)
-                                            <a href="{{route('avis')}}" class="list-group-item list-group-item-action list-group-item-primary">
-                                                <div class="d-flex w-100 justify-content-between">
-                                                    <h4 class="mb-1">{{$key->username}}</h4>
-                                                    <span class="badge badge-success p-2 rounded-circle shadow">{{$key->note}}</span>
-                                                </div>
-                                                <p class="mb-1 text-justify">{{$key->commentaire}}</p>
+                            <div class="list-group mb-3">
+                                @foreach($commentaires as $key)
+                                    <div class="list-group-item list-group-item-action list-group-item-primary p-0 mb-3 rounded border-secondary border">
+                                        <div class="w-100 bg-white d-flex justify-content-between px-4 py-3 rounded-top">
+                                            <h4 class="mb-0">{{$key->username}}</h4>
+                                            @if($key->note <= 2)
+                                                <span class="badge badge-danger px-3 py-2 rounded-circle">{{$key->note}}</span>
+                                            @else
+                                                @if($key->note == 3)
+                                                    <span class="badge badge-warning px-3 py-2 rounded-circle text-white">{{$key->note}}</span>
+                                                @else
+                                                    <span class="badge badge-success px-3 py-2 rounded-circle">{{$key->note}}</span>
+                                                @endif
+                                            @endif
+                                        </div>
+                                        <div class="px-4 pt-2">
+                                            <p class="mb-1 text-justify">{{$key->commentaire}}</p>
+                                            <hr />
+                                            <div class="w-100 text-center mb-2">
                                                 <small>{{$key->created_at}}</small>
-                                            </a>
-                                        @endforeach
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
                     </section>

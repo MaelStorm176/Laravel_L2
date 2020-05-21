@@ -6,9 +6,9 @@
     <div class="container">
         <section class="row">
             <div class="col-lg-12">
-                <div class="card border-info mb-3">
+                <div class="card border-info">
                     <div class="card-header bg-info text-white">Supprimer un avis<span class="fas fa-comment-slash mt-1 float-right"></span></div>
-                    <form class="w-100 bg-danger" method="GET" action="{{route('adm_avis')}}">
+                    <form class="w-100 bg-danger mb-0" method="GET" action="{{route('adm_avis')}}">
                         <select class="form-control rounded-0 bg-danger text-white border-danger" name="choix" onchange="this.form.submit();">
                             <option>Trier les commentaires</option>
                             <option value="recent">Les plus recent</option>
@@ -16,17 +16,33 @@
                             <option value="moins">Les moins bien notés</option>
                         </select>
                     </form>
-                    <div class="card-body">
+                    <div class="card-body pb-0">
                         <div class="list-group mb-3">
                             @foreach($commentaires as $key)
-                                <a href="#" class="list-group-item list-group-item-action list-group-item-primary">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h4 class="mb-1">{{$key->username}}</h4>
-                                        <span class="badge badge-success p-2 rounded-circle shadow">{{$key->note}}</span>
+                                <div id="{{$key->id}}" class="list-group-item list-group-item-action list-group-item-primary p-0 mb-3 rounded border-secondary border">
+                                    <div class="w-100 bg-white d-flex justify-content-between px-4 py-3 rounded-top">
+                                        <h4 class="mb-0">{{$key->username}}</h4>
+                                        <div>
+                                            @if($key->note <= 2)
+                                                <span class="badge badge-danger px-3 py-2 rounded-circle">{{$key->note}}</span>
+                                            @else
+                                                @if($key->note == 3)
+                                                    <span class="badge badge-warning px-3 py-2 rounded-circle text-white">{{$key->note}}</span>
+                                                @else
+                                                    <span class="badge badge-success px-3 py-2 rounded-circle">{{$key->note}}</span>
+                                                @endif
+                                            @endif
+                                            <button type="button" class="btn btn-primary" onclick="supprimer_avis({{$key->id}})"><span class="fas fa-trash-alt"></span></button>
+                                        </div>
                                     </div>
-                                    <p class="mb-1 text-justify">{{$key->commentaire}}</p>
-                                    <small>{{$key->created_at}}</small>
-                                </a>
+                                    <div class="px-4 pt-2">
+                                        <p class="mb-1 text-justify">{{$key->commentaire}}</p>
+                                        <hr />
+                                        <div class="w-100 text-center mb-2">
+                                            <small>{{$key->created_at}}</small>
+                                        </div>
+                                    </div>
+                                </div>
                             @endforeach
                         </div>
                         <nav aria-label="Page navigation example">
@@ -34,6 +50,7 @@
                         </nav>
                     </div>
                 </div>
+                <div class="p-4 w-100"></div>
             </div>
         </section>
     </div>
