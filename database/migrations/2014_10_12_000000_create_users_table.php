@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->string('adresse')->nullable()->default(NULL);
             $table->string('password');
             $table->rememberToken();
+            $table->timestamp('ban')->nullable();
             $table->timestamps();
         });
     }

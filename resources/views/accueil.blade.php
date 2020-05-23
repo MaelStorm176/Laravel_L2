@@ -180,12 +180,15 @@
                 <div class="card border-one mb-3">
                     <div class="card-header bg-one text-one">Newsletter<span class="fas fa-envelope-square float-right mt-1"></span></div>
                     <div class="card-body">
-                        <div class="input-group">
-                            <input type="email" class="form-control" placeholder="adresse mail" aria-label="adresse mail" aria-describedby="button-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-one" type="button" id="button-addon2">S'inscrire</button>
+                        <form class="mb-0" method="post" action="{{route('newsletter_ajout')}}">
+                            @csrf
+                            <div class="input-group">
+                                <input type="email" class="form-control" placeholder="adresse mail" name="email" aria-label="adresse mail" aria-describedby="button-addon2" required>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-one" type="submit" id="button-addon2">S'inscrire</button>
+                                </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </section>

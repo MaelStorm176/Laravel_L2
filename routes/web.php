@@ -27,6 +27,7 @@ Route::get('make-migration',
         return back();
     })->name('make-migration');
 
+/* AVIS */
 Route::post('ajout_commentaire', 'Commentaire@ajout')->name('ajout_commentaire')->middleware('verified');
 Route::get('avis','Commentaire@afficher')->name('avis');
 Route::get('commentaire',"Commentaire@voir")->name('commentaire')->middleware('verified');
@@ -105,6 +106,7 @@ Auth::routes(['verify' => true]);
 /* ACCUEIL */
 Route::get('/','HomeController@index')->name('/');
 Route::get('horaires','HomeController@horaires')->name('horaires');
+Route::post('newsletter_ajout', 'HomeController@newsletter_ajout')->name('newsletter_ajout');
 
 /*ACCUEIL CAROUSEL*/
 Route::post('/modif_carousel', 'Accueil_Carousel@modifier')->name('accueil_carousel');
@@ -130,8 +132,8 @@ Route::middleware('can:accessAdminpanel')->group(function() {
     Route::get('admin/feriee_ajout', 'Admin@feriee_ajout')->name('adm_feriee_ajout');
     Route::get('admin/fermeture_supprimer', 'Admin@fermeture_supprimer')->name('adm_fermeture_supprimer');
     Route::get('admin/fermeture_ajout', 'Admin@fermeture_ajout')->name('adm_fermeture_ajout');
-    /* SECONDAIRE */
-    Route::get('admin/secondaire', 'Admin@secondaire')->name('adm_secondaire');
+    /* PAGE ACCUEIL */
+    Route::get('admin/page_accueil', 'Admin@page_accueil')->name('adm_page_accueil');
     Route::get('partenaire_ajout', 'Admin@partenaire_ajout')->name('partenaire_ajout');
     Route::get('partenaire_supprimer', 'Admin@partenaire_supprimer')->name('partenaire_supprimer');
     Route::get('admin/afficher_form_reseaux', 'Admin@afficher_form_reseaux')->name('afficher_form_reseaux');
@@ -141,8 +143,10 @@ Route::middleware('can:accessAdminpanel')->group(function() {
     Route::get('admin/supprimer_avis', 'Admin@supprimer_avis')->name('adm_supprimer_avis');
     /* ENGAGEMENTS */
     Route::get('admin/engagements', 'Admin@engagements')->name('adm_engagements');
-    Route::get('admin/ajout_engagement', 'Admin@ajout_engagement')->name('ajout_engagement');
+    Route::post('admin/ajout_engagement', 'Admin@ajout_engagement')->name('ajout_engagement');
     Route::get('admin/supprimer_engagement', 'Admin@supprimer_engagement')->name('supprimer_engagement');
+    Route::post('admin/modif_engagement', 'Admin@modif_engagement')->name('modif_engagement');
+    Route::get('admin/enga_afficher_form', 'Admin@enga_afficher_form')->name('enga_afficher_form');
     /* GENERAL */
     Route::get('admin/general', 'Admin@general')->name('adm_general');
     Route::post('admin/telephone', 'Admin@telephone')->name('adm_telephone');
@@ -158,11 +162,18 @@ Route::middleware('can:accessAdminpanel')->group(function() {
     Route::post('admin/informations', 'Admin@informations')->name('adm_informations');
     Route::get('admin/droits', 'Admin@droits')->name('adm_droits');
     Route::get('admin/expulsions', 'Admin@expulsions')->name('adm_expulsions');
+    Route::post('admin/expulsions_ajout', 'Admin@expulsion_ajout')->name('adm_explusion_ajout');
+    /* CARTE */
     Route::get('admin/codes', 'Admin@codes')->name('adm_codes');
     Route::get('admin/articles', 'Admin@articles')->name('adm_articles');
     Route::get('admin/menus', 'Admin@menus')->name('adm_menus');
     Route::get('admin/promotions', 'Admin@promotions')->name('adm_promotions');
     Route::get('admin/promotions/refresh_article', 'Admin@refresh_article'); //AJAX
+    /* NEWSLETTER */
+    Route::get('admin/newsletter', 'Admin@newsletter')->name('adm_newsletter');
+    Route::get('admin/newsletter_supprimer', 'Admin@newsletter_supprimer')->name('adm_newsletter_supprimer');
+    Route::post('admin/envoi_mail', 'Admin@envoi_mail')->name('adm_envoi_mail');
+
 });
 
 /*********************/

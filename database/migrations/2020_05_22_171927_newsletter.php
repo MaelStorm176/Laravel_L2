@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Engagement extends Migration
+class Newsletter extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class Engagement extends Migration
      */
     public function up()
     {
-        Schema::create('engagement', function (Blueprint $table) {
+        Schema::create('newsletter', function (Blueprint $table){
             $table->id();
-            $table->string('titre');
-            $table->mediumText('description_courte');
-            $table->string('photo');
+            $table->string('email');
+            $table->timestamps();
         });
     }
 
@@ -28,6 +27,6 @@ class Engagement extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('engagement');
+        Schema::dropIfExists('newsletter');
     }
 }

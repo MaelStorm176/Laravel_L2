@@ -211,12 +211,12 @@ class Admin extends Controller
         return view('adm/adm_engagements')->with('engagements', $engagements);
     }
 
-    public function secondaire()
+    public function page_accueil()
     {
         $carousel=DB::table('accueil_carousel')->select('*')->get();
         $partenaires = DB::table('partenaires')->select('*')->get();
         $parametres = DB::table('parametres')->where('id', 1)->get();
-        return view('adm/adm_secondaire',compact('carousel','partenaires', 'parametres'));
+        return view('adm/adm_page_accueil',compact('carousel','partenaires', 'parametres'));
     }
 
     public function partenaire_ajout(Request $request)
@@ -315,8 +315,18 @@ class Admin extends Controller
     }
 
     public function expulsions()
+    {   
+        $users = DB::table('users')->where('ban', '>=', date('Y-m-d H:i:s'))->paginate(15);
+        return view('adm/adm_expulsions')->with('users', $users);
+    }
+
+    public function expulsion_ajout(Request $request)
     {
-        return view('adm/adm_expulsions');
+        DB::table('users')->where('email','=',$request['mail'])->update([
+            'ban' => $request['date']
+        ]);
+
+        return back()->with('message', 'L\'utilisateur a bien été expulsé.');
     }
 
     public function codes()
@@ -361,12 +371,53 @@ class Admin extends Controller
 
     public function ajout_engagement(Request $request)
     {
+        $imageName = time().'.'.$request->image->extension();
+        $imageName1 = 'images/'.$imageName;
+
         DB::table('engagement')->insert([
             'titre' => $request['titre'],
-            'description_courte' => $request['description_courte']
+            'description_courte' => $request['description_courte'],
+            'photo' => $imageName1
         ]);
 
+        $request->image->move(public_path('images'), $imageName);
         return back()->with('message', 'Engagement ajouté avec succès !');
+    }
+
+    public function enga_afficher_form(Request $request)
+    {
+        if($request->ajax()){
+            $req = DB::table('engagement')->select('*')->where('id','=',$request['id'])->get();
+            foreach ($req as $key){
+                echo $key->titre."_|".$key->description_courte."_|";
+            }
+        }
+        else{
+            abort(404);
+        }
+    }
+
+    public function modif_engagement(Request $request)
+    {
+        DB::table('engagement')->where('id','=',$request['engaInput'])->update([
+            'titre' => $request['titreM'],
+            'description_courte' => $request['description_courteM'], 
+        ]);
+
+        if(!empty($request->image)){
+
+            $imageName = time().'.'.$request->image->extension();
+            $imageName1 = 'images/'.$imageName;
+
+
+            DB::table('engagement')->where('id','=',$request['engaInput'])->update([
+                'photo' => $imageName1
+            ]);
+
+            $request->image->move(public_path('images'), $imageName);
+        }
+
+        return back()->with('message', 'L\'engagement a bien été modifié.');
     }
 
     public function supprimer_engagement(Request $request)
@@ -374,6 +425,36 @@ class Admin extends Controller
         DB::table('engagement')->where('id', '=', $request['id'])->delete();
 
         return back()->with('message', 'Engagement supprimé avec succès !');
+    }
+
+    public function newsletter(){
+
+        $newsletters = DB::table('newsletter')->select('*')->paginate(10);
+        return view('adm/adm_newsletter')->with('newsletters', $newsletters);
+    
+    }
+
+    public function newsletter_supprimer(Request $request){
+
+        DB::table('newsletter')->where('id','=',$request['id'])->delete();
+
+    }
+
+    public function envoi_mail(Request $request){
+
+        $newsletters = DB::table('newsletter')->select('*')->get();
+
+        $details = [
+            'objet' => $request['objet'],
+            'contenu' => $request['contenu']
+        ];
+
+        foreach($newsletters as $key){
+            \Mail::to($key->email)->send(new \App\Mail\NewsMail($details));
+        }
+
+        return back()->with('message', 'Le mail a bien été envoyé.');
+
     }
 
 }

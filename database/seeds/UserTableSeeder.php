@@ -27,6 +27,9 @@ class UserTableSeeder extends Seeder {
                 $user->last_name = $faker->lastName;
                 $user->email = $faker->unique()->email;
                 $user->password = bcrypt('12345678');
+                if($i<=20){
+                    $user->ban = date('Y-m-d H:i:s', strtotime('+'.$i.' day', strtotime(date('Y-m-d H:i:s'))));
+                }
             }
             $user->save();
         }

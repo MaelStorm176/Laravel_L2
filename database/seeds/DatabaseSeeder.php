@@ -25,5 +25,7 @@ class DatabaseSeeder extends Seeder
         $this->call(Feriee_seeder::class);
         $this->call(Fermeture_seeder::class);
         $this->call(Parametres_seeder::class);
+        $this->call(Newsletter_seeder::class);
+        $this->call(Engagement_seeder::class);
     }
 }

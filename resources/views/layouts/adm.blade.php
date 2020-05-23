@@ -6,6 +6,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
         <!-- jQuery library -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
         <!-- Popper JS -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <!-- Latest compiled JavaScript -->
@@ -27,10 +28,25 @@
                             <span class="fas fa-sliders-h mt-1 mr-1"></span>
                             GENERAL
                         </a>
-                        <a href="{{route('adm_secondaire')}}" class="nav-link list-group-item list-group-item-action py-3 bg-dark text-white rounded-0">
-                            <span class="fas fa-cog mt-1 mr-1"></span>
-                            SECONDAIRE
-                        </a>
+                        <div class="dropright">
+                            <a href="#" class="nav-link list-group-item list-group-item-action dropdown-toggle py-3 bg-dark text-white rounded-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="fas fa-cog mt-1 mr-1"></span>
+                                SECONDAIRE
+                            </a>
+                            <div class="dropdown-menu bg-success rounded-0 mr-0">
+                                <!-- Sous menu  -->
+                                <div class="list-group">
+                                    <a href="{{route('adm_page_accueil')}}" class="list-group-item list-group-item-action py-3 bg-dark text-white rounded-0">
+                                        <span class="fas fa-home mt-1 mr-1"></span>
+                                        Page Accueil
+                                    </a>
+                                    <a href="{{route('adm_newsletter')}}" class="list-group-item list-group-item-action py-3 bg-dark text-white rounded-0">
+                                        <span class="fas fa-envelope-square mt-1 mr-1"></span>
+                                        Newsletter
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                         <div class="dropright">
                             <a href="#" class="nav-link list-group-item list-group-item-action dropdown-toggle py-3 bg-dark text-white" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="fas fa-clipboard-list mt-1 mr-1"></span>

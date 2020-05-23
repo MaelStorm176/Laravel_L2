@@ -29,4 +29,13 @@ class HomeController extends Controller
         return view('horaires', compact('horaires', 'fermetures', 'feriees'));
     }
 
+    public function newsletter_ajout(Request $request){
+
+        DB::table('newsletter')->updateOrInsert([
+            'email' => $request['email'],
+            'created_at' => date('Y-m-d H:i:s')
+        ]);
+
+        return back()->with('message', 'Votre adresse mail a bien été enregistré.');
+    }
 }

@@ -11,19 +11,19 @@
             <div class="col-12">
                 <div class="row row-cols-1 row-cols-md-3">
                     @foreach($engagements as $key)
-                        <div class="col mb-4">
-                            <div class="card">
-                                <div class="row justify-content-center">
-                                    <div class="col-8">
-                                        <img src="img/engagements.jpg" class="card-img-top rounded-circle pt-3" alt="">
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">{{$key->titre}}</h5>
-                                    <p class="card-text text-justify">{{$key->description_courte}}</p>
+                    <div class="col mb-4">
+                        <div class="card">
+                            <div class="row justify-content-center">
+                                <div class="col-8">
+                                    <img src="{{$key->photo}}" class="card-img-top rounded-circle pt-3 w-100" style="height:10rem;" alt="">
                                 </div>
                             </div>
+                            <div class="card-body">
+                                <h5 class="card-title">{{$key->titre}}</h5>
+                                <p class="card-text text-justify">{{$key->description_courte}}</p>
+                            </div>
                         </div>
+                    </div>
                     @endforeach
                 </div>
             </div>

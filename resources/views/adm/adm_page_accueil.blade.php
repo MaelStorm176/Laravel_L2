@@ -1,6 +1,6 @@
 @extends('layouts.adm')
 @section('titre')
-    SECONDAIRE<span class="fas fa-cog mt-1 ml-1"></span>
+    PAGE ACCUEIL<span class="fas fa-home mt-1 ml-1"></span>
 @endsection
 @section('contenu')
     <div class="container">
