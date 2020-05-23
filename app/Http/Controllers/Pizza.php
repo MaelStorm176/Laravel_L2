@@ -239,18 +239,17 @@ class Pizza extends Menu
     {
         if (isset($request['choix']))
         {
-            if ($request['choix'] == 'non')
-            {
-                DB::table('categorie')->where('id','=',$request['id_cate'])->delete();
-            }
             if ($request['choix'] == 'oui')
             {
                 $pizza = DB::table('pizza')
                     ->join('categorie','pizza.categorie','=','categorie.nom')
                     ->where('categorie.id','=',$request['id_cate'])
-                    ->select('id');
-                DB::table('contenu_menu')->whereIn('categorie.id_menu',$pizza)->delete();
-                $pizza->delete();
+                    ->pluck('pizza.id');
+                DB::table('contenu_menu')->where('id_pizza','=',$pizza)->delete();
+                DB::table('pizza')
+                    ->join('categorie','pizza.categorie','=','categorie.nom')
+                    ->where('categorie.id','=',$request['id_cate'])
+                    ->delete();
                 DB::table('categorie')->where('id','=',$request['id_cate'])->delete();
             }
             return back();

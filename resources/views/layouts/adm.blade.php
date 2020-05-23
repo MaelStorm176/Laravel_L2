@@ -93,10 +93,25 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="{{route('adm_horaires')}}" class="nav-link list-group-item list-group-item-action py-3 bg-dark text-white">
-                            <span class="fas fa-calendar-alt mt-1 mr-1"></span>
-                            PLANNING
-                        </a>
+                        <div class="dropright">
+                            <a href="#" class="nav-link list-group-item list-group-item-action dropdown-toggle py-3 bg-dark text-white" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="fas fa-receipt mt-1 mr-1"></span>
+                                PLANNING
+                            </a>
+                            <div class="dropdown-menu bg-success rounded-0 mr-0">
+                                <!-- Sous menu  -->
+                                <div class="list-group">
+                                <a href="{{route('adm_horaires')}}" class="nav-link list-group-item list-group-item-action py-3 bg-dark text-white">
+                                    <span class="fas fa-calendar-alt mt-1 mr-1"></span>
+                                    HORAIRES
+                                </a>
+                                <a href="{{route('adm_creneaux')}}" class="nav-link list-group-item list-group-item-action py-3 bg-dark text-white">
+                                    <span class="fas fa-calendar-alt mt-1 mr-1"></span>
+                                    CRENEAUX DE RESERVATION
+                                </a>
+                                </div>
+                            </div>
+                        </div>
                         <a href="{{route('adm_avis')}}" class="nav-link list-group-item list-group-item-action py-3 bg-dark text-white">
                             <span class="fas fa-comment mt-1 mr-1"></span>
                             AVIS

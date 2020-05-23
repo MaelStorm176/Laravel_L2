@@ -122,6 +122,13 @@ Route::get('parametres', function(){
 Route::get('conf_email', 'ParametresController@verify')->name('conf_email');
 Route::get('verif_email', 'ParametresController@verif_email');
 
+/*CREANEAUX*/
+route::get('/creneaux','Creneaux@index')->name('creneaux.index');
+route::get('/creneaux/reserver','Creneaux@reserver')->name('creneaux.reserver');
+route::get('/creneaux_ajouter','Creneaux@ajouter')->name('creneaux.ajouter');
+route::get('/creneaux_supprimer','Creneaux@supprimer')->name('creneaux.supprimer');
+route::get('/creneaux_reini','Creneaux@reini')->name('creneaux.reini');
+
 /* ADMINISTRATION */
 Route::middleware('can:accessAdminpanel')->group(function() {
     Route::get('admin/home', 'Admin@index')->name('admin');
@@ -173,6 +180,8 @@ Route::middleware('can:accessAdminpanel')->group(function() {
     Route::get('admin/newsletter', 'Admin@newsletter')->name('adm_newsletter');
     Route::get('admin/newsletter_supprimer', 'Admin@newsletter_supprimer')->name('adm_newsletter_supprimer');
     Route::post('admin/envoi_mail', 'Admin@envoi_mail')->name('adm_envoi_mail');
+    /* CRENEAUX */
+    Route::get('admin/creneaux', 'Admin@creneaux')->name('adm_creneaux');
 
 });
 

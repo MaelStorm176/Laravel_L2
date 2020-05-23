@@ -288,7 +288,7 @@
                 @csrf
                 <div class="modal-body">
                     <div>
-                        <label id="label_cate" for="nom">Voulez-vous supprimer les articles de cette catégorie ?</label>
+                        <label id="label_cate" for="nom">Attention ! La suppression de cette catégorie entraine la suppression de tous les articles dépendant de celle ci. Etes-vous sûr ?</label>
                         <!-- Default checked -->
                         <div class="custom-control custom-radio custom-control-inline">
                             <input type="radio" class="custom-control-input" id="defaultChecked_oui" name="choix" value="oui" checked>

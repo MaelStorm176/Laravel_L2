@@ -22,7 +22,7 @@ return [
 
     'tabText' => '#ffffff',
 
-    'ArrPlan' => '#ffffff',
+    'ArrPlan' => '#d2bcbc',
     
 ];
 

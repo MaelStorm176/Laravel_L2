@@ -26,6 +26,103 @@ class Admin extends Controller
         return view('adm/adm_horaires',compact('horaires','fermetures', 'feriees'));
     }
 
+    public function creneaux(Request $request)
+    {
+        $jour = $request['jour'];
+        if($request['jour']=='Choisir un jour'){
+            return back()->with('error','Vous devez choisir un jour de la semaine');
+        }
+        $jourv=DB::table('creneaux_config')
+            ->select('*')
+            ->orderBy('id','asc')
+            ->get();
+        $global2=DB::table('creneaux_config')->select('jour','livreur_matin')->get();
+        $global=DB::table('creneaux_config')->where('jour','=',$jour)->get();
+
+        $table_creneaux = DB::table('creneaux')
+            ->select('creneaux','jour','client')
+            ->orderBy('jour','asc')
+            ->get();
+        if (empty($request['jour']) || $request['jour'] != $jourv){
+            $creneau_get = DB::table('creneaux')->select('creneaux','livreur_matin','livreur_soir')->where('jour','=','lundi')->get();
+            $creneau_livreur = DB::table('creneaux_config')->select('livreur_matin','livreur_soir')->where('jour','=','lundi')->get();
+
+            if($creneau_livreur ==NULL){
+                $creneau_livreur_matin = $creneau_livreur[0]->livreur_matin;
+                $creneau_livreur_soir = $creneau_livreur[0]->livreur_soir;
+                $deb_matin ='Fe';
+                $fin_matin ='Fe';
+                $deb_soir ='Fe';
+                $fin_soir = 'Fe';
+                return view('adm.adm_creneaux',compact('creneau_livreur_soir','creneau_livreur_matin','global2','creneau_get','jour','jourv','deb_matin','fin_matin','deb_soir','fin_soir'));
+
+            }
+
+        }
+        else{
+            if($global->isEmpty()){
+                abort(404);
+            }
+        }
+
+        if (isset($request['jour'])){
+            $creneau_get = DB::table('creneaux')->select('creneaux','livreur_matin','livreur_soir')->where('jour','=',$jour)->get();
+            $creneau_livreur = DB::table('creneaux_config')->select('livreur_matin','livreur_soir')->where('jour','=',$jour)->get();
+            $creneau_livreur_matin = $creneau_livreur[0]->livreur_matin;
+            $creneau_livreur_soir = $creneau_livreur[0]->livreur_soir;
+            $deb_matin = $global[0]->deb_matin;
+            $fin_matin = $global[0]->fin_matin;
+            $deb_soir = $global[0]->deb_soir;
+            $fin_soir = $global[0]->fin_soir;
+            $tmp = substr($deb_matin,-2);
+
+            $deb_matin = substr($deb_matin, -7, 2);//11 H 00
+            if ($tmp == '30'){
+                $deb_matin1=30;
+            }else{
+                $deb_matin1=0;
+            }
+            $tmp = substr($fin_matin,-2);
+
+            $fin_matin = substr($fin_matin, -7, 2);
+            if ($tmp == '30'){
+                $fin_matin1=30;
+            }else{
+                $fin_matin1=0;
+            }
+            $tmp = substr($deb_soir,-2);
+
+            $deb_soir = substr($deb_soir, -7, 2);
+            if ($tmp == '30'){
+                $deb_soir1=30;
+            }else{
+                $deb_soir1=0;
+            }
+            $tmp = substr($fin_soir,-2);
+
+            if ($tmp == '30'){
+                $fin_soir1=30;
+            }else{
+                $fin_soir1=0;
+            }
+            $fin_soir = substr($fin_soir, -7, 2);
+
+
+
+            return view('adm.adm_creneaux',compact('creneau_livreur_soir','creneau_livreur_matin','jourv','jour','creneau_livreur','global2','creneau_get','deb_matin','fin_matin','deb_soir','fin_soir','deb_matin1','fin_matin1','deb_soir1','fin_soir1'));
+
+
+        }
+        else{
+
+            $deb_matin ='Fe';
+            $fin_matin ='Fe';
+            $deb_soir ='Fe';
+            $fin_soir = 'Fe';
+            return view('adm.adm_creneaux',compact('creneau_livreur_soir','creneau_livreur_matin','global2','jourv','creneau_get','jour','deb_matin','fin_matin','deb_soir','fin_soir','table_creneaux'));
+        }
+    }
+
     public function horaires_modif(Request $request)
     {
         $validate_data = Validator::make($request->all(), [
@@ -315,7 +412,7 @@ class Admin extends Controller
     }
 
     public function expulsions()
-    {   
+    {
         $users = DB::table('users')->where('ban', '>=', date('Y-m-d H:i:s'))->paginate(15);
         return view('adm/adm_expulsions')->with('users', $users);
     }
@@ -401,7 +498,7 @@ class Admin extends Controller
     {
         DB::table('engagement')->where('id','=',$request['engaInput'])->update([
             'titre' => $request['titreM'],
-            'description_courte' => $request['description_courteM'], 
+            'description_courte' => $request['description_courteM'],
         ]);
 
         if(!empty($request->image)){
@@ -431,7 +528,7 @@ class Admin extends Controller
 
         $newsletters = DB::table('newsletter')->select('*')->paginate(10);
         return view('adm/adm_newsletter')->with('newsletters', $newsletters);
-    
+
     }
 
     public function newsletter_supprimer(Request $request){
