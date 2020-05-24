@@ -42,7 +42,7 @@
                                     <th class="align-middle" scope="col">POINTS FIDELITE</th>
                                     <th class="align-middle" scope="col">NOMBRES COMMANDES</th>
                                     <th class="align-middle" scope="col">STATUT</th>
-                                    <th class="align-middle" scope="col">Action</th>
+                                    <th class="align-middle" scope="col">ACTION</th>
                                 </tr>
                             </thead>
                             <tbody>

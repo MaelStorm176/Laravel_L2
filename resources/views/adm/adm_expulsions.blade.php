@@ -44,14 +44,14 @@
                             </thead>
                             <tbody>
                                 @foreach($users as $key)
-                                    <tr>
+                                    <tr id="user_{{$key->id}}">
                                         <td class="align-middle">{{$key->id}}</td>
                                         <td class="align-middle">{{$key->username}}</td>
                                         <td class="align-middle">{{$key->email}}</td>
                                         <td class="align-middle">{{$key->ban}}</td>
                                         <td class="align-middle">
                                             <span class="fas fa-edit btn p-0"></span>
-                                            <span class="fas fa-trash-alt btn p-0"></span>
+                                            <span onclick="supprimer({{$key->id}})" class="fas fa-trash-alt btn p-0"></span>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -66,3 +66,22 @@
         </section>
     </div>
 @endsection
+@section('script')
+<script>
+    function supprimer(id){
+        var dummy = Date.now();
+            $.ajax({
+            url : '{{route('adm_explusion_supprimer')}}',
+            type : "GET",
+            dataType : 'html',
+            data : {dummy:dummy, id:id},
+            success : function(code_html, statut){
+            $('tr[id="user_'+id+'"]').remove();
+            },
+            error : function(resultat, statut, erreur){
+            alert('Erreur avec la requete Ajax');
+            },
+        });
+    }
+</script>
+    @endsection

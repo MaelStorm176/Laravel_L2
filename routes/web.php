@@ -119,8 +119,8 @@ Route::get('update', 'ParametresController@update')->name('update');
 Route::get('parametres', function(){
     return view('parametres');
 })->middleware('auth')->name('parametres');
-Route::get('conf_email', 'ParametresController@verify')->name('conf_email');
-Route::get('verif_email', 'ParametresController@verif_email');
+Route::get('conf_email', 'ParametresController@verify')->middleware('auth')->name('conf_email');
+Route::get('verif_email', 'ParametresController@verif_email')->middleware('auth');
 
 /*CREANEAUX*/
 route::get('/creneaux','Creneaux@index')->name('creneaux.index');
@@ -170,6 +170,7 @@ Route::middleware('can:accessAdminpanel')->group(function() {
     Route::get('admin/droits', 'Admin@droits')->name('adm_droits');
     Route::get('admin/expulsions', 'Admin@expulsions')->name('adm_expulsions');
     Route::post('admin/expulsions_ajout', 'Admin@expulsion_ajout')->name('adm_explusion_ajout');
+    Route::get('admin/expulsion_supprimer', 'Admin@expulsion_supprimer')->name('adm_explusion_supprimer');
     /* CARTE */
     Route::get('admin/codes', 'Admin@codes')->name('adm_codes');
     Route::get('admin/articles', 'Admin@articles')->name('adm_articles');

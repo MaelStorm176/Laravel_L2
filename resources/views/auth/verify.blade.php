@@ -6,11 +6,11 @@
     <div class="modal-body">
         @if (session('resent'))
             <div class="alert alert-success" role="alert">
-                {{ __('Une nouveau lien de vérification a été envoyé à ton adresse mail.') }}
+                {{ __('Un nouveau lien de vérification a été envoyé à votre adresse mail') }} {{Auth::user()->id}}
             </div>
         @endif
         <p class="text-justify mb-0">
-            {{ __('Avant de continuer, consulte tes mail pour un lien de vérification. Si tu n\'as pas reçu le mail, clique sur le boutton pour en envoyer un autre.') }}
+            {{ __('Avant de continuer, consultez vos emails pour un lien de vérification. Si vous n\'avez pas reçu le mail, veuillez cliquer sur le boutton pour en envoyer un autre.') }}
         </p>
     </div>
     <div class="modal-footer">
@@ -34,15 +34,15 @@
                 <div class="card-body">
                     @if (session('resent'))
                         <div class="alert alert-success" role="alert">
-                            {{ __('Une nouveau lien de vérification a été envoyé à ton adresse mail.') }}
+                            {{ __('Une nouveau lien de vérification a été envoyé à votre adresse mail.') }}
                         </div>
                     @endif
 
-                    {{ __('Avant de continuer, consulte tes mail pour un lien de vérification.') }}
-                    {{ __('Si tu n\'as pas reçu le mail') }},
+                    {{ __('Avant de continuer, consultez vos mail pour un lien de vérification.') }}
+                    {{ __('Si vous n\'avez pas reçu de mail') }},
                     <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
                         @csrf
-                        <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('Clique ici pour envoyer un mail de vérification') }}</button>.
+                        <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('Cliquez ici pour envoyer un mail de vérification') }}</button>.
                     </form>
                 </div>
             </div>

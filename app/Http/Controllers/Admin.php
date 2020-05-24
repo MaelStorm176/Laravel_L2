@@ -431,6 +431,14 @@ class Admin extends Controller
 
         return back()->with('message', 'L\'utilisateur a bien été expulsé.');
     }
+    public function expulsion_supprimer(Request $request)
+    {
+        DB::table('users')->where('id','=',$request['id'])->update([
+            'ban' => NULL
+        ]);
+
+        return back()->with('message', 'L\'expulsion a été retiré');
+    }
 
     public function codes()
     {

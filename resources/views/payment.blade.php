@@ -172,6 +172,7 @@
                     $("#affichage").css("display","flex");
                     $("#affichage").show();
                     prix*=res[1];
+                    prix = prix.toFixed(2);
                     remise = -($("#prix").val()-prix);
                     $("#prix_total").val(prix);
                     $("#total").html(prix+" €");
