@@ -1,4 +1,6 @@
 <!-- Modal -->
+<!-- MODAL AJOUT ARTICLES -->
+<!-- Modal -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content" style="overflow:scroll; height:750px;">
@@ -17,7 +19,7 @@
                         <br/>
                         <input type="file" name="image" id="image" class="form-control" required style="width:300px; display: inline-block;" onchange="update_Photo();">
                         <input type="hidden" name="image_base" id="image_base">
-                        <img id="image_affiche" src="images/img_seed/1.jpg" style="width:150;"/>
+                        <img id="image_affiche" src="{{asset('images/img_seed/1.jpg')}}" style="width:150;"/>
                         <br/> <br/>
                         <label>Nom de votre article</label>
                         <input type="text" name="nom_p" placeholder="Nom" id="nom_p" class="form-control" required>
@@ -51,34 +53,36 @@
                     </div>
                     <br/>
                     <div>
+                        <label>Valeurs nutritionnelles</label>
+                        <small><i>(Optionnel)</i></small>
                         <table class="table table-bordered">
                             <thead class="thead-dark">
-                                <tr>
-                                    <th scope="col">Sodium (mg)</th>
-                                    <th scope="col">Fibres (g)</th>
-                                    <th scope="col">Dont_satures (g)</th>
-                                </tr>
+                            <tr>
+                                <th scope="col">Sodium (mg)</th>
+                                <th scope="col">Fibres (g)</th>
+                                <th scope="col">Dont_satures (g)</th>
+                            </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td><input type="number" step="0.1" class="form-control" id="sodium" name="sodium" min="0" ></td>
-                                    <td><input type="number" step="0.1" class="form-control" id="fibres" name="fibres" min="0" ></td>
-                                    <td><input type="number" step="0.1" class="form-control" id="dont_satures" name="dont_satures" min="0" ></td>
-                                </tr>
+                            <tr>
+                                <td><input type="number" step="0.1" class="form-control" id="sodium" name="sodium" min="0" ></td>
+                                <td><input type="number" step="0.1" class="form-control" id="fibres" name="fibres" min="0" ></td>
+                                <td><input type="number" step="0.1" class="form-control" id="dont_satures" name="dont_satures" min="0" ></td>
+                            </tr>
                             </tbody>
                             <thead class="thead-dark">
-                                <tr>
-                                    <th scope="col">Lipides (g)</th>
-                                    <th scope="col">Dont_sucres (g)</th>
-                                    <th scope="col">Glucides (g)</th>
-                                </tr>
+                            <tr>
+                                <th scope="col">Lipides (g)</th>
+                                <th scope="col">Dont_sucres (g)</th>
+                                <th scope="col">Glucides (g)</th>
+                            </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td><input type="number" step="0.1" class="form-control" id="lipides" name="lipides" min="0" ></td>
-                                    <td><input type="number" step="0.1" class="form-control" id="dont_sucres" name="dont_sucres" min="0" ></td>
-                                    <td><input type="number" step="0.1" class="form-control" id="glucides" name="glucides" min="0" ></td>
-                                </tr>
+                            <tr>
+                                <td><input type="number" step="0.1" class="form-control" id="lipides" name="lipides" min="0" ></td>
+                                <td><input type="number" step="0.1" class="form-control" id="dont_sucres" name="dont_sucres" min="0" ></td>
+                                <td><input type="number" step="0.1" class="form-control" id="glucides" name="glucides" min="0" ></td>
+                            </tr>
                             </tbody>
                             <thead class="thead-dark">
                             <tr>
@@ -87,18 +91,18 @@
                             </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td><input type="number" step="0.1" class="form-control" id="proteines" name="proteines" min="0" ></td>
-                                    <td><input type="number" step="0.1" class="form-control" id="energies" name="energies" min="0" ></td>
-                                </tr>
+                            <tr>
+                                <td><input type="number" step="0.1" class="form-control" id="proteines" name="proteines" min="0" ></td>
+                                <td><input type="number" step="0.1" class="form-control" id="energies" name="energies" min="0" ></td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                <button type="submit" id="upload" class="btn btn-primary">Ajouter</button>
-            </div>
-            </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                        <button type="submit" id="upload" class="btn btn-primary">Ajouter</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

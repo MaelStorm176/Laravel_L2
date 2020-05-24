@@ -193,6 +193,8 @@
                         </div>
                         <br/>
                         <div>
+                            <label>Valeurs nutritionnelles</label>
+                            <small><i>(Optionnel)</i></small>
                             <table class="table table-bordered">
                                 <thead class="thead-dark">
                                 <tr>

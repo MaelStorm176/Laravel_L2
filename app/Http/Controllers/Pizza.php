@@ -41,18 +41,19 @@ class Pizza extends Menu
             'image'             =>  'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'nom_p'             =>  'required',
             'statut_p'          =>  'required',
-            'prix_p'            =>  'nullable|integer|between:0,100',
-            'sodium'            =>  'nullable|integer|between:0,10000',
-            'fibres'            =>  'nullable|integer|between:0,10000',
-            'dont_satures'      =>  'nullable|integer|between:0,10000',
-            'lipides'           =>  'nullable|integer|between:0,10000',
-            'dont_sucres'       =>  'nullable|integer|between:0,10000',
-            'glucides'          =>  'nullable|integer|between:0,10000',
-            'proteines'         =>  'nullable|integer|between:0,10000',
-            'energies'          =>  'nullable|integer|between:0,10000'
+            'prix_p'            =>  'nullable|numeric|between:0,100',
+            'sodium'            =>  'nullable|numeric|between:0,10000',
+            'fibres'            =>  'nullable|numeric|between:0,10000',
+            'dont_satures'      =>  'nullable|numeric|between:0,10000',
+            'lipides'           =>  'nullable|numeric|between:0,10000',
+            'dont_sucres'       =>  'nullable|numeric|between:0,10000',
+            'glucides'          =>  'nullable|numeric|between:0,10000',
+            'proteines'         =>  'nullable|numeric|between:0,10000',
+            'energies'          =>  'nullable|numeric|between:0,10000'
         ]);
 
         if($validate_data->fails()){
+            return $validate_data->failed();
             return back()->with('erreur',"Il y a une erreur avec la création de votre article.");
         }
 
@@ -107,21 +108,20 @@ class Pizza extends Menu
             'image'             =>  'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'nom_p'             =>  'required',
             'statut_p'          =>  'required',
-            'prix_p'            =>  'nullable|integer|between:0,100',
-            'sodium'            =>  'nullable|integer|between:0,10000',
-            'fibres'            =>  'nullable|integer|between:0,10000',
-            'dont_satures'      =>  'nullable|integer|between:0,10000',
-            'lipides'           =>  'nullable|integer|between:0,10000',
-            'dont_sucres'       =>  'nullable|integer|between:0,10000',
-            'glucides'          =>  'nullable|integer|between:0,10000',
-            'proteines'         =>  'nullable|integer|between:0,10000',
-            'energies'          =>  'nullable|integer|between:0,10000'
+            'prix_p'            =>  'nullable|numeric|between:0,100',
+            'sodium'            =>  'nullable|numeric|between:0,10000',
+            'fibres'            =>  'nullable|numeric|between:0,10000',
+            'dont_satures'      =>  'nullable|numeric|between:0,10000',
+            'lipides'           =>  'nullable|numeric|between:0,10000',
+            'dont_sucres'       =>  'nullable|numeric|between:0,10000',
+            'glucides'          =>  'nullable|numeric|between:0,10000',
+            'proteines'         =>  'nullable|numeric|between:0,10000',
+            'energies'          =>  'nullable|numeric|between:0,10000'
         ]);
 
         if($validate_data->fails()){
             return back()->with('erreur',"Il y a une erreur avec la modification de votre article.");
         }
-
         $id_nutrition = DB::table('pizza')->where('id','=',$request['id_pizza'])->select('nutrition')->value('nutrition');
         DB::table('nutrition')
             ->where('id','=',$id_nutrition)
