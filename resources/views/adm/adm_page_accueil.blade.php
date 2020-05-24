@@ -81,11 +81,11 @@
                     <div class="card-body">
                         <table class="table table-hover table-bordered mb-3 text-center">
                             <thead class="bg-primary text-white">
-                                <tr>
-                                    <th scope="col">Nom</th>
-                                    <th scope="col">Lien du site</th>
-                                    <th scope="col">Action</th>
-                                </tr>
+                            <tr>
+                                <th scope="col">Nom</th>
+                                <th scope="col">Lien du site</th>
+                                <th scope="col">Action</th>
+                            </tr>
                             </thead>
                             <tbody class="bg-secondary text-white">
                             @foreach($partenaires as $partenaire)
@@ -109,25 +109,25 @@
                     <div class="card-body">
                         <table class="table table-hover table-bordered mb-3 text-center">
                             <thead class="bg-primary text-white">
-                                <tr>
-                                    <th scope="col">Nom</th>
-                                    <th scope="col">Lien</th>
-                                    <th scope="col">Action</th>
-                                </tr>
+                            <tr>
+                                <th scope="col">Nom</th>
+                                <th scope="col">Lien</th>
+                                <th scope="col">Action</th>
+                            </tr>
                             </thead>
                             <tbody class="bg-secondary text-white">
-                                @foreach($parametres as $key)
-                                    <tr>
-                                        <td>FACEBOOK</td>
-                                        <td><a href="{{$key->facebook}}">{{$key->facebook}}</a></td>
-                                        <td><span class="fas fa-edit" onclick="modifier(1)" data-toggle="modal" data-target="#modal_reseaux"></span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>TWITTER</td>
-                                        <td><a href="{{$key->twitter}}">{{$key->twitter}}</a></td>
-                                        <td><span class="fas fa-edit" onclick="modifier(2)" data-toggle="modal" data-target="#modal_reseaux"></span></td>
-                                    </tr>
-                                @endforeach
+                            @foreach($parametres as $key)
+                                <tr>
+                                    <td>FACEBOOK</td>
+                                    <td><a href="{{$key->facebook}}">{{$key->facebook}}</a></td>
+                                    <td><span class="fas fa-edit" onclick="modifier(1)" data-toggle="modal" data-target="#modal_reseaux"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>TWITTER</td>
+                                    <td><a href="{{$key->twitter}}">{{$key->twitter}}</a></td>
+                                    <td><span class="fas fa-edit" onclick="modifier(2)" data-toggle="modal" data-target="#modal_reseaux"></span></td>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -183,38 +183,38 @@
                     <div class="form-group row">
                         <label for="staticEmail" class="col-sm-3 col-form-label">Image</label>
                         <div class="col-sm-5" style="margin-bottom: 1.5em">
-                            <input type="file" name="image_carousel" id="image_carousel_{{$key->id}}"  class="form-control" required>
+                            <input type="file" name="image_carousel" id="image_carousel_"  class="form-control" required>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="staticEmail" class="col-sm-3 col-form-label">Titre carousel</label>
                         <div class="col-sm-5" style="margin-bottom: 1.5em">
-                            <input type="text" name="titre_carousel" id="titre_carousel_{{$key->id}}" class="form-control">
+                            <input type="text" name="titre_carousel" id="titre_carousel_" class="form-control">
                         </div>
                     </div>
                     <div class="form-group row" >
                         <label for="staticEmail" class="col-sm-3 col-form-label">Couleur titre</label>
                         <div class="col-sm-5" style="margin-bottom: 1.5em">
-                            <input type="color" value="#DCDCDC" name="titre_couleur" id="titre_couleur_{{$key->id}}" class="form-control">
+                            <input type="color" value="#DCDCDC" name="titre_couleur" id="titre_couleur_" class="form-control">
                         </div>
                     </div>
                     <div class="form-group row" >
                         <label for="staticEmail" class="col-sm-3 col-form-label">Texte carousel</label>
                         <div class="col-sm-5" style="margin-bottom: 1.5em">
-                            <input type="text" name="texte_carousel" id="texte_carousel_{{$key->id}}" class="form-control">
+                            <input type="text" name="texte_carousel" id="texte_carousel_" class="form-control">
                         </div>
                     </div>
                     <div class="form-group row" >
                         <label for="staticEmail" class="col-sm-3 col-form-label">Couleur texte</label>
                         <div class="col-sm-5" style="margin-bottom: 1.5em">
-                            <input type="color" value="#DCDCDC" name="texte_couleur" id="texte_couleur_{{$key->id}}" class="form-control">
+                            <input type="color" value="#DCDCDC" name="texte_couleur" id="texte_couleur_" class="form-control">
                         </div>
                     </div>
-                    <input type="hidden" name="id_carousel" value="{{$key->id}}">
+                    <input type="hidden" name="id_carousel" value="">
                     <div class="form-group row" >
                         <label for="staticEmail" class="col-sm-3 col-form-label">Couleur fond</label>
                         <div class="col-sm-5" style="margin-bottom: 1.5em">
-                            <input type="color" value="#DCDCDC" name="fond_couleur" id="fond_couleur_{{$key->id}}" class="form-control">
+                            <input type="color" value="#DCDCDC" name="fond_couleur" id="fond_couleur_" class="form-control">
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -263,96 +263,96 @@
             </div>
             <div class="modal-body">
                 <form method="post" action="{{route('adm_modifier_reseau')}}" class="mb-0">
-                        @csrf
-                        <input type="hidden" id="testInput" name="testInput">
-                        <div class="form-group">
-                            <label for="lienInput">Nouveau lien</label>
-                            <input type="text" id="lienInput" name="lienInput" class="form-control" required>
-                        </div>
-                        <button type="submit" class="w-100 btn btn-primary">ENREGISTRER</button>
+                    @csrf
+                    <input type="hidden" id="testInput" name="testInput">
+                    <div class="form-group">
+                        <label for="lienInput">Nouveau lien</label>
+                        <input type="text" id="lienInput" name="lienInput" class="form-control" required>
+                    </div>
+                    <button type="submit" class="w-100 btn btn-primary">ENREGISTRER</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
 @section('script')
-<script>
-    function partenaire_supprimer(id) {
-        var dummy = Date.now();
-        $.ajax({
-            url : '../partenaire_supprimer',
-            type : 'GET',
-            dataType : 'html',
-            data : {dummy:dummy, id:id},
-            success : function(code_html, statut){
-                $('tr[id="'+id+'"]').remove();
-            },
+    <script>
+        function partenaire_supprimer(id) {
+            var dummy = Date.now();
+            $.ajax({
+                url : '../partenaire_supprimer',
+                type : 'GET',
+                dataType : 'html',
+                data : {dummy:dummy, id:id},
+                success : function(code_html, statut){
+                    $('tr[id="'+id+'"]').remove();
+                },
 
-            error : function(resultat, statut, erreur){
-                alert('Erreur avec la requete Ajax');
-            },
-        });
-    }
+                error : function(resultat, statut, erreur){
+                    alert('Erreur avec la requete Ajax');
+                },
+            });
+        }
 
 
-    function afficher_form_carousel(id) {
-        var dummy = Date.now();
-        $.ajax({
-            url :'../afficher_form_carousel',
-            type : 'GET',
-            dataType : 'html',
-            data : {dummy:dummy, id:id},
-            success : function(code_html, statut){
-                $('#modal_div').html(code_html);
-                remplissage(id,1);
-            },
+        function afficher_form_carousel(id) {
+            var dummy = Date.now();
+            $.ajax({
+                url :'../afficher_form_carousel',
+                type : 'GET',
+                dataType : 'html',
+                data : {dummy:dummy, id:id},
+                success : function(code_html, statut){
+                    $('#modal_div').html(code_html);
+                    remplissage(id,1);
+                },
 
-            error : function(resultat, statut, erreur){
-                alert('Erreur avec la requete Ajax');
-            },
-        });
-    }
-    function remplissage(id,action){
-        //Rempli le formulaire afin de modifier l'element selectionnée
-        var dummy = Date.now();
-        $.ajax({
-            url :'../afficher_form_carousel',
-            type : 'GET',
-            dataType : 'html',
-            data : {dummy:dummy, id:id, action:action},
-            success : function(code_html1, statut){
-                var dataretour = code_html1.split('|');
-                $('#titre_carousel_'+id).val(dataretour[0]);
-                $('#titre_couleur_'+id).val(dataretour[1]);
-                $('#texte_carousel_'+id).val(dataretour[2]);
-                $('#texte_couleur_'+id).val(dataretour[3]);
-                $('#couleur_fond_'+id).val(dataretour[4]);
+                error : function(resultat, statut, erreur){
+                    alert('Erreur avec la requete Ajax');
+                },
+            });
+        }
+        function remplissage(id,action){
+            //Rempli le formulaire afin de modifier l'element selectionnée
+            var dummy = Date.now();
+            $.ajax({
+                url :'../afficher_form_carousel',
+                type : 'GET',
+                dataType : 'html',
+                data : {dummy:dummy, id:id, action:action},
+                success : function(code_html1, statut){
+                    var dataretour = code_html1.split('|');
+                    $('#titre_carousel_'+id).val(dataretour[0]);
+                    $('#titre_couleur_'+id).val(dataretour[1]);
+                    $('#texte_carousel_'+id).val(dataretour[2]);
+                    $('#texte_couleur_'+id).val(dataretour[3]);
+                    $('#couleur_fond_'+id).val(dataretour[4]);
 
-            },
+                },
 
-            error : function(resultat, statut, erreur){
-                alert('Erreur avec la requete Ajax');
-            },
-        });
-    }
+                error : function(resultat, statut, erreur){
+                    alert('Erreur avec la requete Ajax');
+                },
+            });
+        }
 
-    function modifier(test){
-        var dummy = Date.now();
-        $.ajax({
-            url:'afficher_form_reseaux',
-            type:'GET',
-            dataType:'html',
-            data:{dummy:dummy, test:test},
-            
-            success:function(code_html, statut){
-                $('#testInput').val(test);
-                $('#lienInput').val(code_html);
-            },
+        function modifier(test){
+            var dummy = Date.now();
+            $.ajax({
+                url:'afficher_form_reseaux',
+                type:'GET',
+                dataType:'html',
+                data:{dummy:dummy, test:test},
 
-            error : function(resultat, statut, erreur){
-                alert('Erreur avec la requete Ajax');
-            },
-        });
-    }
-</script>
+                success:function(code_html, statut){
+                    $('#testInput').val(test);
+                    $('#lienInput').val(code_html);
+                },
+
+                error : function(resultat, statut, erreur){
+                    alert('Erreur avec la requete Ajax');
+                },
+            });
+        }
+    </script>
 @endsection

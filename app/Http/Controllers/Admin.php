@@ -328,7 +328,13 @@ class Admin extends Controller
 
     public function partenaire_supprimer(Request $request)
     {
-        DB::table('partenaires')->where('id','=',$request['id'])->delete();
+        if ($request->ajax()) {
+            DB::table('partenaires')->where('id', '=', $request['id'])->delete();
+        }
+        else
+        {
+            abort(404);
+        }
     }
 
     public function afficher_form_reseaux(Request $request)

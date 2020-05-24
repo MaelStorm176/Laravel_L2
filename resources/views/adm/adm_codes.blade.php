@@ -1,6 +1,6 @@
 @extends('layouts.adm')
 @section('titre')
-    CODE PROMOTIONELS<span class="fas fa-gift mt-1 ml-1"></span>
+    CODE PROMOTIONNELS<span class="fas fa-gift mt-1 ml-1"></span>
 @endsection
 @section('contenu')
     <div class="container">
@@ -14,7 +14,7 @@
                             <input type="hidden" name="id_code" id="id_code">
                             <section class="row">
                                 <div class="col-lg-6 mb-4">
-                                    <label for="remise">Remise en %</label>
+                                    <label for="remise">Remise sur la commande (en %)</label>
                                     <input type="text" name="remise" placeholder="Remise" id="remise" class="form-control" required>
                                 </div>
                                 <div class="col-lg-6 mb-4">

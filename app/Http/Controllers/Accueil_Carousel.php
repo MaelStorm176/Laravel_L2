@@ -27,6 +27,10 @@ class Accueil_Carousel extends Controller
         }
     }
     public function modifier(Request $request){
+        if(empty($request['image_carousel'])){
+            return back()->with('error','Veuillez ajouter une image');
+        }
+
         $validator=Validator::make($request->all(), [
             'image_carousel' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
