@@ -1,4 +1,7 @@
 @extends('layouts.adm') 
+@section('titre')
+    CRENEAUX DE RESERVATIONS<span class="fas fa-hourglass-half mt-1 ml-1"></span>
+@endsection
 @section('contenu')
     <div class="container">
         <section class="row">

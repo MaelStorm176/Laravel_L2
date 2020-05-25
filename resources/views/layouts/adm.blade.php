@@ -16,13 +16,55 @@
         <link rel="shortcut icon" href="../img/favicon.png">
         <title>ADMINISTRATION</title>
     </head>
+    <style type="text/css">
+        @media only screen and (min-width:1050px) {
+            nav  {
+                position: fixed;
+                top:0;
+                left:0;
+                min-height: 100vh!important;
+                height:100%;
+                width:25%;
+                
+            }
+            #contenu{
+                margin-left: 25%;
+                width:75%;
+            }
+            #foot{
+                position: fixed;
+                bottom: 2rem;
+                left:0;
+                width:25%;
+            }
+        }
+        @media only screen and (max-width:1050px) {
+            nav   {
+                position: none;
+                min-height: none;
+                height:auto;
+                position: relative;
+                width: 100%;
+            }
+            #contenu{
+                margin-left: 0%;
+                width:100%;
+            }
+
+            #foot{
+                position:none;
+                width: 100%;
+
+            }
+        }
+    </style>
     <body>
         <?php $droits = \App\Http\Controllers\Admin::afficher_droits(); ?>
         @foreach($droits as $key)
         @endforeach
         <div class="container-fluid">
             <section class="row">
-                <nav class="nav flex-column bg-dark position-fixed min-vh-100 h-100 col-3 px-0" style="z-index:2000;">
+                <nav class="nav flex-column bg-dark px-0" style="z-index:2000;">
                     <div class="bg-success text-center w-100 py-3 border border-dark border-top-0 border-left-0">
                         <a class="nav-link text-white" href="{{route('admin')}}">ADMINISTRATION</a>
                     </div>
@@ -165,11 +207,11 @@
                             RETOUR AU SITE
                         </a>
                     </div>
-                    <div class="fixed-bottom col-3 text-center text-white bg-secondary mb-3 p-3 border border-dark border-top-0 border-left-0">
+                    <div id="foot" class="text-center text-white bg-secondary mb-3 p-3 border border-dark border-top-0 border-left-0">
                         © 2020 Copyright: {{config('app.url')}}
                     </div>
                 </nav>
-                <div class="col-lg-9 offset-lg-3 px-0">
+                <div id="contenu" class="px-0">
                     <div class="bg-dark py-4 w-100 text-center text-info mb-3">@yield('titre')</div>
                     @yield('contenu')
                 </div>
