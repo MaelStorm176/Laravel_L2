@@ -336,7 +336,8 @@ class Admin extends Controller
         DB::table('parametres')->where('id','=','1')->update([
             'ptsEquivalent' => $request['equivalent'],
             'ptsGain' => $request['gain'],
-            'ptsNbComm' => $request['nbComm']
+            'ptsNbComm' => $request['nbComm'],
+            'ptsMinTotal' => $request['minTotal']
         ]);
 
         return back()->with('message', 'Les parametres des points de fidelité ont bien été modifiés.');

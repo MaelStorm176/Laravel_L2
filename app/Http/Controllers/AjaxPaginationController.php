@@ -15,11 +15,13 @@ class AjaxPaginationController extends Controller
      */
     public function ajaxPagination(Request $request)
     {
-        $products = DB::table('commande')->select('*')->orderBy('created_at','desc')->paginate(5);
+        $products = DB::table('commande')->select('*')->where('user_id', Auth::user()->id)->where('statut_prepa', '!=', 'En cours')->orderBy('created_at','desc')->paginate(5);
 
         if ($request->ajax()) {
             return view('presult', compact('products'));
         }
         return view('historique_commande',compact('products'));
     }
+
+    
 }

@@ -25,7 +25,7 @@
                         </table>
                     </div>
                 </div>
-                <button type="button" class="btn btn-primary text-white w-100 py-3" onclick="charger_commande(0,0)">
+                <button type="button" class="btn btn-primary text-white w-100 py-3 mb-3" onclick="charger_commande(0,0)">
                     RAFRAICHIR
                 </button>
             </div>

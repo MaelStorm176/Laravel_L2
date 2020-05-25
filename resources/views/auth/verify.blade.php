@@ -6,7 +6,7 @@
     <div class="modal-body">
         @if (session('resent'))
             <div class="alert alert-success" role="alert">
-                {{ __('Un nouveau lien de vérification a été envoyé à votre adresse mail') }} {{Auth::user()->id}}
+                {{ __('Un nouveau lien de vérification a été envoyé à votre adresse mail:') }} {{Auth::user()->email}}
             </div>
         @endif
         <p class="text-justify mb-0">

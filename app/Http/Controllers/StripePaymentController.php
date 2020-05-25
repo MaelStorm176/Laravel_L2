@@ -17,8 +17,9 @@ class StripePaymentController extends Controller
      */
     public function index()
     {
+        $parametres = DB::table('parametres')->where('id', 1)->get();
         list($prix_total,$products,$menu,$q_tot) = $this->commande_finale();
-        return view('payment',compact('products','menu','prix_total','q_tot'));
+        return view('payment',compact('products','menu','prix_total','q_tot', 'parametres'));
     }
 
     public function stripe()
@@ -75,7 +76,7 @@ class StripePaymentController extends Controller
             session(['message' => 'Il y a une erreur']);
             return redirect('/panier');
         }
-
+        
         Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
         Stripe\Charge::create ([
             "amount" => ($request->prix_total)*100,
@@ -106,6 +107,19 @@ class StripePaymentController extends Controller
         //J'AJOUTE L'ADRESSE DANS LA TABLE USERS
         DB::table('users')->where('id','=',$request->user_id)->update(['adresse'=>$request->address]);
 
+        //POINTS FIDELITES
+        $parametres = DB::table('parametres')->where('id', 1)->get();
+        $nb_comm = DB::table('commande')->where('user_id',$request->user_id)->count();
+
+        foreach($parametres as $key){
+            if($nb_comm % $key->ptsNbComm == 0 && $request->prix_total >= $key->ptsMinTotal){
+                $nbPoints_actuel = DB::table('users')->select('pointsFidelite')->where('id', $request->user_id)->get();
+                DB::table('users')->where('id', $request->user_id)->update([
+                    'pointsFidelite' => $nbPoints_actuel[0]->pointsFidelite + $key->ptsGain
+                ]);
+            }
+        }
+
         return redirect('/payment_accepted');
     }
 
@@ -130,5 +144,21 @@ class StripePaymentController extends Controller
         }
     }
 
+    public function utiliser_points(Request $request){
+        if ($request->ajax()) {
+            if($request['nbPoints'] <= Auth::user()->pointsFidelite && $request['nbPoints'] > 0 && $request['nbPoints'] % 1 === 0){
+                DB::table('users')->where('email', Auth::user()->email)->update([
+                    'pointsFidelite' => Auth::user()->pointsFidelite - $request['nbPoints']
+                ]);
+                echo TRUE;
+            } else {
+                echo FALSE;
+            }
+        }
+        else
+        {
+            abort(404);
+        }
+    }
 
 }

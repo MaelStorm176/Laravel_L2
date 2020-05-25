@@ -7,7 +7,7 @@
 @section('content')
     @foreach($pizza as $key)
     @endforeach
-    <div class="container">
+    <div class="container px-0">
         <div class="row">
             <div class="col-lg-12">
                 <div class="card border-one mb-3">
@@ -30,45 +30,31 @@
                                 @else
                                     <div class="badge badge-primary p-2 float-right text-white">{{$key->prix}} €</div>
                                 @endif
-                                @auth
-                                    @if(Auth::user()->role=='admin')
-                                        <a onclick="afficher_promo()">
-                                            <span class="badge badge-danger mb-3 ">Appliquer une promotion</span>
-                                        </a>
-                                        <div class="input-group mb-3" id="div-promotion" style="display: none;">
-                                            <form action="{{route('promotion')}}" method="post">
-                                                @csrf
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text" id="basic-addon1">%</span>
-                                                    <input type="hidden" value="{{$key->id}}" name="id">
-                                                    <input type="number" class="form-control" id="input-promotion" name="promotion" placeholder="Promotion">
-                                                    <button class="btn btn-outline-success" type="submit">Valider</button>
-                                                </div>
-
-                                            </form>
-                                        </div>
-                                    @endif
-                                @endauth
                                 <h4 class="mb-3"><u>Description:</u></h4>
                                 <p class="card-text text-justify mb-3">{{$key->description_longue}}</p>
                                 <div class="row justify-content-center">
-                                    <div class="col-6">
+                                    <div class="col-12">
                                         @auth
                                             <form class="justify-content-left" action="{{route('panier.ajouter')}}">
                                                 <input type="hidden" value="{{$key->id}}" name="id_pizza">
-                                                <div class="input-group">
-                                                    <input type="number" class="form-control" name="quantite" value="1" aria-label="Search">
-                                                    <div class="input-group-append">
-                                                        <button class="btn btn-one" type="submit">
-                                                            Ajouter à votre panier
-                                                            <span class="fas fa-shopping-cart ml-1"></span>
-                                                        </button>
+                                                    <div class="row justify-content-center">
+                                                        <div class="input-group col-8 col-lg-6">
+                                                            <input type="number" class="form-control" name="quantite" value="1" aria-label="Search">
+                                                            <div class="input-group-append">
+                                                                <button class="btn btn-one" type="submit">
+                                                                    Ajouter à votre panier
+                                                                    <span class="fas fa-shopping-cart ml-1"></span>
+                                                                </button>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </form>
                                         @endauth
                                         @guest
-                                                <button class="btn btn-one" data-toggle="modal" data-target="#connexionModal">Pour commander, connectez vous !</button>
+                                            <div class="row justify-content-center">
+                                                <button class="col-8 col-lg-6 btn btn-one" data-toggle="modal" data-target="#connexionModal">Pour commander, connectez vous !</button>
+                                            </div>
                                         @endguest
                                     </div>
                                 </div>

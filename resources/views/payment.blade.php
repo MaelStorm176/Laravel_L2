@@ -86,7 +86,7 @@
                 <div class="card border-two mb-3">
                     <div class="card-header bg-two text-two">Votre Panier<span class="badge badge-secondary badge-pill float-right mt-1">{{$q_tot}} articles</span></div>
                     <div class="card-body">
-                        <ul class="list-group mb-3 z-depth-1">
+                        <ul class="list-group mb-0 z-depth-1">
                             @foreach($products as $key)
                                 <li class="list-group-item d-flex justify-content-between lh-condensed">
                                     <div>
@@ -112,6 +112,13 @@
                                 </div>
                                 <span class="text-success" id="remise"></span>
                             </li>
+                            <li id="affichage2" style="display:none;" class="list-group-item justify-content-between bg-light">
+                                <div class="text-success">
+                                    <h6 class="my-0">Points fidelités</h6>
+                                    <small id="affpoints"></small>
+                                </div>
+                                <span class="text-success" id="remise2"></span>
+                            </li>
                             <li class="list-group-item d-flex justify-content-between lh-condensed">
                                 <div>
                                     <h6 class="my-0">TOTAL</h6>
@@ -122,7 +129,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="card text-white border-two mb-3">
+                <div class="card border-two mb-3">
                     <div class="card-header bg-two text-two">Code Promo<span class="fas fa-gift float-right mt-1"></span></div>
                     <div class="card-body">
                         <div class="input-group">
@@ -131,8 +138,32 @@
                                 <button class="btn btn-outline-primary btn-md waves-effect m-0" onclick="testvalidite()">UTILISER</button>
                             </div>
                         </div>
-                        <span style="color:red; display:none;" id="invalide">Code invalide</span>
-                        <span style="color:green; display:none;" id="valide">Code valide</span>
+                        <span class="text-danger" style="display:none;" id="invalide">Code invalide</span>
+                        <span class="text-success" style="display:none;" id="valide">Code valide</span>
+                    </div>
+                </div>
+                <div class="card border-two mb-3">
+                    <div class="card-header bg-two text-two">Points de Fidélité<span class="fas fa-gift float-right mt-1"></span></div>
+                    <div class="card-body">
+                        <section class="row">
+                            @foreach($parametres as $key)
+                                <input id="equivalent" type="hidden" value="{{$key->ptsEquivalent}}">
+                            @endforeach
+                            <div class="col-lg-12">                
+                                <label for="pointsTotal">Mes points</label>
+                                <input type="text" id="pointsTotal" name="pointsTotal" value="{{Auth::user()->pointsFidelite}}" class="from-control text-center bg-secondary mb-3 w-100 rounded text-white border-0" readonly>            
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="input-group">
+                                    <input type="number" id="points" name="points" class="form-control" placeholder="Nombre points" required>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-primary btn-md waves-effect m-0"  onclick="utiliserPoints()">UTILISER</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="text-danger" style="display:none;" id="invalide2">Il y a une erreur avec le nombre de points.</span>
+                            <span class="text-success" style="display:none;" id="valide2">Les points on été utilisés.</span>
+                        </section>
                     </div>
                 </div>
             </div>
@@ -140,9 +171,6 @@
     </div>
 @endsection
 
-<!-- Initializations -->
-<!-- MDB core JavaScript -->
-<script type="text/javascript" src="js/mdb.min.js"></script>
 <!-- JQUERY -->
 <script
     src="https://code.jquery.com/jquery-3.5.0.min.js"
@@ -193,6 +221,47 @@
             complete : function(resultat, statut){
 
             }
+
+        });
+    }
+
+    function utiliserPoints(){
+        const nbPoints = $("#points").val();
+        var prix = $("#prix").val();
+        var equivalent = $("#equivalent").val();
+
+        $.ajax({
+            url : 'utiliser_points',
+            type : 'GET',
+            dataType : 'html',
+            data : {nbPoints:nbPoints},
+            success : function(code_html, statut){
+                var res = code_html;
+                var remise;
+                if(res) {
+                    $("#valide2").show();
+                    $("#invalide2").hide();
+                    $("#affichage2").css("display","flex");
+                    $("#affichage2").show();
+                    prix-=nbPoints*equivalent;
+                    prix = prix.toFixed(2);
+                    remise = -($("#prix").val()-prix);
+                    $("#prix_total").val(prix);
+                    $("#total").html(prix+" €");
+                    $("#remise2").html(remise+" €");
+                    $("#affpoints").html(nbPoints);
+                    $("#pointsTotal").val($("#pointsTotal").val()-nbPoints);
+
+                }
+                else {
+                    $("#valide2").hide();
+                    $("#invalide2").show();
+                }
+            },
+
+            error : function(resultat, statut, erreur){
+                alert('Erreur avec la requete Ajax');
+            },
 
         });
     }

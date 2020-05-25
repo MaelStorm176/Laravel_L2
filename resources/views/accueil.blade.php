@@ -5,8 +5,8 @@
             <div class="col-lg-12">
                 <div class="alert alert-danger">
                     <section class="row">
-                        <div class="col-lg-2"><strong class="panel-title">Offre du moment:</strong></div>
-                        <marquee class="col-lg-10" onmouseout="this.start();" onmouseover="this.stop();" >
+                        <div class="col-lg-2 col-md-3 col-5"><strong class="panel-title">Offre du moment:</strong></div>
+                        <marquee class="col-lg-10 col-md-9 col-7" onmouseout="this.start();" onmouseover="this.stop();" >
                             Promotions ! @foreach($pizza as $key) @if($key->promo < $key->prix) {{$key->nom}} -> <strong>{{$key->promo}} € </strong>  @endif @endforeach
                         </marquee>
                     </section>
@@ -15,11 +15,11 @@
         </section>
         <section class="row">
             <div class="col-lg-9 pl-0">
-                <div class="container-fluid">
+                <div class="container-fluid pr-0">
                     <section class="row">
-                        <div class="col-lg-12">
+                        <div class="col-12">
                             <!-- Carousel -->
-                            <div id="carouselExampleIndicators" class="mb-3 carousel slide" data-ride="carousel">
+                            <div id="carouselExampleIndicators" class="mb-3 carousel slide w-100" data-ride="carousel">
                                 <div class="carousel-inner">
                                     <ol class="carousel-indicators">
                                         <?php $var=0; ?>
@@ -83,7 +83,7 @@
                                     </marquee>
                                 </div>
                                 <div class="card-footer bg-two text-center">
-                                    <h5 class="text-two m-0">Nos pizzas du moment</h5>
+                                    <h5 class="text-two m-0">Nos articles du moment</h5>
                                 </div>
                             </div>
                         </div>
@@ -203,10 +203,10 @@
                         </div>
                         <div class="card-footer bg-two text-two">
                             @foreach($parametres as $key)
-                                <div class="text-center"><small>
-                                    1 point = {{$key->ptsEquivalent}} euros<br>
-                                    +{{$key->ptsGain}} points toutes les {{$key->ptsNbComm}} commandes.<br>
-                                    (Offre valable dès xx € d'achats)
+                                <div class=""><small>
+                                    +{{$key->ptsGain}} points toutes les {{$key->ptsNbComm}} commandes<br>
+                                    (Offre valable dès {{$key->ptsMinTotal}} € d'achats)<br>
+                                    1 point = {{$key->ptsEquivalent}}€
                                 </small></div>
                             @endforeach
                         </div>

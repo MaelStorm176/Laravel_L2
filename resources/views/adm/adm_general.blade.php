@@ -123,17 +123,21 @@
                             <form method="post" class="mb-0" action="{{route('adm_points')}}">
                                 @csrf
                                 <section class="row">
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-6">
                                         <label for="equivalent">Equivalent en euros</label>
                                         <input type="number" id="equivalent" name="equivalent" class="form-control mb-4" value="{{$key->ptsEquivalent}}" required>
                                     </div>
-                                    <div class="col-lg-12">
-                                        <label for="gain">Quantitée débloquée à chaque gain</label>
+                                    <div class="col-lg-6">
+                                        <label for="gain">Quantitée gagnée (points)</label>
                                         <input type="number" id="gain" name="gain" class="form-control mb-4" value="{{$key->ptsGain}}" required>
                                     </div>
-                                    <div class="col-lg-12">
-                                        <label for="nbComm">Nombre de commandes avant gain</label>
+                                    <div class="col-lg-6">
+                                        <label for="nbComm">Nombre de Commande</label>
                                         <input type="number" id="nbComm" name="nbComm" class="form-control mb-4" value="{{$key->ptsNbComm}}" required>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label for="minTotal">Minimum d'achat (€)</label>
+                                        <input type="number" id="minTotal" name="minTotal" class="form-control mb-4" value="{{$key->ptsMinTotal}}" required>
                                     </div>
                                     <div class="col-lg-12">
                                         <button type="submit" class="btn btn-primary w-100">ENREGISTRER</button>
@@ -153,11 +157,11 @@
                             <section class="row">
                                 <div class="col-lg-12">
                                     <label for="mail">Adresse Mail</label>
-                                    <input type="text" id="mail" name="mail" class="form-control mb-4" value="{{env('MAIL_USERNAME')}}" required>
+                                    <input type="text" id="mail" name="mail" class="form-control mb-4" required>
                                 </div>
                                 <div class="col-lg-12">
                                     <label for="cp">Mot de passe</label>
-                                    <input type="password" id="mdp" name="mdp" value="{{env('MAIL_PASSWORD')}}" class="form-control mb-4" required>
+                                    <input type="password" id="mdp" name="mdp" class="form-control mb-4" required>
                                 </div>
                                 <div class="col-lg-12">
                                     <button type="submit" class="btn btn-primary w-100">ENREGISTRER</button>

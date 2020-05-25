@@ -1,25 +1,20 @@
 @extends('layouts.base')
 @section('content')
-    @auth
-        @if(Auth::user()->role=='admin')
-            @include('pizza.pizza_modal')
-        @endif
-    @endauth
-    <div class="container">
+    <div class="container px-0">
         <section class="row">
             <div class="col-lg-12">
                 <div class="card bg-two mb-3 p-3">
                     <div class="container">
-                        <section class="row justify-content-center">
+                        <section class="row justify-content-center pt-3">
                             @foreach($categorie as $cat)
-                                <div class="col-lg-2 text-center">
+                                <div class="col-lg-2 text-center mb-3">
                                     <button class="btn btn-one w-100" type="button" data-toggle="collapse" data-target="#{{$cat->nom}}Collapse" aria-expanded="true" aria-controls="{{$cat->nom}}Collapse">
                                         Nos {{$cat->nom}}
                                     </button>
                                 </div>
                             @endforeach
                             @if(!Empty($menu))
-                                <div class="col-lg-2 text-center">
+                                <div class="col-lg-2 text-center mb-3">
                                     <button class="btn btn-one w-100" type="button" data-toggle="collapse" data-target="#menu_Collapse" aria-expanded="true" aria-controls="menu_Collapse">
                                         Nos menus
                                     </button>
@@ -43,15 +38,7 @@
                                                 <div class="card">
                                                     <div class="row no-gutters">
                                                         <div class="col-md-4">
-                                                            @auth
-                                                                @if(Auth::user()->role=='admin')
-                                                                    <div style="z-index: 6; position: absolute;">
-                                                                        <button type="button" class="btn btn-primary" onclick="modifier({{$key->id}})" data-toggle="modal" data-target="#exampleModalCenter"><i class="fas fa-edit"></i></button> <br/> <br/>
-                                                                        <button type="button" class="btn btn-primary" onclick="supprimer({{$key->id}})"><i class="fas fa-trash"></i></button>
-                                                                    </div>
-                                                                @endif
-                                                            @endauth
-                                                            <img src="{{$key->photo}}" class="rounded-left" style="width:150px; height:150px;">
+                                                            <img src="{{$key->photo}}" class="rounded-left w-100 h-100">
                                                         </div>
                                                         <div class="col-md-8">
                                                             <div class="card-body">
@@ -63,7 +50,7 @@
                                                                 <h5 class="card-title mt-1">{{$key->nom}}</h5>
                                                                 <p class="card-text text-justify">{{$key->description_courte}}</p>
                                                                 <div class="row justify-content-center">
-                                                                    <a type="button"  href="pizza_all/{{$key->nom}}" class="col-6 btn btn-one navbar-btn align-center">Voir le détail</a>
+                                                                    <a type="button"  href="pizza_all/{{$key->nom}}" class="col-8 col-lg-6 btn btn-one navbar-btn align-center">Voir le détail</a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -75,15 +62,7 @@
                                                 <div class="card">
                                                     <div class="row no-gutters">
                                                         <div class="col-md-4">
-                                                            @auth
-                                                                @if(Auth::user()->role=='admin')
-                                                                    <div style="z-index: 6; position: absolute;">
-                                                                        <button type="button" class="btn btn-primary" onclick="modifier({{$key->id}})" data-toggle="modal" data-target="#exampleModalCenter"><i class="fas fa-edit"></i></button> <br/> <br/>
-                                                                        <button type="button" class="btn btn-primary" onclick="supprimer({{$key->id}})"><i class="fas fa-trash"></i></button>
-                                                                    </div>
-                                                                @endif
-                                                            @endauth
-                                                            <img src="{{$key->photo}}" class="rounded-left" style="width: 150px; height: 150px;">
+                                                            <img src="{{$key->photo}}" class="rounded-left w-100 h-100">
                                                         </div>
                                                         <div class="col-md-8">
                                                             <div class="card-body">
@@ -95,7 +74,7 @@
                                                                 <h5 class="card-title mt-1">{{$key->nom}}</h5>
                                                                 <p class="card-text text-justify">{{$key->description_courte}}</p>
                                                                 <div class="row justify-content-center">
-                                                                    <a class="btn btn-outline-one" style="cursor: not-allowed;">Indisponible</a>
+                                                                    <a class="btn btn-outline-one col-8 col-lg-6" style="cursor: not-allowed;">Indisponible</a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -123,15 +102,7 @@
                                     @endif
                                     <div class="row no-gutters">
                                         <div class="col-md-4">
-                                            @auth
-                                                @if(Auth::user()->role=='admin')
-                                                    <div style="z-index: 6; position: absolute;">
-                                                        <button type="button" class="btn btn-primary" onclick="modifier_menu({{$item->id}})" data-toggle="modal" data-target="#MenuModal"><i class="fas fa-edit"></i></button> <br/> <br/>
-                                                        <button type="button" class="btn btn-primary" onclick="supprimer_menu({{$item->id}})"><i class="fas fa-trash"></i></button>
-                                                    </div>
-                                                @endif
-                                            @endauth
-                                            <img src="../images/menu.jpg" class="rounded-left" style="width:150px; height:150px;">
+                                            <img src="img/menus.jpg" class="rounded-left w-100 h-100">
                                         </div>
                                         <div class="col-md-8">
                                             <div class="card-body">
@@ -144,9 +115,9 @@
                                                 <p class="card-text text-justify">{{$item->description}}</p>
                                                 <div class="row justify-content-center">
                                                     @if($item->statut == 'Indisponible')
-                                                        <a type="button" class="col-6 btn btn-one navbar-btn align-center">Indisponible</a>
+                                                        <a type="button" class="col-8 col-lg-6 btn btn-one navbar-btn align-center">Indisponible</a>
                                                     @else
-                                                        <a type="button" href="pizza_all/menu/{{$item->nom}}" class="col-6 btn btn-one navbar-btn align-center">Voir le détail</a>
+                                                        <a type="button" href="pizza_all/menu/{{$item->nom}}" class="col-8 col-lg-6 btn btn-one navbar-btn align-center">Voir le détail</a>
                                                     @endif
                                                 </div>
                                             </div>

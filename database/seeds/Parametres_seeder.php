@@ -20,8 +20,9 @@ class Parametres_seeder extends Seeder
              'facebook' => 'https://www.facebook.com/',
              'twitter' => 'https://twitter.com/',
              'ptsEquivalent' => '1',
-             'ptsGain' => '10',
-             'ptsNbComm' => '15']
+             'ptsGain' => '5',
+             'ptsMinTotal' => '12',
+             'ptsNbComm' => '10']
         ]);
     }
 }

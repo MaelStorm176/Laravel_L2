@@ -8,6 +8,21 @@ use Illuminate\Support\Facades\DB;
 
 class ParametresController extends Controller
 {
+    public function index(Request $request)
+    {
+        $user = DB::table('users')->where('id', auth::user()->id)->get();
+        return view('parametres')->with('user', $user[0]);
+    }
+
+    public function modif_adresse(Request $request)
+    {
+        $user = DB::table('users')->where('id', auth::user()->id)->update([ 
+            'adresse' => $request['adresse']
+        ]);
+
+        
+        return back()->with('message', 'L\'adresse a bien été modifié');
+    }
 
     public function update(Request $request)
     {

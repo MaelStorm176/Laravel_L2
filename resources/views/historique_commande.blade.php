@@ -7,54 +7,86 @@
         <section class="row">
             <div class="col-lg-12">
                 @auth
-                    <div class="card border-one text-center p-3 font-weight-bold font-italic mb-3">
+                    <div class="card border-one text-center font-weight-bold mb-3">
                         <div class="card-header bg-one text-one">
                             <h5 class="mb-0">HISTORIQUE DE VOS COMMANDES</h5>
                         </div>
                         <div class="card-body">
-                            @if(Auth::user()->role=='admin')
-                                <div id="tag_container">
-                                    @include('presult')
-                                </div>
-                            @else
-                                <div id="tag_container">
-                                    @include('presult2')
-                                </div>
+                            <table class="table table-hover table-bordered mb-3 text-center">
+                                <thead class="bg-tab text-tab">
+                                    <tr>
+                                        <th class="align-middle" scope="col">#</th>
+                                        <th class="align-middle" scope="col">Détail de la commande</th>
+                                        <th class="align-middle" scope="col">Prix</th>
+                                        <th class="align-middle" scope="col">Statut Paiement</th>
+                                        <th class="align-middle" scope="col">Heure de la commande</th>
+                                        <th class="align-middle" scope="col">Heure de la fin de préparation</th>
+                                        <th class="align-middle" scope="col">Statut Préparation</th>
+                                    </tr>
+                                </thead>          
+                                <tbody>
+                                    @if(!empty($products))
+                                        @foreach ($products as $value)
+                                            <tr>
+                                                <td class="align-middle">{{ $value->id }}</td>
+                                                <td class="align-middle">
+                                                    <button class="btn btn-outline-primary" onclick="afficher({{$value->id}})" data-toggle="modal" data-target="#commandesModal">{{ $value->num_commande }}
+                                                </td>
+                                                <td class="align-middle">{{ $value->prix_total }}</td>
+                                                <td class="align-middle">{{ $value->statut_pay }}</td>
+                                                <td class="align-middle">{{ $value->created_at }}</td>
+                                                @if($value->updated_at == NULL)
+                                                    <td class="align-middle">Non déterminée</td>
+                                                @else
+                                                    <td class="align-middle">{{ $value->updated_at }}</td>
+                                                @endif
+                                                <td class="align-middle">{{ $value->statut_prepa }}</td>
+                                            </tr>
+                                        @endforeach
+                                    @endif
+                                </tbody>
+                            </table>
+                            @if(!empty($value))
+                                @if($value->user_id==Auth::user()->id)
+                                    {!! $products->render() !!}
+                                @endif
                             @endif
                         </div>
                     </div>
-                    @if(Auth::user()->role=='admin')
-                        <div class="card border-two text-center p-3 font-weight-bold font-italic mb-3">
-                            <div class="card-header bg-two text-two">
-                                <h5 class="mb-0">
-                                    COMMANDES EN COURS
-                                    <button class=" btn btn-outline-one float-right" style="width: 15%;" onclick="charger_commande(0,0)">Rafraîchir</button>
-                                </h5>
-                            </div>
-                            <div class="card-body">
-                                <table class="table table-hover table-bordered mb-3 text-center">
-                                    <thead class="bg-tab text-tab">
-                                        <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Détails commande</th>
-                                            <th scope="col">Client</th>
-                                            <th scope="col">Prix</th>
-                                            <th scope="col">Statut Paiement</th>
-                                            <th scope="col">Heure de la commande</th>
-                                            <th scope="col">Statut Préparation</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="afficher_commande"></tbody>
-                                </table>
+                    <div class="card border-two text-center font-weight-bold mb-3">
+                        <div class="card-header bg-two text-two">
+                            <div class="container">
+                                <section class="row justify-content-between">
+                                    <h5 class="mb-0 mt-1">
+                                        VOS COMMANDES EN COURS
+                                    </h5>
+                                    <button class=" btn btn-one float-right" onclick="charger_commande2(0,0)">Rafraîchir</button>
+                                </section>
                             </div>
                         </div>
-                    @endif
+                        <div class="card-body">
+                            <table class="table table-hover table-bordered mb-3 text-center">
+                                <thead class="bg-tab text-tab">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Détails commande</th>
+                                        <th scope="col">Client</th>
+                                        <th scope="col">Prix</th>
+                                        <th scope="col">Statut Paiement</th>
+                                        <th scope="col">Heure de la commande</th>
+                                        <th scope="col">Statut Préparation</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="afficher_commande"></tbody>
+                            </table>
+                        </div>
+                    </div>
                 @endauth
             </div>
         </section>
     </div>
 @endsection
-<!-- Modal Cetails Commande -->
+<!-- Modal Details Commande -->
 <div class="modal fade" id="commandesModal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -101,6 +133,27 @@
                 },
             });
         }
+
+        function charger_commande2(typeAction,idaffiche) {
+
+            var dummy = Date.now();
+            $.ajax({
+                url: "afficher_commande2",
+                type: 'GET',
+                dataType: 'html',
+                data: {dummy: dummy,typeAction:typeAction,idaffiche:idaffiche},
+                success: function (code_html, statut) {
+                    if (typeAction==0)
+                        $('#afficher_commande').html(code_html);
+                    else if (typeAction==1)
+                        $('#append_here').html(code_html);
+                },
+
+                error: function (resultat, statut, erreur) {
+                    alert('Erreur avec la requete Ajax');
+                },
+            });
+}
 
         function valider(id){
             $.ajax({

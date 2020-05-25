@@ -79,11 +79,6 @@
                                                                             SUPPRIMER
                                                                         </button>
                                                                     </div>
-                                                                    <div class="col-lg-12">
-                                                                        <button type="button" class="btn btn-primary w-100" onclick="promotion({{$key->id}})" data-toggle="modal" data-target="#exampleModalCenterCode">
-                                                                            AJOUTER PROMOTION
-                                                                        </button>
-                                                                    </div>
                                                                 </section>
                                                             </div>
                                                         </div>

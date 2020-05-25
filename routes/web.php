@@ -72,6 +72,7 @@ Route::get('panier.contenu_supprimer','Panier@contenu_supprimer')->name('panier.
 /*COMMANDE*/
 Route::get('valider', 'Commande@valider')->name('valider');
 Route::get('afficher_commande', 'Commande@afficher_comm')->name('afficher_commande');
+Route::get('afficher_commande2', 'Commande@afficher_comm2')->name('afficher_commande2');
 Route::get('historique_commande','AjaxPaginationController@ajaxPagination')->name('historique_commande');
 
 /*PAYEMENT*/
@@ -81,6 +82,7 @@ Route::get('/payment_accepted', function () {
 });
 Route::get('/payment', 'StripePaymentController@index')->name('payment')->middleware('auth');
 Route::get('testvalidite', 'StripePaymentController@testvalidite')->name('testvalidite');
+Route::get('/utiliser_points', 'StripePaymentController@utiliser_points')->name('utiliser_points');
 
 /*CRAFT*/
 Route::get('/craft', 'Craft@afficher')->name('craft');
@@ -116,11 +118,10 @@ Route::get('/modif_carousel_supprimer', 'Accueil_Carousel@supprimer')->name('acc
 
 /* PARAMETRE */
 Route::get('update', 'ParametresController@update')->name('update');
-Route::get('parametres', function(){
-    return view('parametres');
-})->middleware('auth')->name('parametres');
+Route::get('parametres', 'ParametresController@index')->middleware('auth')->name('parametres');
 Route::get('conf_email', 'ParametresController@verify')->middleware('auth')->name('conf_email');
 Route::get('verif_email', 'ParametresController@verif_email')->middleware('auth');
+Route::post('modif_adresse', 'ParametresController@modif_adresse')->middleware('auth')->name('modif_adresse');
 
 /*CREANEAUX*/
 route::get('/creneaux','Creneaux@index')->name('creneaux.index');

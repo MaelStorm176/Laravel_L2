@@ -1,7 +1,4 @@
 @extends('layouts.base')
-@section('head')
-    @include('toast')
-@endsection
 @section('content')
     <div class="container">
         <section class="row">
@@ -9,9 +6,9 @@
                 <div class="card border-one mb-3">
                     <div class="card-header bg-one text-one">
                         <div class="container">
-                            <section class="row">
-                                <h5 class="col-4 offset-4 mb-0">MON PANIER</h5>
-                                <h5 class="col-1 offset-3 mb-0">
+                            <section class="row justify-content-between">
+                                <h5 class="mt-1">MON PANIER</h5>
+                                <h5 class="mt-1 mb-0">
                                     <span class="badge badge-secondary badge-pill px-2 py-1" id="quantite_total">{{$quantite_total ?? 0}} articles</span>
                                 </h5>
                             </section>
@@ -21,7 +18,7 @@
                         @auth
                             @if(!Empty($products) || !Empty($menu))
                                 <input type="hidden" value="{{$products}}" id="products">
-                                <table class="table table-hover table-bordered mb-3 text-center">
+                                <table class="table table-hover table-bordered mb-0 text-center">
                                     <thead class="bg-tab text-tab">
                                         <tr>
                                             <th scope="col">Article</th>
@@ -35,7 +32,7 @@
                                             <tr id="article_{{$key->id}}">
                                                 <td class="align-middle">{{ $key->nom }}</td>
                                                 <td class="align-middle">
-                                                    <input type="number" class="text-center" value="{{$key->quantite}}" onchange="refresh($(this).val(),{{$key->id}},1)">
+                                                    <input type="number" class="text-center form-control" value="{{$key->quantite}}" onchange="refresh($(this).val(),{{$key->id}},1)">
                                                 </td>
                                                 <td class="align-middle">{{ $key->promo }} €</td>
                                                 <td class="align-middle">

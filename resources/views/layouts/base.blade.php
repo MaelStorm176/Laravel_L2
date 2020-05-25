@@ -60,8 +60,8 @@
         <nav class="navbar navbar-expand-lg bg-nav mb-3 rounded-0">
             <div class="container container-nav">
                 <a class="navbar-brand text-nav" href="{{ route('/') }}">{{ config('app.name') }}</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                <button class="navbar-toggler btn-one" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="fas fa-bars"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
@@ -81,11 +81,6 @@
                             <li class="nav-item">
                                 <a class="nav-link text-nav" href="{{route('creneaux.index')}}">Réservations</a>
                             </li>
-                            @if(Auth::user()->role=='admin')
-                                <li class="nav-item">
-                                    <a class="nav-link text-nav" href="{{route('admin')}}">Admin</a>
-                                </li>
-                            @endif
                         @endauth
                     </ul>
                     @guest
@@ -108,7 +103,11 @@
                                         <span class="fas fa-user-circle mr-2"></span>{{ Auth::user()->username }}
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <a class="dropdown-item" href="{{route('panier')}}"><span class="fas fa-shopping-cart mr-2"></span>Mon Panier</a>
+                                        @auth
+                                            @if(Auth::user()->role=='admin')
+                                                <a class="dropdown-item" href="{{route('admin')}}"><span class="fas fa-shopping-cart mr-2"></span>Admin</a>
+                                            @endif
+                                        @endauth
                                         <a class="dropdown-item" href="{{route('historique_commande')}}"><span class="fas fa-store mr-2"></span>Mes Commandes</a>
                                         <a class="dropdown-item" href="{{ route('parametres') }}"><span class="fas fa-cogs mr-2"></span>Mes Paramères</a>
                                     </div>
