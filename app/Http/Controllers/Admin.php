@@ -503,19 +503,6 @@ class Admin extends Controller
                 ->paginate(15);
 
         }
-        /*elseif (!empty($request['last_name']))
-        {
-            $users = DB::table('users')
-                ->where('last_name', '=', $request['last_name'])
-                ->paginate(15);
-        }
-
-        elseif (!empty($request['first_name']))
-        {
-            $users = DB::table('users')
-                ->where('first_name', '=', $request['first_name'])
-                ->paginate(15);
-        } */
         else
         {
             $users = DB::table('users')->paginate(15);
@@ -551,6 +538,10 @@ class Admin extends Controller
 
         DB::table('droits')->updateOrInsert([
             'user_id' => $user[0]->id
+        ]);
+
+        DB::table('users')->where('email', '=', $request['mail'])->update([
+            'role' => 'admin'
         ]);
 
         return back()->with('message', 'L\'utilisateur a été ajouté avec succes.');
@@ -769,6 +760,13 @@ class Admin extends Controller
 
         return back()->with('message', 'Le mail a bien été envoyé.');
 
+    }
+
+    public static function afficher_droits(){
+
+        $droits = DB::table('droits')->where('user_id', Auth::user()->id)->get();
+
+        return $droits;
     }
 
 }

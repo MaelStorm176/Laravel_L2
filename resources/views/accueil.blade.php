@@ -193,17 +193,25 @@
                         </form>
                     </div>
                 </div>
-                <div class="card border-two mb-3">
-                    <div class="card-header bg-two text-two">Points de fidelité<span class="fas fa-gift float-right mt-1"></span></div>
-                    <div class="card-body">
-                        <section class="row">
+                @auth
+                    <div class="card border-two mb-3">
+                        <div class="card-header bg-two text-two">Points de fidelité<span class="fas fa-gift float-right mt-1"></span></div>
+                        <div class="card-body">
+                            <section class="row">
                                 <div class="col text-center text-info jumbotron p-1 mb-0">{{Auth::user()->pointsFidelite }}</div>
-                        </section>
-                        @foreach($parametres as $key)
-                            <div class="text-center"><small>1 point = {{$key->ptsEquivalent}} euros<br>+{{$key->ptsGain}} points toutes les {{$key->ptsNbComm}} commandes.</small></div>
-                        @endforeach
+                            </section>
+                        </div>
+                        <div class="card-footer bg-two text-two">
+                            @foreach($parametres as $key)
+                                <div class="text-center"><small>
+                                    1 point = {{$key->ptsEquivalent}} euros<br>
+                                    +{{$key->ptsGain}} points toutes les {{$key->ptsNbComm}} commandes.<br>
+                                    (Offre valable dès xx € d'achats)
+                                </small></div>
+                            @endforeach
+                        </div>
                     </div>
-                </div>
+                @endauth
             </section>
         </section>
     </div>
