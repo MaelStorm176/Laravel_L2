@@ -101,6 +101,9 @@ class Creneaux extends Controller
         }
     }
     public function reserver(Request $request){
+        if(empty($request['creneaux'])){
+            return back()->with('erreur','Veuillez selectionner un jour.');
+        }
         $test = $request['creneaux'];
         $test = substr($test,-7,2);
         if($test>15){
@@ -113,8 +116,6 @@ class Creneaux extends Controller
             $value++;
             DB::table('creneaux')
                 ->insert(['creneaux'=>$request['creneaux'],'jour'=>$request['jour'],'livreur_soir'=>$value,'client'=>Auth::user()->id]);
-            $value--;
-            //DB::table('creneaux')->select('livreur_soir','id')->where('jour','=',$request['jour'])->where('creneaux','=',$request['creneaux'])->where('livreur_soir','=',$value)->delete();
         }
         else{
             $value = DB::table('creneaux')
@@ -126,9 +127,6 @@ class Creneaux extends Controller
             $value++;
             DB::table('creneaux')
                 ->insert(['creneaux'=>$request['creneaux'],'jour'=>$request['jour'],'livreur_matin'=>$value,'client'=>Auth::user()->id]);
-            $value--;
-            //DB::table('creneaux')->select('livreur_matin','id')->where('jour','=',$request['jour'])->where('creneaux','=',$request['creneaux'])->where('livreur_matin','=',$value)->delete();
-
         }
         return back()->with('message','Votre créneau de '.$request['jour'].' à '.$request['creneaux'].' a bien été réservé');
     }

@@ -153,11 +153,11 @@
                             <section class="row">
                                 <div class="col-lg-12">
                                     <label for="mail">Adresse Mail</label>
-                                    <input type="text" id="mail" name="mail" class="form-control mb-4" required>
+                                    <input type="text" id="mail" name="mail" class="form-control mb-4" value="{{env('MAIL_USERNAME')}}" required>
                                 </div>
                                 <div class="col-lg-12">
                                     <label for="cp">Mot de passe</label>
-                                    <input type="password" id="mdp" name="mdp" class="form-control mb-4" required>
+                                    <input type="password" id="mdp" name="mdp" value="{{env('MAIL_PASSWORD')}}" class="form-control mb-4" required>
                                 </div>
                                 <div class="col-lg-12">
                                     <button type="submit" class="btn btn-primary w-100">ENREGISTRER</button>

@@ -34,9 +34,10 @@ class Pizza extends Menu
         }
     }
 
-    //Upload d'une pizza
+    //Upload d'une pizza sur le site
     public function upload(Request $request)
     {
+        //VALIDATION DE LA REQUETE (Permet d'éviter de rentrer des mauvaises informations en base)
         $validate_data = Validator::make($request->all(), [
             'image'             =>  'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'nom_p'             =>  'required',
@@ -52,12 +53,12 @@ class Pizza extends Menu
             'energies'          =>  'nullable|numeric|between:0,10000'
         ]);
 
+        //Si notre requete est invalide, on retourne l'administrateur sur la page précédente avec un message d'erreur
         if($validate_data->fails()){
-            return $validate_data->failed();
             return back()->with('erreur',"Il y a une erreur avec la création de votre article.");
         }
 
-        /* INSERTION NUTRITION */
+        /* INSERTION NUTRITION (Insertion des données de nutrition en base */
         DB::table('nutrition')
             ->insert([
             'Sodium'       => $request["sodium"],
@@ -70,13 +71,16 @@ class Pizza extends Menu
             'Energies'     => $request["energies"]
         ]);
 
+        //On récupère l'id de la dernière nutrition -> celle correspondant à notre article
         $id_nutrition = DB::table('nutrition')->latest('id')->value('id');
 
 
-        /* INSERTION TABLE PIZZA */
+
+        //On récupère l'image de notre article puis on lui assigne un nom unique
         $imageName = time().'.'.$request->image->extension();
         $imageName1 = 'images/'.$imageName;
 
+        /* INSERTION TABLE PIZZA */
         DB::table("pizza")->insert([
             'nom'                => $request["nom_p"],
             'photo'              => $imageName1,
@@ -88,8 +92,10 @@ class Pizza extends Menu
             'prix'               => $request["prix_p"],
             'promo'              => $request["prix_p"]
         ]);
+        //On déplace l'image récupérée dans le bon dossier de notre application soit le dossier "public/images"
         $request->image->move(public_path('images'), $imageName);
 
+        //on retourne l'administrateur sur la page précédente avec un message d'erreur
         return back()->with('message','Votre '.$request['categorie'].' a été mise en ligne !');
     }
 
