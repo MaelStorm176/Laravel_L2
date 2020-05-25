@@ -157,11 +157,11 @@
                             <section class="row">
                                 <div class="col-lg-12">
                                     <label for="mail">Adresse Mail</label>
-                                    <input type="text" id="mail" name="mail" class="form-control mb-4" required>
+                                    <input type="text" id="mail" name="mail" class="form-control mb-4" value="{{env('MAIL_USERNAME')}}" required>
                                 </div>
                                 <div class="col-lg-12">
                                     <label for="cp">Mot de passe</label>
-                                    <input type="password" id="mdp" name="mdp" class="form-control mb-4" required>
+                                    <input type="password" id="mdp" name="mdp" class="form-control mb-4" value="{{env('MAIL_PASSWORD')}}" required>
                                 </div>
                                 <div class="col-lg-12">
                                     <button type="submit" class="btn btn-primary w-100">ENREGISTRER</button>
@@ -289,7 +289,7 @@
     </div>
 @endsection
 <!-- MODAL COULEURS -->
-<div class="modal fade" id="modal_couleurs" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" style="z-index:200000;" id="modal_couleurs" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">

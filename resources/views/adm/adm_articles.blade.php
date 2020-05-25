@@ -243,7 +243,7 @@
         </div>
     </div>
 <!-- MODAL AJOUT CATEGORIE -->
-<div class="modal fade" id="exampleModalCenterCode" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" style="z-index:200000;" id="exampleModalCenterCode" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-primary">
@@ -272,7 +272,7 @@
 </div>
 <!-- FIN MODAL -->
 <!-- MODAL SUPPRESSION -->
-<div class="modal fade bd-example-modal-sm" id="modal_suppression" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+<div class="modal fade bd-example-modal-sm" style="z-index:200000;" id="modal_suppression" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header bg-danger">

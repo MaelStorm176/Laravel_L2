@@ -145,7 +145,7 @@
     </div>
 </div>
 <!-- MODAL AJOUTER --> 
-<div class="modal fade" id="ajouter_creneaux" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="ajouter_creneaux" style="z-index:200000;" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">

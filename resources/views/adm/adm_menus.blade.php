@@ -75,7 +75,7 @@
 @endsection
 
     <!-- FIN DU MODAL -->
-        <div class="modal fade" id="MenuModal" tabindex="-1" role="dialog" aria-labelledby="MenuModalTitle" aria-hidden="true">
+        <div class="modal fade" style="z-index:200000;" id="MenuModal" tabindex="-1" role="dialog" aria-labelledby="MenuModalTitle" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content" style="overflow:scroll; height:750px;">
                     <div class="modal-header bg-success">
@@ -141,7 +141,7 @@
 
 
 <!-- MODAL AJOUT PROMOTION -->
-<div class="modal fade" id="exampleModalCenterCode" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" style="z-index:200000;" id="exampleModalCenterCode" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-primary">

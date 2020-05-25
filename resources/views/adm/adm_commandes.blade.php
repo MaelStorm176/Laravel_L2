@@ -33,7 +33,7 @@
     </div>
 @endsection
 <!-- Modal AFFICHER DETAILS -->
-<div class="modal fade" id="commandesModal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+<div class="modal fade" style="z-index:200000;" id="commandesModal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header bg-info text-white">
