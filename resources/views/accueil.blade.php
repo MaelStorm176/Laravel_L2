@@ -134,7 +134,9 @@
                     <div class="card-body">
                         <section class="row">
                             <div class="col-12 p-0">
-                                <iframe class="w-100" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2602.004943824818!2d4.1130172159140965!3d49.2952494778007!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e99d86f90099cd%3A0x33bb405513e3549d!2sPlace%20de%20la%20Gare%2C%2051100%20Reims!5e0!3m2!1sfr!2sfr!4v1588795280366!5m2!1sfr!2sfr" width="225" height="200" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                                @foreach($parametres as $key)
+                                    <iframe class="w-100" src="{{$key->iframe}}" width="225" height="200" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>}}
+                                @endforeach
                             </div>
                         </section>
                     </div>
@@ -189,6 +191,17 @@
                                 </div>
                             </div>
                         </form>
+                    </div>
+                </div>
+                <div class="card border-two mb-3">
+                    <div class="card-header bg-two text-two">Points de fidelité<span class="fas fa-gift float-right mt-1"></span></div>
+                    <div class="card-body">
+                        <section class="row">
+                                <div class="col text-center text-info jumbotron p-1 mb-0">{{Auth::user()->pointsFidelite }}</div>
+                        </section>
+                        @foreach($parametres as $key)
+                            <div class="text-center"><small>1 point = {{$key->ptsEquivalent}} euros<br>+{{$key->ptsGain}} points toutes les {{$key->ptsNbComm}} commandes.</small></div>
+                        @endforeach
                     </div>
                 </div>
             </section>

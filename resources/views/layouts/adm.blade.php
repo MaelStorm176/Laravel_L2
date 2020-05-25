@@ -40,9 +40,9 @@
                                         <span class="fas fa-home mt-1 mr-1"></span>
                                         Page Accueil
                                     </a>
-                                    <a href="{{route('adm_newsletter')}}" class="list-group-item list-group-item-action py-3 bg-dark text-white rounded-0">
-                                        <span class="fas fa-envelope-square mt-1 mr-1"></span>
-                                        Newsletter
+                                    <a href="{{route('adm_engagements')}}" class="list-group-item list-group-item-action py-3 bg-dark text-white rounded-0">
+                                        <span class="fas fa-object-group mt-1 mr-1"></span>
+                                        Engagements
                                     </a>
                                 </div>
                             </div>
@@ -116,9 +116,9 @@
                             <span class="fas fa-comment mt-1 mr-1"></span>
                             AVIS
                         </a>
-                        <a href="{{route('adm_engagements')}}" class="nav-link list-group-item list-group-item-action py-3 bg-dark text-white">
-                            <span class="fas fa-object-group mt-1 mr-1"></span>
-                            ENGAGEMENTS
+                        <a href="{{route('adm_newsletter')}}" class="nav-link list-group-item list-group-item-action py-3 bg-dark text-white">
+                            <span class="fas fa-envelope-square mt-1 mr-1"></span>
+                            NEWSLETTER
                         </a>
                         <div class="dropright">
                             <a href="#" class="nav-link list-group-item list-group-item-action dropdown-toggle py-3 bg-dark text-white" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

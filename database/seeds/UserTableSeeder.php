@@ -20,6 +20,7 @@ class UserTableSeeder extends Seeder {
                 $user->email = 'admin@gmail.com';
                 $user->password = bcrypt('12345678');
                 $user->role = 'admin';
+                $user->pointsFidelite = rand(0,100);
             }
             else {
                 $user->username = $faker->userName;
@@ -30,6 +31,7 @@ class UserTableSeeder extends Seeder {
                 if($i<=20){
                     $user->ban = date('Y-m-d H:i:s', strtotime('+'.$i.' day', strtotime(date('Y-m-d H:i:s'))));
                 }
+                $user->pointsFidelite = rand(0,100);
             }
             $user->save();
         }

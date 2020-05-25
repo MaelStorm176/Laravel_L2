@@ -19,23 +19,23 @@
                             <tbody>
                                 <tr>
                                     <th scope="row" class="align-middle">Aujourd'hui</th>
-                                    <td><input type="text" class="form-control text-center" placeholder="xx" readonly></td>
+                                    <td><input type="text" class="form-control text-center" placeholder="{{$visites['jour']}}" readonly></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="align-middle">Cette semaine</th>
-                                    <td><input type="text" class="form-control text-center" placeholder="xx" readonly></td>
+                                    <td><input type="text" class="form-control text-center" placeholder="{{$visites['semaine']}}" readonly></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="align-middle">Ce mois-ci</th>
-                                    <td><input type="text" class="form-control text-center" placeholder="xx" readonly></td>
+                                    <td><input type="text" class="form-control text-center" placeholder="{{$visites['mois']}}" readonly></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="align-middle">Cette année</th>
-                                    <td><input type="text" class="form-control text-center" placeholder="xx" readonly></td>
+                                    <td><input type="text" class="form-control text-center" placeholder="{{$visites['annee']}}" readonly></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="align-middle">Total</th>
-                                    <td><input type="text" class="form-control text-center" placeholder="xx" readonly></td>
+                                    <td><input type="text" class="form-control text-center" placeholder="{{$visites['total']}}" readonly></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -56,23 +56,23 @@
                             <tbody>
                                 <tr>
                                     <th scope="row" class="align-middle">Aujourd'hui</th>
-                                    <td><input type="text" class="form-control text-center" placeholder="xx" readonly></td>
+                                    <td><input type="text" class="form-control text-center" placeholder="{{$users['jour']}}" readonly></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="align-middle">Cette semaine</th>
-                                    <td><input type="text" class="form-control text-center" placeholder="xx" readonly></td>
+                                    <td><input type="text" class="form-control text-center" placeholder="{{$users['semaine']}}" readonly></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="align-middle">Ce mois-ci</th>
-                                    <td><input type="text" class="form-control text-center" placeholder="xx" readonly></td>
+                                    <td><input type="text" class="form-control text-center" placeholder="{{$users['mois']}}" readonly></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="align-middle">Cette année</th>
-                                    <td><input type="text" class="form-control text-center" placeholder="xx" readonly></td>
+                                    <td><input type="text" class="form-control text-center" placeholder="{{$users['annee']}}" readonly></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" class="align-middle">Total</th>
-                                    <td><input type="text" class="form-control text-center" placeholder="{{$nb_user}}" readonly></td>
+                                    <td><input type="text" class="form-control text-center" placeholder="{{$users['total']}}" readonly></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -93,23 +93,23 @@
                                 <tbody>
                                     <tr>
                                         <th scope="row" class="align-middle">Aujourd'hui</th>
-                                        <td><input type="text" class="form-control text-center" placeholder="xx" readonly></td>
+                                        <td><input type="text" class="form-control text-center" placeholder="{{$commandes['jour']}}" readonly></td>
                                     </tr>
                                     <tr>
                                         <th scope="row" class="align-middle">Cette semaine</th>
-                                        <td><input type="text" class="form-control text-center" placeholder="xx" readonly></td>
+                                        <td><input type="text" class="form-control text-center" placeholder="{{$commandes['semaine']}}" readonly></td>
                                     </tr>
                                     <tr>
                                         <th scope="row" class="align-middle">Ce mois-ci</th>
-                                        <td><input type="text" class="form-control text-center" placeholder="xx" readonly></td>
+                                        <td><input type="text" class="form-control text-center" placeholder="{{$commandes['mois']}}" readonly></td>
                                     </tr>
                                     <tr>
                                         <th scope="row" class="align-middle">Cette année</th>
-                                        <td><input type="text" class="form-control text-center" placeholder="xx" readonly></td>
+                                        <td><input type="text" class="form-control text-center" placeholder="{{$commandes['annee']}}" readonly></td>
                                     </tr>
                                     <tr>
                                         <th scope="row" class="align-middle">Total</th>
-                                        <td><input type="text" class="form-control text-center" placeholder="{{$nb_commande}}" readonly></td>
+                                        <td><input type="text" class="form-control text-center" placeholder="{{$commandes['total']}}" readonly></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -130,23 +130,23 @@
                                 <tbody>
                                     <tr>
                                         <th scope="row" class="align-middle">Aujourd'hui</th>
-                                        <td><input type="text" class="form-control text-center" placeholder="xx" readonly></td>
+                                        <td><input type="text" class="form-control text-center" placeholder="{{$avis['jour']}}" readonly></td>
                                     </tr>
                                     <tr>
                                         <th scope="row" class="align-middle">Cette semaine</th>
-                                        <td><input type="text" class="form-control text-center" placeholder="xx" readonly></td>
+                                        <td><input type="text" class="form-control text-center" placeholder="{{$avis['semaine']}}" readonly></td>
                                     </tr>
                                     <tr>
                                         <th scope="row" class="align-middle">Ce mois-ci</th>
-                                        <td><input type="text" class="form-control text-center" placeholder="xx" readonly></td>
+                                        <td><input type="text" class="form-control text-center" placeholder="{{$avis['mois']}}" readonly></td>
                                     </tr>
                                     <tr>
                                         <th scope="row" class="align-middle">Cette année</th>
-                                        <td><input type="text" class="form-control text-center" placeholder="xx" readonly></td>
+                                        <td><input type="text" class="form-control text-center" placeholder="{{$avis['annee']}}" readonly></td>
                                     </tr>
                                     <tr>
                                         <th scope="row" class="align-middle">Total</th>
-                                        <td><input type="text" class="form-control text-center" placeholder="{{$nb_avis}}" readonly></td>
+                                        <td><input type="text" class="form-control text-center" placeholder="{{$avis['total']}}" readonly></td>
                                     </tr>
                                 </tbody>
                             </table>

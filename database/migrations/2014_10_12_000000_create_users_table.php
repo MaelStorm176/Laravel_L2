@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamp('ban')->nullable();
+            $table->integer('pointsFidelite')->default(0);
             $table->timestamps();
         });
     }

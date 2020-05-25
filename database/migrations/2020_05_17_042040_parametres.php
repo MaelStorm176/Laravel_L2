@@ -19,6 +19,10 @@ class Parametres extends Migration
             $table->string('adresse');
             $table->integer('codePostal');
             $table->string('ville');
+            $table->string('iframe',500);
+            $table->string('ptsEquivalent');
+            $table->string('ptsGain');
+            $table->string('ptsNbComm');
             $table->string('facebook');
             $table->string('twitter');
         });

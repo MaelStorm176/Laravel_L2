@@ -12,10 +12,44 @@ class Admin extends Controller
 {
     public function index()
     {
-        $nb_user = DB::table("users")->count("id");
-        $nb_commande = DB::table("commande")->count("id");
-        $nb_avis = DB::table("commentaire")->count("id");
-        return view('adm/adm_home',compact('nb_user','nb_avis','nb_commande'));
+        $jour = date("Y-m-d H:i:s", mktime(0, 0, 0, date("m"), date("d"), date("Y")));
+        $semaine = date("Y-m-d H:i:s", mktime(0, 0, 0, date("m"), date("d")-7, date("Y")));
+        $mois = date("Y-m-d H:i:s", mktime(0, 0, 0, date("m")-1, date("d"), date("Y")));
+        $annee = date("Y-m-d H:i:s", mktime(0, 0, 0, date("m"), date("d"), date("Y")-1));
+        
+        $visites = [
+            'jour' => DB::table("visites")->where("created_at", ">=", $jour)->count("id"),
+            'semaine' => DB::table("visites")->where("created_at", ">=", $semaine)->count("id"),
+            'mois' => DB::table("visites")->where("created_at", ">=", $mois)->count("id"),
+            'annee' => DB::table("visites")->where("created_at", ">=", $annee)->count("id"),
+            'total' => DB::table("visites")->count("id")
+        ];
+
+        $users = [
+            'jour' => DB::table("users")->where("created_at", ">=", $jour)->count("id"),
+            'semaine' => DB::table("users")->where("created_at", ">=", $semaine)->count("id"),
+            'mois' => DB::table("users")->where("created_at", ">=", $mois)->count("id"),
+            'annee' => DB::table("users")->where("created_at", ">=", $annee)->count("id"),
+            'total' => DB::table("users")->count("id")
+        ];
+        
+        $commandes = [
+            'jour' => DB::table("commande")->where("created_at", ">=", $jour)->count("id"),
+            'semaine' => DB::table("commande")->where("created_at", ">=", $semaine)->count("id"),
+            'mois' => DB::table("commande")->where("created_at", ">=", $mois)->count("id"),
+            'annee' => DB::table("commande")->where("created_at", ">=", $annee)->count("id"),
+            'total' => DB::table("commande")->count("id")
+        ];
+
+        $avis = [    
+            'jour' => DB::table("commentaire")->where("created_at", ">=", $jour)->count("id"),
+            'semaine' => DB::table("commentaire")->where("created_at", ">=", $semaine)->count("id"),
+            'mois' => DB::table("commentaire")->where("created_at", ">=", $mois)->count("id"),
+            'annee' => DB::table("commentaire")->where("created_at", ">=", $annee)->count("id"),
+            'total' => DB::table("commentaire")->count("id")
+        ];
+        
+        return view('adm/adm_home',compact('visites','users','commandes','avis'));
     }
 
     public function horaires()
@@ -107,10 +141,7 @@ class Admin extends Controller
             }
             $fin_soir = substr($fin_soir, -7, 2);
 
-
-
             return view('adm.adm_creneaux',compact('creneau_livreur_soir','creneau_livreur_matin','jourv','jour','creneau_livreur','global2','creneau_get','deb_matin','fin_matin','deb_soir','fin_soir','deb_matin1','fin_matin1','deb_soir1','fin_soir1'));
-
 
         }
         else{
@@ -254,25 +285,36 @@ class Admin extends Controller
 
     public function images(Request $request)
     {
-        $banName = time().'.'. $request->baniere->extension();
-        $banName1 = 'images/'.$banName;
-        $logoName = time()+1 .'.'. $request->logo->extension();
-        $logoName1 = 'images/'.$logoName;
+        if(empty($request->logo) && empty($request->baniere)){
+            return back()->with('erreur', 'Veuillez selectionner au moins une image');
+        }
 
         $path = base_path('config/images.php');
 
-        if (file_exists($path)) {
+        if (file_exists($path) && !empty($request->baniere)) {
+
+            $banName = time().'.'. $request->baniere->extension();
+            $banName1 = 'images/'.$banName;
+            
             file_put_contents($path, str_replace(
                 "'baniere' => '" . config('images.baniere') . "'", "'baniere' => '" . $banName1 . "'", file_get_contents($path)
             ));
 
+            $request->baniere->move(public_path('images'), $banName);
+
+        }
+
+        if(file_exists($path) && !empty($request->logo)){
+
+            $logoName = time()+1 .'.'. $request->logo->extension();
+            $logoName1 = 'images/'.$logoName;
+
             file_put_contents($path, str_replace(
                 "'logo' => '" . config('images.logo') . "'", "'logo' => '" . $logoName1 . "'", file_get_contents($path)
             ));
-        }
 
-        $request->baniere->move(public_path('images'), $banName);
-        $request->logo->move(public_path('images'), $logoName);
+            $request->logo->move(public_path('images'), $logoName);
+        }
 
         return back()->with('message', 'Les images ont bien été enregistré.');
     }
@@ -282,11 +324,43 @@ class Admin extends Controller
         DB::table('parametres')->where('id','=','1')->update([
             'adresse' => $request['adresse'],
             'codePostal' => $request['cp'],
-            'ville' => $request['ville']
+            'ville' => $request['ville'],
+            'iframe' => $request['iframe']
 
         ]);
 
         return back()->with('message', 'L\'adresse a bien été modifié.');
+    }
+
+    public function points(Request $request){
+        DB::table('parametres')->where('id','=','1')->update([
+            'ptsEquivalent' => $request['equivalent'],
+            'ptsGain' => $request['gain'],
+            'ptsNbComm' => $request['nbComm']
+        ]);
+
+        return back()->with('message', 'Les parametres des points de fidelité ont bien été modifiés.');
+    }
+
+    public function gmail(Request $request)
+    {
+        $path = base_path('.env');
+
+        if (file_exists($path)) {
+            file_put_contents($path, str_replace(
+                "MAIL_USERNAME=" . env('MAIL_USERNAME'), "MAIL_USERNAME=" . $request['mail'], file_get_contents($path)
+            ));
+
+            file_put_contents($path, str_replace(
+                'MAIL_PASSWORD="' . env('MAIL_PASSWORD') . '"', 'MAIL_PASSWORD="' . $request['mdp'] . '"', file_get_contents($path)
+            ));
+
+            file_put_contents($path, str_replace(
+                "MAIL_FROM_ADDRESS=" . env('MAIL_FROM_ADDRESS'), "MAIL_FROM_ADDRESS=" . $request['mail'], file_get_contents($path)
+            ));
+        }
+
+        return back()->with('message', 'Le compte a bien été enregistré.');
     }
 
     public function couleurs(Request $request)
@@ -385,14 +459,51 @@ class Admin extends Controller
 
     public function informations(Request $request)
     {
-        if (!empty($request['last_name']) && !empty($request['first_name']))
+        if (!empty($request['last_name']) && !empty($request['first_name']) && !empty($request['pseudo']))
         {
             $users = DB::table('users')
                 ->where('last_name', '=', $request['last_name'])
                 ->where('first_name', '=', $request['first_name'])
+                ->where('username', '=', $request['pseudo'])
                 ->paginate(15);
         }
-        elseif (!empty($request['last_name']))
+        else if(!empty($request['last_name']) && empty($request['first_name']) && empty($request['pseudo'])){
+            $users = DB::table('users')
+                ->where('last_name', '=', $request['last_name'])
+                ->paginate(15);
+        }
+        else if(empty($request['last_name']) && !empty($request['first_name']) && empty($request['pseudo'])){
+            $users = DB::table('users')
+                ->where('first_name', '=', $request['first_name'])
+                ->paginate(15);
+
+        } elseif(empty($request['last_name']) && empty($request['first_name']) && !empty($request['pseudo'])){
+            $users = DB::table('users')
+                ->where('username', '=', $request['pseudo'])
+                ->paginate(15);
+        }
+        elseif(!empty($request['last_name']) && !empty($request['first_name']) && empty($request['pseudo'])){
+            $users = DB::table('users')
+                ->where('last_name', '=', $request['last_name'])
+                ->where('first_name', '=', $request['first_name'])
+                ->paginate(15);
+
+        }
+        elseif(empty($request['last_name']) && !empty($request['first_name']) && !empty($request['pseudo'])){
+            $users = DB::table('users')
+                ->where('first_name', '=', $request['first_name'])
+                ->where('username', '=', $request['pseudo'])
+                ->paginate(15);
+
+        }
+        elseif(!empty($request['last_name']) && empty($request['first_name']) && !empty($request['pseudo'])){
+            $users = DB::table('users')
+                ->where('last_name', '=', $request['last_name'])
+                ->where('username', '=', $request['pseudo'])
+                ->paginate(15);
+
+        }
+        /*elseif (!empty($request['last_name']))
         {
             $users = DB::table('users')
                 ->where('last_name', '=', $request['last_name'])
@@ -404,7 +515,7 @@ class Admin extends Controller
             $users = DB::table('users')
                 ->where('first_name', '=', $request['first_name'])
                 ->paginate(15);
-        }
+        } */
         else
         {
             $users = DB::table('users')->paginate(15);
@@ -414,7 +525,99 @@ class Admin extends Controller
 
     public function droits()
     {
-        return view('adm/adm_droits');
+        $droits = DB::table('droits')->select('*')->get();
+        return view('adm/adm_droits')->with('droits', $droits);
+    }
+
+    public function supprimer_droits(Request $request){
+
+        if ($request->ajax()) {
+            DB::table('droits')->select('*')->where('id', '=', $request['id'])->delete();
+        }
+        else
+        {
+            abort(404);
+        }
+
+    }
+
+    public function droits_ajouter(Request $request){
+        
+        $user = DB::table('users')->select('*')->where('email', '=', $request['mail'])->get();
+        
+        if($user->isEmpty()){
+            return back()->with('erreur', 'L\'utilisateur n\'existe pas.');
+        }
+
+        DB::table('droits')->updateOrInsert([
+            'user_id' => $user[0]->id
+        ]);
+
+        return back()->with('message', 'L\'utilisateur a été ajouté avec succes.');
+    }
+
+    public function droits_modifier(Request $request){
+
+        if($request->ajax()){
+
+            $test = DB::table('droits')->where('id', $request['id'])->get();
+            
+            if($request['categorie'] == 'moderation'){
+                if($test[0]->moderation){
+                    DB::table('droits')->where('id', $request['id'])->update([
+                        'moderation' => 0
+                    ]);
+                } else {
+                    DB::table('droits')->where('id', $request['id'])->update([
+                        'moderation' => 1
+                    ]);
+                }
+            } elseif($request['categorie'] == 'restauration'){
+                if($test[0]->restauration){
+                    DB::table('droits')->where('id', $request['id'])->update([
+                        'restauration' => 0
+                    ]);
+                } else {
+                    DB::table('droits')->where('id', $request['id'])->update([
+                        'restauration' => 1
+                    ]);
+                }
+            } elseif($request['categorie'] == 'parametre'){
+                if($test[0]->parametre){
+                    DB::table('droits')->where('id', $request['id'])->update([
+                        'parametre' => 0
+                    ]);
+                } else {
+                    DB::table('droits')->where('id', $request['id'])->update([
+                        'parametre' => 1
+                    ]);
+                }
+            } elseif($request['categorie'] == 'upgrade'){
+                if($test[0]->upgrade){
+                    DB::table('droits')->where('id', $request['id'])->update([
+                        'upgrade' => 0
+                    ]);
+                } else {
+                    DB::table('droits')->where('id', $request['id'])->update([
+                        'upgrade' => 1
+                    ]);
+                }
+            } elseif($request['categorie'] == 'newsletter'){
+                if($test[0]->newsletter){
+                    DB::table('droits')->where('id', $request['id'])->update([
+                        'newsletter' => 0
+                    ]);
+                } else {
+                    DB::table('droits')->where('id', $request['id'])->update([
+                        'newsletter' => 1
+                    ]);
+                }
+            }
+
+        } else {
+            abort(404);
+        }
+
     }
 
     public function expulsions()

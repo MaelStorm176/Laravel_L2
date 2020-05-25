@@ -7,7 +7,7 @@
         <section class="row">
             <div class="col-lg-12">
                 <div class="card border-info mb-3">
-                    <div class="card-header bg-info text-white">Envoyer un mail<span class="fas fa-bars mt-1 float-right"></span></div>
+                    <div class="card-header bg-info text-white">Envoyer un mail<span class="fas fa-share mt-1 float-right"></span></div>
                     <div class="card-body">
                         <form class="mb-0" method="post" action="{{route('adm_envoi_mail')}}">
                             @csrf

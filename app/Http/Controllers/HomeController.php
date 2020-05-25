@@ -9,7 +9,19 @@ use Illuminate\Support\Facades\Validator;
 class HomeController extends Controller
 {
     public function index()
-    {
+    {   
+        $testVisites = DB::table('visites')
+        ->where('ip', '=', $_SERVER['REMOTE_ADDR'])
+        ->where('created_at', '>=', date('Y-m-d H:i:s', mktime(0,0,0,date('m'), date('d'), date('Y'))))
+        ->count('id');
+
+        if($testVisites == 0){
+            DB::table('visites')->insert([
+                'ip' => $_SERVER['REMOTE_ADDR'],
+                'created_at' => date('Y-m-d H:i:s')
+            ]);
+        }
+
         $pizza = DB::table('pizza')->select('*')->where('statut','=','Disponible')->get();
         $carousel=DB::table('accueil_carousel')->select('*')->get();
         $commentaires = DB::table("commentaire")

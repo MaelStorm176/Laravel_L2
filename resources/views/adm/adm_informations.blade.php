@@ -14,11 +14,15 @@
                             <section class="row">
                                 <div class="col-lg-4 mb-4">
                                     <label for="nom">Nom</label>
-                                    <input type="text" name="last_name" class="form-control">
+                                    <input type="text" name="last_name" id="nom" class="form-control">
                                 </div>
                                 <div class="col-lg-4 mb-4">
                                     <label for="prenom">Prénom</label>
-                                    <input type="text" name="first_name" class="form-control">
+                                    <input type="text" name="first_name" id="prenom" class="form-control">
+                                </div>
+                                <div class="col-lg-4 mb-4">
+                                    <label for="pseudo">Nom d'utilisateur</label>
+                                    <input type="text" name="pseudo" id="pseudo" class="form-control">
                                 </div>
                                 <div class="col-lg-12">
                                     <button type="submit" class="btn btn-primary text-white w-100">RECHERCHER</button>
@@ -53,7 +57,7 @@
                                     <td class="align-middle">{{$user->first_name}}</td>
                                     <td class="align-middle">{{$user->email}}</td>
                                     <td class="align-middle">{{$user->username}}</td>
-                                    <td class="align-middle">24</td>
+                                    <td class="align-middle">{{$user->pointsFidelite}}</td>
                                     <td class="align-middle">{{$nb_comm}}</td>
                                     <td class="align-middle">{{$user->role}}</td>
                                     <td class="align-middle"><span class="fas fa-trash-alt btn"></span></td>

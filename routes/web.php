@@ -128,62 +128,98 @@ route::get('/creneaux/reserver','Creneaux@reserver')->name('creneaux.reserver');
 route::get('/creneaux_ajouter','Creneaux@ajouter')->name('creneaux.ajouter');
 route::get('/creneaux_supprimer','Creneaux@supprimer')->name('creneaux.supprimer');
 route::get('/creneaux_reini','Creneaux@reini')->name('creneaux.reini');
+Route::get('supprimer_reservation', 'Creneaux@supprimer_reservation')->name('supprimer_reservation');
 
 /* ADMINISTRATION */
 Route::middleware('can:accessAdminpanel')->group(function() {
     Route::get('admin/home', 'Admin@index')->name('admin');
-    /* PLANNING */
-    Route::get('admin/horaires', 'Admin@horaires')->name('adm_horaires');
-    Route::post('admin/horaires.modif', 'Admin@horaires_modif')->name('adm_horaires.modif');
-    Route::get('admin/feriee_supprimer', 'Admin@feriee_supprimer')->name('adm_feriee_supprimer');
-    Route::get('admin/feriee_ajout', 'Admin@feriee_ajout')->name('adm_feriee_ajout');
-    Route::get('admin/fermeture_supprimer', 'Admin@fermeture_supprimer')->name('adm_fermeture_supprimer');
-    Route::get('admin/fermeture_ajout', 'Admin@fermeture_ajout')->name('adm_fermeture_ajout');
-    /* PAGE ACCUEIL */
-    Route::get('admin/page_accueil', 'Admin@page_accueil')->name('adm_page_accueil');
-    Route::get('partenaire_ajout', 'Admin@partenaire_ajout')->name('partenaire_ajout');
-    Route::get('partenaire_supprimer', 'Admin@partenaire_supprimer')->name('partenaire_supprimer');
-    Route::get('admin/afficher_form_reseaux', 'Admin@afficher_form_reseaux')->name('afficher_form_reseaux');
-    Route::post('admin/modifier_reseau', 'Admin@modifier_reseau')->name('adm_modifier_reseau');
-    /* AVIS */
-    Route::get('admin/avis', 'Admin@avis')->name('adm_avis');
-    Route::get('admin/supprimer_avis', 'Admin@supprimer_avis')->name('adm_supprimer_avis');
-    /* ENGAGEMENTS */
-    Route::get('admin/engagements', 'Admin@engagements')->name('adm_engagements');
-    Route::post('admin/ajout_engagement', 'Admin@ajout_engagement')->name('ajout_engagement');
-    Route::get('admin/supprimer_engagement', 'Admin@supprimer_engagement')->name('supprimer_engagement');
-    Route::post('admin/modif_engagement', 'Admin@modif_engagement')->name('modif_engagement');
-    Route::get('admin/enga_afficher_form', 'Admin@enga_afficher_form')->name('enga_afficher_form');
-    /* GENERAL */
-    Route::get('admin/general', 'Admin@general')->name('adm_general');
-    Route::post('admin/telephone', 'Admin@telephone')->name('adm_telephone');
-    Route::post('admin/identite', 'Admin@identite')->name('adm_identite');
-    Route::post('admin/adresse', 'Admin@adresse')->name('adm_adresse');
-    Route::post('admin/images', 'Admin@images')->name('adm_images');
-    Route::post('admin/couleurs', 'Admin@couleurs')->name('adm_couleurs');
-    /* COMMANDES */
-    Route::get('admin/commandes', 'Admin@commandes')->name('adm_commandes');
-    Route::get('admin/historique_commandes', 'Admin@historique_commandes')->name('adm_historique_commandes');
-    /* UTILISATEURS */
-    Route::get('admin/informations', 'Admin@informations')->name('adm_informations');
-    Route::post('admin/informations', 'Admin@informations')->name('adm_informations');
-    Route::get('admin/droits', 'Admin@droits')->name('adm_droits');
-    Route::get('admin/expulsions', 'Admin@expulsions')->name('adm_expulsions');
-    Route::post('admin/expulsions_ajout', 'Admin@expulsion_ajout')->name('adm_explusion_ajout');
-    Route::get('admin/expulsion_supprimer', 'Admin@expulsion_supprimer')->name('adm_explusion_supprimer');
-    /* CARTE */
-    Route::get('admin/codes', 'Admin@codes')->name('adm_codes');
-    Route::get('admin/articles', 'Admin@articles')->name('adm_articles');
-    Route::get('admin/menus', 'Admin@menus')->name('adm_menus');
-    Route::get('admin/promotions', 'Admin@promotions')->name('adm_promotions');
-    Route::get('admin/promotions/refresh_article', 'Admin@refresh_article'); //AJAX
-    /* NEWSLETTER */
-    Route::get('admin/newsletter', 'Admin@newsletter')->name('adm_newsletter');
-    Route::get('admin/newsletter_supprimer', 'Admin@newsletter_supprimer')->name('adm_newsletter_supprimer');
-    Route::post('admin/envoi_mail', 'Admin@envoi_mail')->name('adm_envoi_mail');
-    /* CRENEAUX */
-    Route::get('admin/creneaux', 'Admin@creneaux')->name('adm_creneaux');
 
+    /* MODERATION */
+    Route::group([
+        'middleware' => 'App\Http\Middleware\CheckModeration',
+    ], function () {
+        /* EXPULSIONS */
+        Route::get('admin/expulsions', 'Admin@expulsions')->name('adm_expulsions');
+        Route::post('admin/expulsions_ajout', 'Admin@expulsion_ajout')->name('adm_explusion_ajout');
+        Route::get('admin/expulsion_supprimer', 'Admin@expulsion_supprimer')->name('adm_explusion_supprimer');
+        /* UTILISATEURS INFOS */
+        Route::get('admin/informations', 'Admin@informations')->name('adm_informations');
+        Route::post('admin/informations', 'Admin@informations')->name('adm_informations');
+        /* AVIS */
+        Route::get('admin/avis', 'Admin@avis')->name('adm_avis');
+        Route::get('admin/supprimer_avis', 'Admin@supprimer_avis')->name('adm_supprimer_avis');
+    });
+
+    /* RESTAURATION */
+    Route::group([
+        'middleware' => 'App\Http\Middleware\CheckRestauration',
+    ], function () {
+        /* COMMANDES */
+        Route::get('admin/commandes', 'Admin@commandes')->name('adm_commandes');
+        Route::get('admin/historique_commandes', 'Admin@historique_commandes')->name('adm_historique_commandes');
+        Route::get('admin/historique_commandes', 'Admin@historique_commandes')->name('adm_historique_commandes');
+        /* PLANNING */
+        Route::get('admin/horaires', 'Admin@horaires')->name('adm_horaires');
+        Route::post('admin/horaires.modif', 'Admin@horaires_modif')->name('adm_horaires.modif');
+        Route::get('admin/feriee_supprimer', 'Admin@feriee_supprimer')->name('adm_feriee_supprimer');
+        Route::get('admin/feriee_ajout', 'Admin@feriee_ajout')->name('adm_feriee_ajout');
+        Route::get('admin/fermeture_supprimer', 'Admin@fermeture_supprimer')->name('adm_fermeture_supprimer');
+        Route::get('admin/fermeture_ajout', 'Admin@fermeture_ajout')->name('adm_fermeture_ajout');
+        /* CARTE */
+        Route::get('admin/codes', 'Admin@codes')->name('adm_codes');
+        Route::get('admin/articles', 'Admin@articles')->name('adm_articles');
+        Route::get('admin/menus', 'Admin@menus')->name('adm_menus');
+        Route::get('admin/promotions', 'Admin@promotions')->name('adm_promotions');
+        Route::get('admin/promotions/refresh_article', 'Admin@refresh_article'); //AJAX
+        /* CRENEAUX */
+        Route::get('admin/creneaux', 'Admin@creneaux')->name('adm_creneaux');
+    });
+
+    /* PARAMETRE */
+    Route::group([
+        'middleware' => 'App\Http\Middleware\CheckParametre',
+    ], function () {
+        /* GENERAL */
+        Route::get('admin/general', 'Admin@general')->name('adm_general');
+        Route::post('admin/telephone', 'Admin@telephone')->name('adm_telephone');
+        Route::post('admin/identite', 'Admin@identite')->name('adm_identite');
+        Route::post('admin/adresse', 'Admin@adresse')->name('adm_adresse');
+        Route::post('admin/images', 'Admin@images')->name('adm_images');
+        Route::post('admin/couleurs', 'Admin@couleurs')->name('adm_couleurs');
+        Route::post('admin/gmail', 'Admin@gmail')->name('adm_gmail');
+        Route::post('admin/points', 'Admin@points')->name('adm_points');
+        /* PAGE ACCUEIL */
+        Route::get('admin/page_accueil', 'Admin@page_accueil')->name('adm_page_accueil');
+        Route::get('partenaire_ajout', 'Admin@partenaire_ajout')->name('partenaire_ajout');
+        Route::get('partenaire_supprimer', 'Admin@partenaire_supprimer')->name('partenaire_supprimer');
+        Route::get('admin/afficher_form_reseaux', 'Admin@afficher_form_reseaux')->name('afficher_form_reseaux');
+        Route::post('admin/modifier_reseau', 'Admin@modifier_reseau')->name('adm_modifier_reseau');
+        /* ENGAGEMENTS */
+        Route::get('admin/engagements', 'Admin@engagements')->name('adm_engagements');
+        Route::post('admin/ajout_engagement', 'Admin@ajout_engagement')->name('ajout_engagement');
+        Route::get('admin/supprimer_engagement', 'Admin@supprimer_engagement')->name('supprimer_engagement');
+        Route::post('admin/modif_engagement', 'Admin@modif_engagement')->name('modif_engagement');
+        Route::get('admin/enga_afficher_form', 'Admin@enga_afficher_form')->name('enga_afficher_form');
+    });
+
+    /* DROITS */
+    Route::group([
+        'middleware' => 'App\Http\Middleware\CheckUpgrade',
+    ], function () {
+        Route::get('admin/droits', 'Admin@droits')->name('adm_droits');
+        Route::get('admin/supprimer_droits', 'Admin@supprimer_droits')->name('adm_supprimer_droits');
+        Route::post('admin/droits_ajouter', 'Admin@droits_ajouter')->name('adm_droits_ajouter');
+        Route::get('admin/droits_modifier', 'Admin@droits_modifier')->name('adm_droits_modifier');
+    });
+
+    /* NEWSLETTER */
+    Route::group([
+        'middleware' => 'App\Http\Middleware\CheckNewsletter',
+    ], function () {
+        Route::get('admin/newsletter', 'Admin@newsletter')->name('adm_newsletter');
+        Route::get('admin/newsletter_supprimer', 'Admin@newsletter_supprimer')->name('adm_newsletter_supprimer');
+        Route::post('admin/envoi_mail', 'Admin@envoi_mail')->name('adm_envoi_mail');
+    });    
 });
 
 /*********************/

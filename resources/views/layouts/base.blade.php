@@ -78,6 +78,9 @@
                             <a class="nav-link text-nav" href="{{route('avis')}}">Avis</a>
                         </li>
                         @auth
+                            <li class="nav-item">
+                                <a class="nav-link text-nav" href="{{route('creneaux.index')}}">Réservations</a>
+                            </li>
                             @if(Auth::user()->role=='admin')
                                 <li class="nav-item">
                                     <a class="nav-link text-nav" href="{{route('admin')}}">Admin</a>
@@ -94,28 +97,28 @@
                     @auth
                         <div class="navbar-right">
                             <div class="btn-group" role="group" aria-label="Basic example">
-                            <div class="dropdown">
-                                <button class="btn btn-outline-info dropdown-toggle navbar-btn mr-1" type="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="fas fa-user-circle mr-2"></span>{{ Auth::user()->username }}
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <a class="dropdown-item" href="{{route('panier')}}"><span class="fas fa-shopping-cart mr-2"></span>Mon Panier</a>
-                                    <a class="dropdown-item" href="{{route('historique_commande')}}"><span class="fas fa-store mr-2"></span>Mes Commandes</a>
-                                    <a class="dropdown-item" href="{{ route('parametres') }}"><span class="fas fa-cogs mr-2"></span>Mes Paramères</a>
+                                <a href="{{route('panier')}}">
+                                    <button class="btn btn-outline-warning navbar-btn mr-1"> 
+                                        <i class="fas fa-shopping-cart"></i>
+                                        <span id="quantite_total_panier">panier (<?php echo \App\Http\Controllers\Panier::quantite_total(); ?>)</span>
+                                    </button>
+                                </a>
+                                <div class="dropdown">
+                                    <button class="btn btn-outline-info dropdown-toggle navbar-btn mr-1" type="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="fas fa-user-circle mr-2"></span>{{ Auth::user()->username }}
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <a class="dropdown-item" href="{{route('panier')}}"><span class="fas fa-shopping-cart mr-2"></span>Mon Panier</a>
+                                        <a class="dropdown-item" href="{{route('historique_commande')}}"><span class="fas fa-store mr-2"></span>Mes Commandes</a>
+                                        <a class="dropdown-item" href="{{ route('parametres') }}"><span class="fas fa-cogs mr-2"></span>Mes Paramères</a>
+                                    </div>
                                 </div>
-                            </div>
-                            <a class="btn btn-outline-secondary navbar-btn" href="{{route('panier')}}">
-                                <i class="fas fa-shopping-cart" style="color:#fff;"></i>
-                                <span class="badge badge-primary badge-pill px-2 py-1" id="quantite_total_panier"><?php echo \App\Http\Controllers\Panier::quantite_total(); ?></span>
-                            </a>
-
-                            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                 <button type="button" class="btn btn-outline-danger navbar-btn"><span class="fas fa-door-open mr-2"></span>{{ __('Deconnexion') }}</button>
-                            </a>
-
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                @csrf
-                            </form>
+                                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <button type="button" class="btn btn-outline-danger navbar-btn"><span class="fas fa-door-open mr-2"></span>{{ __('Deconnexion') }}</button>
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
                             </div>
                         </div>
                     @endauth
@@ -126,7 +129,7 @@
         <div class="w-100 p-3 text-white">-</div>
         <footer class="bg-nav page-footer fixed-bottom py-3 text-center">
             <span style="color:{{config('couleurs.navText')}};">© 2020 Copyright:</span>
-            <a href="#" class="text-nav">LIEN DU SITE</a>
+            <a href="#" class="text-nav">{{config('app.url')}}</a>
         </footer>
         @guest
             <!-- Modal Connexion -->

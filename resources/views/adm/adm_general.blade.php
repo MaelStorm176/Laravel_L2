@@ -103,11 +103,67 @@
                                         <input type="text" id="ville" name="ville" class="form-control mb-4" value="{{$key->ville}}" required>
                                     </div>
                                     <div class="col-lg-12">
+                                        <label for="iframe">Lien Iframe GoogleMaps</label>
+                                        <input type="text" id="iframe" name="iframe" class="form-control mb-4" value="{{$key->iframe}}" required>
+                                    </div>
+                                    <div class="col-lg-12">
                                         <button type="submit" class="btn btn-primary w-100">ENREGISTRER</button>
                                     </div>
                                 </section>
                             </form>
                         @endforeach
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card border-info mb-3">
+                    <div class="card-header bg-info text-white">Points Fidelites<span class="fas fa-gift mt-1 float-right"></span></div>
+                    <div class="card-body">
+                        @foreach($parametres as $key)
+                            <form method="post" class="mb-0" action="{{route('adm_points')}}">
+                                @csrf
+                                <section class="row">
+                                    <div class="col-lg-12">
+                                        <label for="equivalent">Equivalent en euros</label>
+                                        <input type="number" id="equivalent" name="equivalent" class="form-control mb-4" value="{{$key->ptsEquivalent}}" required>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <label for="gain">Quantitée débloquée à chaque gain</label>
+                                        <input type="number" id="gain" name="gain" class="form-control mb-4" value="{{$key->ptsGain}}" required>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <label for="nbComm">Nombre de commandes avant gain</label>
+                                        <input type="number" id="nbComm" name="nbComm" class="form-control mb-4" value="{{$key->ptsNbComm}}" required>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <button type="submit" class="btn btn-primary w-100">ENREGISTRER</button>
+                                    </div>
+                                </section>
+                            </form>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card border-info mb-3">
+                    <div class="card-header bg-info text-white">Adresse Gmail<span class="fas fa-envelope-square mt-1 float-right"></span></div>
+                    <div class="card-body">
+                        <form method="post"  class="mb-0" action="{{route('adm_gmail')}}">
+                            @csrf
+                            <section class="row">
+                                <div class="col-lg-12">
+                                    <label for="mail">Adresse Mail</label>
+                                    <input type="text" id="mail" name="mail" class="form-control mb-4" required>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label for="cp">Mot de passe</label>
+                                    <input type="password" id="mdp" name="mdp" class="form-control mb-4" required>
+                                </div>
+                                <div class="col-lg-12">
+                                    <button type="submit" class="btn btn-primary w-100">ENREGISTRER</button>
+                                </div>
+                            </section>
+                        </form>
                     </div>
                 </div>
             </div>

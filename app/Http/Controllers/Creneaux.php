@@ -15,6 +15,11 @@ class Creneaux extends Controller
         $jourv=DB::table('creneaux_config')->select('jour')->get();
         $global2=DB::table('creneaux_config')->select('jour','livreur_matin')->get();
         $global=DB::table('creneaux_config')->where('jour','=',$jour)->get();
+        $table_creneaux = DB::table('creneaux')
+        ->select('id','creneaux','jour','client')
+        ->where('client', '=', Auth::user()->id)
+        ->orderBy('jour','asc')
+        ->get();
         if (empty($request['jour']) || $request['jour'] != $jourv){
             $creneau_get = DB::table('creneaux')->select('creneaux','livreur_matin','livreur_soir')->where('jour','=','lundi')->get();
             $creneau_livreur = DB::table('creneaux_config')->select('livreur_matin','livreur_soir')->where('jour','=','lundi')->get();
@@ -26,7 +31,7 @@ class Creneaux extends Controller
                 $fin_matin ='Fe';
                 $deb_soir ='Fe';
                 $fin_soir = 'Fe';
-                return view('creneaux',compact('creneau_livreur_soir','creneau_livreur_matin','global2','creneau_get','jour','deb_matin','fin_matin','deb_soir','fin_soir'));
+                return view('creneaux',compact('creneau_livreur_soir','creneau_livreur_matin','global2','creneau_get','jour','deb_matin','fin_matin','deb_soir','fin_soir', 'table_creneaux'));
 
             }
 
@@ -81,7 +86,7 @@ class Creneaux extends Controller
 
 
 
-            return view('creneaux',compact('creneau_livreur_soir','creneau_livreur_matin','jour','creneau_livreur','global2','creneau_get','jour','deb_matin','fin_matin','deb_soir','fin_soir','deb_matin1','fin_matin1','deb_soir1','fin_soir1'));
+            return view('creneaux',compact('creneau_livreur_soir','creneau_livreur_matin','jour','creneau_livreur','global2','creneau_get','jour','deb_matin','fin_matin','deb_soir','fin_soir','deb_matin1','fin_matin1','deb_soir1','fin_soir1', 'table_creneaux'));
 
 
         }
@@ -91,7 +96,7 @@ class Creneaux extends Controller
             $fin_matin ='Fe';
             $deb_soir ='Fe';
             $fin_soir = 'Fe';
-            return view('creneaux',compact('creneau_livreur_soir','creneau_livreur_matin','global2','creneau_get','jour','deb_matin','fin_matin','deb_soir','fin_soir'));
+            return view('creneaux',compact('creneau_livreur_soir','creneau_livreur_matin','global2','creneau_get','jour','deb_matin','fin_matin','deb_soir','fin_soir', 'table_creneaux'));
 
         }
     }
@@ -137,6 +142,17 @@ class Creneaux extends Controller
         DB::table('creneaux')->select('*')->where('jour','=',$request['reini'])->delete();
         return back()->with('message','Vos créneaux ont été réinitialisé');
     }
+
+    public function supprimer_reservation(Request $request){
+        if ($request->ajax()) {
+            DB::table('creneaux')->select('*')->where('id', '=', $request['id'])->delete();
+        }
+        else
+        {
+            abort(404);
+        }
+    }
+
     public function ajouter(Request $request){
         if($request['jour']=='Choisir un jour'){
             return back()->with('erreur','Vous devez choisir un jour de la semaine');
