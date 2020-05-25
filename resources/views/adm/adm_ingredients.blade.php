@@ -1,56 +1,53 @@
-@extends('layouts.base')
-@section('content')
+@extends('layouts.adm')
+@section('titre')
+    INGREDIENTS<span class="fas fa-list-alt mt-1 ml-1"></span>
+@endsection
+@section('contenu')
     <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="card border-one">
-                    <div class="card-header bg-one text-one">Craft une pizza</div>
+        <section class="row">
+            <div class="col-lg-12">
+            <button type="button" onclick="ajouter()" class="btn btn-outline-primary w-100 mb-3" data-toggle="modal" data-target="#putain">
+                                    Ajouter un ingrédient
+                                </button>
+                <div class="card border-info mb-3">
+                    <div class="card-header bg-info text-white">Liste des ingrédients<span class="fas fa-bars mt-1 float-right"></span></div>
                     <div class="card-body">
-                        @auth
-                    
-                            <form action="{{route('craft_ajouter')}}" method="post">
-                                @csrf
-                                <table class="table table-hover table-bordered mb-3 text-center">
-                                <thead class="bg-tab text-tab">
-                                    <tr>
-                                        <th class="align-middle" scope="col">#</th>
-                                        <th class="align-middle" scope="col">Image</th>
-                                        <th class="align-middle" scope="col">Prix</th>
-                                        <th class="align-middle" scope="col">Ajouter</th>
-                                    </tr>
-                                </thead>          
-                                <tbody>
-                                <!-- {{$var=1}}-->
-                                @foreach ($ingredients as $value)
+                        <table class="table table-hover table-bordered mb-3 text-center">
+                            <thead class="bg-primary text-white">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Image</th>
+                                    <th scope="col">Prix</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                             @foreach ($ingredients as $value)
                                     <tr id="{{$value->id}}">
                                         <td class="align-middle">{{ $value->nom_i }}</td>
-                                        <td class="align-middle"><img style="margin-left: 2em" src="{{$value->image}}"width="150px"></td>
+                                        <td class="align-middle"><img style="margin-left: 2em" src="../{{$value->image}}"width="150px"></td>
                                         <td class="align-middle">{{ $value->prix_i }}€</td>
-                                        <td class="align-middle"><div class="form-check form-check-inline">
-                                                <input class="form-check-input" name="ingredient_{{$value->id}}" type="checkbox" id="inlineCheckbox1" value="{{$value->nom_i}}">
-                                                <input class="form-check-input" name="prix_recup_{{$value->id}}" type="hidden" id="inlineCheckbox1" value="{{$value->prix_i}}">
-                                            </div></td>
-                                        
-                                       </tr>
-                                    <!--  {{$var++}}-->
+                                            <td class="align-middle"><button type="button" onclick="modifier({{$value->id}})" class="btn fas fa-edit" data-toggle="modal" data-target="#putain">
+                                                 
+                                                </button>
+                                                <button type="button" onclick="supprimer({{$value->id}})" class="btn fas fa-trash-alt">
+                                                   
+                                                </button>
+                                            </td>
+                                    </tr>
+                                  
                                 @endforeach
-
-                                </tbody>
-                            </table>
-                            <button type="submit" class="btn btn-primary w-100">Valider</button>
-                            </form>
-                        <!-- -->
-                    @endauth
-                    @guest
-                        Vous devez être connecté
-                    @endguest
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
     </div>
 @endsection
-                        <!-- Modal -->
-                        <div class="modal fade" id="putain" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+
+<!-- Modal -->
+<div class="modal fade" style="z-index:200000;" id="putain" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -90,8 +87,8 @@
                             </div>
                         </div>
 <script>
-    //Vide le formulaire afin d'ajouter une pizza
-    function ajouter(){
+        //Vide le formulaire afin d'ajouter une pizza
+        function ajouter(){
         $('#exampleModalLongTitle').html('Ajouter un ingrédient');
         $('#formu').prop('action','{{route('craft_ajouter_ingredient')}}');
         $('#image_i').val('');
@@ -108,7 +105,7 @@
         $('#prix_i').val('');
         var dummy = Date.now();
         $.ajax({
-            url :'craft_afficher_form',
+            url :'../craft_afficher_form',
             type : 'GET',
             dataType : 'html',
             data : {dummy:dummy, id:id},
@@ -127,7 +124,7 @@
     function supprimer(id){
         var dummy = Date.now();
         $.ajax({
-            url :'craft_supprimer_ingredient',
+            url :'../craft_supprimer_ingredient',
             type : 'GET',
             dataType : 'html',
             data : {dummy:dummy, id:id},
@@ -141,5 +138,3 @@
         });
     }
 </script>
-
-

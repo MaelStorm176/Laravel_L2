@@ -174,6 +174,7 @@ Route::middleware('can:accessAdminpanel')->group(function() {
         Route::get('admin/promotions/refresh_article', 'Admin@refresh_article'); //AJAX
         /* CRENEAUX */
         Route::get('admin/creneaux', 'Admin@creneaux')->name('adm_creneaux');
+        Route::get('admin/ingredients', 'Admin@ingredients')->name('adm_ingredients');
     });
 
     /* PARAMETRE */

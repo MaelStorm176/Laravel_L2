@@ -343,6 +343,12 @@ class Admin extends Controller
         return back()->with('message', 'Les parametres des points de fidelité ont bien été modifiés.');
     }
 
+    public static function ingredients(){
+
+        $ingredients=DB::table('ingredient')->select('*')->get();
+        return view('adm/adm_ingredients', compact('ingredients'));
+    }
+
     public function gmail(Request $request)
     {
         $path = base_path('.env');
