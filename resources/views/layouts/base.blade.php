@@ -105,7 +105,7 @@
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                         @auth
                                             @if(Auth::user()->role=='admin')
-                                                <a class="dropdown-item" href="{{route('admin')}}"><span class="fas fa-shopping-cart mr-2"></span>Admin</a>
+                                                <a class="dropdown-item" href="{{route('admin')}}"><span class="fas fa-tools mr-2"></span>Admin</a>
                                             @endif
                                         @endauth
                                         <a class="dropdown-item" href="{{route('historique_commande')}}"><span class="fas fa-store mr-2"></span>Mes Commandes</a>

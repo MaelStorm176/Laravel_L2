@@ -7,7 +7,7 @@
 @section('content')
     @foreach($pizza as $key)
     @endforeach
-    <div class="container px-0">
+    <div class="container">
         <div class="row">
             <div class="col-lg-12">
                 <div class="card border-one mb-3">
@@ -63,7 +63,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-12" >
+            <div class="col-lg-12 px-0">
                 <div class="card bg-two text-two text-center p-3 font-weight-bold font-italic mb-3">
                     <h5 class="mb-0">Valeurs Nutritionnelles</h5>
                     <i onclick="afficher_nutri({{$key->nutrition}},'{{$key->nom}}')" class="fas fa-angle-down float-right" style="cursor: pointer"></i>

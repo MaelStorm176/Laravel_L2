@@ -3,17 +3,17 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <div class="card border-one">
-                    <div class="card-header bg-one text-one">Craft une pizza</div>
+                <div class="card border-one mb-3">
+                    <div class="card-header bg-one text-one">Créer votre pizza</div>
                     <div class="card-body">
                         @auth
                     
-                            <form action="{{route('craft_ajouter')}}" method="post">
+                            <form action="{{route('craft_ajouter')}}" class="mb-0" method="post">
                                 @csrf
                                 <table class="table table-hover table-bordered mb-3 text-center">
                                 <thead class="bg-tab text-tab">
                                     <tr>
-                                        <th class="align-middle" scope="col">#</th>
+                                        <th class="align-middle" scope="col">Ingrédient</th>
                                         <th class="align-middle" scope="col">Image</th>
                                         <th class="align-middle" scope="col">Prix</th>
                                         <th class="align-middle" scope="col">Ajouter</th>
@@ -37,7 +37,7 @@
 
                                 </tbody>
                             </table>
-                            <button type="submit" class="btn btn-primary w-100">Valider</button>
+                            <button type="submit" class="btn btn-one w-100">Valider</button>
                             </form>
                         <!-- -->
                     @endauth

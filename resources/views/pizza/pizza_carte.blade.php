@@ -30,10 +30,12 @@
                             <div class="card bg-one text-one text-center p-3 font-weight-bold font-italic mb-3">
                                 <h5 class="mb-0 text-uppercase">NOS {{$cat->nom}}</h5>
                             </div>
+                            @if($cat->nom == 'pizzas')
+                                <a href="{{route('craft')}}" class="btn btn-one mb-3 w-100">
+                                    <span class="align-middle">Créer votre Pizza</span>
+                                </a>      
+                            @endif
                             <div class="row row-cols-1 row-cols-md-2">
-                                    @if($cat->nom == 'pizzas')
-                                        <a href="{{route('craft')}}" class="btn btn-one mb-3" style="height:3rem;">Craft Pizza</button></a>
-                                    @endif
                                 @foreach($pizza as $key)
                                     @if($key->categorie == $cat->nom)
                                         @if($key->statut == 'Disponible')

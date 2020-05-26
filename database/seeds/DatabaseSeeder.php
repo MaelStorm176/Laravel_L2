@@ -29,5 +29,6 @@ class DatabaseSeeder extends Seeder
         $this->call(Engagement_seeder::class);
         $this->call(Visites_seeder::class);
         $this->call(Droits_seeder::class);
+        $this->call(Ingredients_seeder::class);
     }
 }

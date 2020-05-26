@@ -139,7 +139,7 @@
                                             Promotions
                                         </a>
                                         <a href="{{route('adm_ingredients')}}" class="list-group-item list-group-item-action py-3 bg-dark text-white rounded-0">
-                                            <span class="fas fa-pizza-slice mt-1 mr-1"></span>
+                                            <span class="fas fa-drumstick-bite mt-1 mr-1"></span>
                                             Ingredients
                                         </a>
                                     </div>

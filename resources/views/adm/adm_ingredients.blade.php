@@ -1,6 +1,6 @@
 @extends('layouts.adm')
 @section('titre')
-    INGREDIENTS<span class="fas fa-list-alt mt-1 ml-1"></span>
+    INGREDIENTS<span class="fas fa-drumstick-bite mt-1 ml-1"></span>
 @endsection
 @section('contenu')
     <div class="container">
